@@ -9,16 +9,23 @@ export class RecipesService {
   private recipes: Recipe[] = [
     {
       id: 'r1',
-      title: 'Schnitzel',
+      title: 'Galaxia',
       imageUrl:
         'https://apod.nasa.gov/apod/image/1911/M101_nasaMultiW.jpg',
       ingredients: ['French Fries', 'Pork Meat', 'Salad']
     },
     {
       id: 'r2',
-      title: 'Spaghetti',
+      title: 'Astronauta',
       imageUrl:
-        'https://apod.nasa.gov/apod/image/1911/M101_nasaMultiW.jpg',
+        'https://apod.nasa.gov/apod/image/1911/BeanConrad_Apollo12_950.jpg',
+      ingredients: ['Spaghetti', 'Meat', 'Tomatoes']
+    },  
+    {
+      id: 'r3',
+      title: 'Luna',
+      imageUrl:
+        'https://apod.nasa.gov/apod/image/1911/PetaviusLangrenus_Poupeau_3000.jpg',
       ingredients: ['Spaghetti', 'Meat', 'Tomatoes']
     }
   ];
@@ -36,4 +43,5 @@ export class RecipesService {
       })
     };
   }
+
 }

@@ -18,6 +18,7 @@ export class RecipeDetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.activatedRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('recipeId')) {
         // redirect
@@ -26,5 +27,7 @@ export class RecipeDetailPage implements OnInit {
       const recipeId = paramMap.get('recipeId');
       this.loadedRecipe = this.recipesService.getRecipe(recipeId);
     });
+
   }
+
 }
