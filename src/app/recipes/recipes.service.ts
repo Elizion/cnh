@@ -9,23 +9,16 @@ export class RecipesService {
   private recipes: Recipe[] = [
     {
       id: 'r1',
-      title: 'Galaxia',
+      title: 'Schnitzel',
       imageUrl:
-        'https://apod.nasa.gov/apod/image/1911/M101_nasaMultiW.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Schnitzel.JPG/1024px-Schnitzel.JPG',
       ingredients: ['French Fries', 'Pork Meat', 'Salad']
     },
     {
       id: 'r2',
-      title: 'Astronauta',
+      title: 'Spaghetti',
       imageUrl:
-        'https://apod.nasa.gov/apod/image/1911/BeanConrad_Apollo12_950.jpg',
-      ingredients: ['Spaghetti', 'Meat', 'Tomatoes']
-    },  
-    {
-      id: 'r3',
-      title: 'Luna',
-      imageUrl:
-        'https://apod.nasa.gov/apod/image/1911/PetaviusLangrenus_Poupeau_3000.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/1024px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
       ingredients: ['Spaghetti', 'Meat', 'Tomatoes']
     }
   ];
@@ -44,4 +37,9 @@ export class RecipesService {
     };
   }
 
+  deleteRecipe(recipeId: string) {
+    this.recipes = this.recipes.filter(recipe => {
+      return recipe.id !== recipeId;
+    });
+  }
 }
