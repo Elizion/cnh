@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
-
 const routes: Routes = [
   { path: '', redirectTo: 'places', pathMatch: 'full' },
   { path: 'auth', loadChildren: './auth/auth.module#AuthPageModule' },
@@ -17,15 +16,10 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: './profile/profile.module#ProfeliPageModule',
+    loadChildren: './profile/profile.module#ProfilePageModule',
     canLoad: [AuthGuard]
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
