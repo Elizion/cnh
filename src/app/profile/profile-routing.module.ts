@@ -10,7 +10,7 @@ const routes: Routes = [
         path: 'user',
         children: [
           {
-            path: '',
+            path: 'info',
             loadChildren: './profile/profile.module#ProfilePageModule'
           }
         ]
