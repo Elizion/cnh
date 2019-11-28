@@ -11,7 +11,7 @@ export class AuthPage implements OnInit {
   ngOnInit() {}
   onLogin() {
     this.authService.login();
-    //this.router.navigateByUrl('/places/tabs/discover');
-    this.router.navigateByUrl('profile/profile/info');
+    this.router.navigateByUrl('/places/tabs/discover');
+    //this.router.navigateByUrl('profile/profile/info');
   }
 }

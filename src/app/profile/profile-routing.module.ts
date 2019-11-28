@@ -7,7 +7,7 @@ const routes: Routes = [
     component: ProfilePage,
     children: [
       {
-        path: 'info',
+        path: 'user',
         children: [
           {
             path: '',
