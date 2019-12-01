@@ -24,5 +24,3 @@ const routes: Routes = [
   declarations: [BookingsPage]
 })
 export class BookingsPageModule {}
-
-
