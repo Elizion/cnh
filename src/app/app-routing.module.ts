@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'payroll',
     loadChildren: () => import('./payroll/payroll.module').then( m => m.PayrollPageModule)
+  },
+  {
+    path: 'notices',
+    loadChildren: () => import('./notices/notices.module').then( m => m.NoticesPageModule)
   }
 ];
 @NgModule({

@@ -55,5 +55,4 @@ export class AuthPage implements OnInit {
       // Send a request to signup servers
     }
   }
-  
 }
