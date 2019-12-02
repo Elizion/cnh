@@ -6,9 +6,24 @@
     <ion-title>Nómina</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding>     
-  <ion-button  color="primary" expand="block" href="../../assets/solicitudVacaciones.pdf" target="blank">Ver pdf</ion-button>
-</ion-content>
+  
+  <ion-grid>    
+      <ion-row>
+        <ion-col size="12" size-sm="8" offset-sm="2" text-center>          
+          <ion-virtual-scroll [items]="_payroll" approxItemHeight="70px">
+            <ion-item [routerLink]="['/','tabs','detail',payroll.consolidationSetId]" detail *virtualItem="let payroll">
+              <ion-label>
+                <h2>{{ payroll.fechaPago }}</h2>
+                <p>{{ payroll.nombreFolio }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-virtual-scroll>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+
+  <ion-button  color="primary" expand="block" href="https://devdactic.com/html/5-simple-hacks-LBT.pdf" target="blank"> PDF </ion-button>
+
 
 
