@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-
+//import { TokenStorage } from './auth.token';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
@@ -16,8 +15,9 @@ export class AuthPage implements OnInit {
   response = null;
   constructor(
     private authService: AuthService,
+    //private token: TokenStorage,
     private router: Router,
-    private loadingCtrl: LoadingController,
+    private loadingCtrl: LoadingController
   ) {}
   ngOnInit() {
   }
@@ -25,7 +25,8 @@ export class AuthPage implements OnInit {
     this.isLoading = true;
     this.authService.generateToken().subscribe(res => {
       this.response = res;
-      console.log(JSON.stringify(this.response));
+      //this.token.saveToken(this.response.data);
+      //console.log(this.token.getToken());
     });
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Generando token...' })
@@ -39,11 +40,14 @@ export class AuthPage implements OnInit {
     });
   }
   onSubmitFunction(form: NgForm) {
+
     if (!form.valid) {
       return;
     }
+
     const email = form.value.email;
     const password = form.value.password;
+
     console.log(email, password);
     if (this.isLogin) {
       // Send a request to login servers

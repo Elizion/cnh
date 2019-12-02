@@ -17,7 +17,7 @@ export class UserPage implements OnInit {
   ngOnInit() {
     this.userService.getUser().subscribe(res => {
       this.response = res;
-      console.log(JSON.stringify(this.response));
+      console.log('User '+JSON.stringify(this.response.metadata));
     });
   }
   onOpenMenu() {
