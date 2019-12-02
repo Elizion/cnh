@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 import { PayrollService } from './payroll.service';
 import { LoadingController } from '@ionic/angular';
 import { Payroll } from './payroll.model';
-
 @Component({
   selector: 'app-payroll',
   templateUrl: './payroll.page.html',
@@ -17,7 +16,6 @@ import { Payroll } from './payroll.model';
 export class PayrollPage implements OnInit {
   isLoading = false;
   _payroll: Payroll[];
-
   constructor(
     private payrollService: PayrollService,
     private loadingCtrl: LoadingController,
@@ -27,18 +25,14 @@ export class PayrollPage implements OnInit {
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando...' })
     .then(loadingEl => {
-
       loadingEl.present();
-
       return this.payrollService.getPayroll().subscribe((response) => {
         this._payroll = response['data'];
         this.isLoading = false;
         loadingEl.dismiss();
       });
-
     });
   }
-
   download() {
     /*
     const fileTransfer: FileTransferObject = this.fileTransfer.create();

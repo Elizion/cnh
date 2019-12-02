@@ -13,45 +13,40 @@ import { AuthService } from './auth.service';
 export class AuthPage implements OnInit {
   isLoading = false;
   isLogin = true;
-
+  response = null;
   constructor(
     private authService: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private http: HttpClient
   ) {}
-
-  ngOnInit() {}
-
+  ngOnInit() {
+  }
   onLogin() {
     this.isLoading = true;
-    this.authService.login();
+    this.authService.generateToken().subscribe(res => {
+      this.response = res;
+      console.log(JSON.stringify(this.response));
+    });
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Iniciando...' })
-      .then(loadingEl => {
-        loadingEl.present();
-        setTimeout(() => {
-          this.isLoading = false;
-          loadingEl.dismiss();
-          this.router.navigateByUrl('/places/tabs/discover');
-        }, 1500);
-      });
+    .create({ keyboardClose: true, message: 'Generando token...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      setTimeout(() => {
+        this.isLoading = false;
+        loadingEl.dismiss();
+        this.router.navigateByUrl('/user');
+      }, 3000);
+    });
   }
-
-  onSwitchAuthMode() {
-    this.isLogin = !this.isLogin;
-  }
-
-  onSubmit(form: NgForm) {
+  onSubmitFunction(form: NgForm) {
     if (!form.valid) {
       return;
     }
     const email = form.value.email;
     const password = form.value.password;
     console.log(email, password);
-    //this.http.get(`https://siarhqamovil.cnh.gob.mx/api/token/autorizacion?solicitante=app-movil`);
     if (this.isLogin) {
-      // Send a request to login servers       
+      // Send a request to login servers
     } else {
       // Send a request to signup servers
     }

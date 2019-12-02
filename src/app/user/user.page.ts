@@ -8,14 +8,18 @@ import { User } from './user.model';
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
-  loadedUser: User[];
+  loadedUser: User;
+  response = null;
   constructor(
     private userService: UserService,
     private menuCtrl: MenuController,
   ) {}
-  ngOnInit() {   
-    this.loadedUser = this.userService.getUser;
-  }  
+  ngOnInit() {
+    this.userService.getUser().subscribe(res => {
+      this.response = res;
+      console.log(JSON.stringify(this.response));
+    });
+  }
   onOpenMenu() {
     this.menuCtrl.toggle();
   }
