@@ -10,35 +10,36 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.page.scss']
 })
 export class AuthPage implements OnInit {
+
   isLoading = false;
   isLogin = true;
   response = null;
+
   constructor(
     private authService: AuthService,
-    //private token: TokenStorage,
     private router: Router,
     private loadingCtrl: LoadingController
   ) {}
+
   ngOnInit() {
   }
+
   onLogin() {
     this.isLoading = true;
-    this.authService.generateToken().subscribe(res => {
-      this.response = res;
-      //this.token.saveToken(this.response.data);
-      //console.log(this.token.getToken());
-    });
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Generando token...' })
     .then(loadingEl => {
       loadingEl.present();
-      setTimeout(() => {
+      this.authService.generateToken().subscribe(res => {
+        this.response = res;
+        console.log(this.response);
         this.isLoading = false;
         loadingEl.dismiss();
         this.router.navigateByUrl('/user');
-      }, 3000);
+      });
     });
   }
+
   onSubmitFunction(form: NgForm) {
 
     if (!form.valid) {
