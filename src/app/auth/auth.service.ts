@@ -1,33 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private _userIsAuthenticated = true;
-  private _userId = '1000';
-
-  get userId() {
-    return this._userId;
-  }
-
-  constructor(private http: HttpClient) { }
+  private _userIsAuthenticated = false;
 
   get userIsAuthenticated() {
     return this._userIsAuthenticated;
   }
 
-  generateToken() {
+  constructor() {}
+
+  login() {
     this._userIsAuthenticated = true;
-    return this.http.get(`https://siarhqamovil.cnh.gob.mx/api/token/autorizacion?solicitante=app-movil`);
   }
 
   logout() {
     this._userIsAuthenticated = false;
   }
-
-
 }
