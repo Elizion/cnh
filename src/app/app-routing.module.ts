@@ -29,9 +29,14 @@ const routes: Routes = [
     path: 'notices',
     loadChildren: './notices/notices.module#NoticesPageModule',
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'payroll',
+    loadChildren: './payroll/payroll.module#PayrollPageModule',
+    canLoad: [AuthGuard]
   },  {
-    path: 'tabs',
-    loadChildren: () => import('./notices/tabs/tabs.module').then( m => m.TabsPageModule)
+    path: 'vacations',
+    loadChildren: () => import('./vacations/vacations.module').then( m => m.VacationsPageModule)
   }
 
 ];

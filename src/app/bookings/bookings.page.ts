@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IonItemSliding } from '@ionic/angular';
-
 import { BookingService } from './booking.service';
 import { Booking } from './booking.model';
 

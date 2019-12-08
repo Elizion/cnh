@@ -8,13 +8,16 @@ import { Downloader, NotificationVisibility, DownloadRequest } from '@ionic-nati
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
+  
   isLoading = false;
   payrolls: any[] = [];
+  
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
     private downloader: Downloader
   ) { }
+
   myFunction() {
     const request: DownloadRequest = {
       uri: 'https://devdactic.com/html/5-simple-hacks-LBT.pdf',
@@ -32,6 +35,7 @@ export class PayrollPage implements OnInit {
     .then((location: string) => console.log('File downloaded at:'+location))
     .catch((error: any) => console.error(error));
   }
+
   ngOnInit() {
     this.isLoading = true;
     this.loadingCtrl
