@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'notices',
-    loadChildren: './notices/notices.module#NoticesPageModule',
+    loadChildren: './controllers/notices/notices.module#NoticesPageModule',
     canLoad: [AuthGuard]
   },
   {
