@@ -28,6 +28,7 @@ const routes: Routes = [
   {
     path: 'notices',
     loadChildren: './notices/notices.module#NoticesPageModule',
+    canLoad: [AuthGuard]
   }
 ];
 @NgModule({
@@ -66,20 +67,10 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'general',
-    loadChildren: () => import('./general/general.module').then( m => m.GeneralPageModule),
-    canLoad: [AuthGuard]
-  },
-  {
-    path: 'personal',
-    loadChildren: () => import('./personal/personal.module').then( m => m.PersonalPageModule),
-    canLoad: [AuthGuard]
-  },
-  {
     path: 'payroll',
     loadChildren: () => import('./payroll/payroll.module').then( m => m.PayrollPageModule),
     canLoad: [AuthGuard]
-  }  
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
