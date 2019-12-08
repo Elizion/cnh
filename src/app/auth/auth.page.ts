@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../profile/profile.service';
 
 @Component({
@@ -16,10 +16,11 @@ export class AuthPage {
   isLogin = true;
 
   constructor(
-    private authService: AuthService,
-    private profileService: ProfileService,
+    private loadingCtrl: LoadingController,
     private router: Router,
-    private loadingCtrl: LoadingController
+    private authService: AuthService,
+    private profileService: ProfileService
+    
   ) {}
 
   onSubmit(form: NgForm) {
@@ -27,9 +28,9 @@ export class AuthPage {
     if (!form.valid) {
       return;
     }
-    //this.isLoading = true;
-    //let tokenBase = null;
-    //let tokenFinal = null;
+    this.isLoading = true;
+    let tokenBase = null;
+    let tokenFinal = null;
     const user = form.value.user;
     const password = form.value.password;
 
