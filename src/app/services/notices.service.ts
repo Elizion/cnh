@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { NoticesModel } from '../notices/notices.model';
+import { NoticesModel } from '../models/notices.model';
 
 const httpOptions = {
   headers: new HttpHeaders({

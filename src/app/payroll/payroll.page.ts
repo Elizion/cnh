@@ -4,7 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { Downloader, NotificationVisibility, DownloadRequest } from '@ionic-native/downloader/ngx';
-import { PayrollModel } from './payroll.model';
+import { PayrollModel } from '../models/payroll.model';
 @Component({
   selector: 'app-payroll',
   templateUrl: './payroll.page.html',

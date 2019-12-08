@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
-import { NoticesModel } from './notices.model';
+import { NoticesModel } from '../models/notices.model';
 import { NoticesService } from '../services/notices.service';
 
 

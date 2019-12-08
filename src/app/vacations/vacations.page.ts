@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { VacationsModel } from './vacations.model';
+import { VacationsModel } from '../models/vacations.model';
 import { VacationsService } from '../services/vactions.service';
 
 
