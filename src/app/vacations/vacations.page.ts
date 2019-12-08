@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { VacationsModel } from './vacations.model';
+import { VacationsService } from '../services/vactions.service';
+
 
 @Component({
   selector: 'app-vacations',
@@ -7,9 +11,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VacationsPage implements OnInit {
 
-  constructor() { }
+  isLoading = false;
+  isLogin = true;
+  vacations: VacationsModel[];
+
+  constructor(
+    private loadingCtrl: LoadingController,
+    private vacationsService: VacationsService
+  ) {}
+
 
   ngOnInit() {
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Cargando api fake...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.getVacations();
+      this.isLoading = false;
+      loadingEl.dismiss();
+    });
   }
+
+  getVacations(): void {
+    this.vacationsService.getVacations().subscribe(vacations => this.vacations = vacations);
+  }
+
+
 
 }
