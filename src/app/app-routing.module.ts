@@ -29,7 +29,11 @@ const routes: Routes = [
     path: 'notices',
     loadChildren: './notices/notices.module#NoticesPageModule',
     canLoad: [AuthGuard]
+  },  {
+    path: 'tabs',
+    loadChildren: () => import('./notices/tabs/tabs.module').then( m => m.TabsPageModule)
   }
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
