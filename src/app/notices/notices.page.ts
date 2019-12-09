@@ -16,20 +16,23 @@ export class NoticesPage implements OnInit {
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService
   ) {}
+
   ngOnInit() {
+    this.getNotices();
+  }
+
+  getNotices(): void {
     this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando api fake...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.getNotices();
+      this.noticesService.getNotices().subscribe(notices => this.notices = notices);
       this.isLoading = false;
       loadingEl.dismiss();
     });
   }
-  getNotices(): void {
-    this.noticesService.getNotices().subscribe(notices => this.notices = notices);
-  }
+
   removeItem(id: number, slidingEl: IonItemSliding) {
     let i = 0;
     for ( i; i < this.notices.length; i++ ) {
@@ -41,4 +44,5 @@ export class NoticesPage implements OnInit {
     }
     slidingEl.close();
   }
+
 }

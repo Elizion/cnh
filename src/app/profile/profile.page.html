@@ -11,36 +11,24 @@
 
   <ion-grid>
     <ion-row>
-
-      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+      <ion-col text-center>        
         
-        <div class="card">
-          <div class="header">
-            <div class="avatar">            
-              <!--<ion-img src="data:image/jpeg;base64, {{fotoBase64}}"></ion-img>-->
-            </div>
-          </div>
-        </div>
-
         <ion-card>
-
+          <ion-img src="data:image/jpeg;base64, {{fotoBase64}}"></ion-img>     
           <ion-card-header>
-            <ion-card-subtitle>{{nombre}} {{numeroEmpleado}}</ion-card-subtitle>
-          </ion-card-header>          
-          
+            <ion-card-subtitle>{{ nombre }} {{ numeroEmpleado }}</ion-card-subtitle>
+            <ion-card-title>{{ rfc }}</ion-card-title>
+          </ion-card-header>
           <ion-card-content>
             <p>{{ unidad }}</p>
             <p>{{ puesto }}</p>
             <p>{{ cargo }}</p>
-            <p>{{ nivel }}</p>
-            <p>{{ rfc }}</p>
+            <p>{{ nivel }}</p>            
             <p>{{ fechaIngresoFormat }}</p>
           </ion-card-content>
-          
         </ion-card>
-
+        
       </ion-col>
-
     </ion-row>
   </ion-grid>
 

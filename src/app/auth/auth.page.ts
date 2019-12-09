@@ -11,20 +11,15 @@ import { ProfileService } from '../profile/profile.service';
   styleUrls: ['./auth.page.scss']
 })
 export class AuthPage {
-
   isLoading = false;
   isLogin = true;
-
   constructor(
     private loadingCtrl: LoadingController,
     private router: Router,
     private authService: AuthService,
     private profileService: ProfileService
-    
   ) {}
-
   onSubmit(form: NgForm) {
-    
     if (!form.valid) {
       return;
     }
@@ -33,12 +28,9 @@ export class AuthPage {
     let tokenFinal = null;
     const user = form.value.user;
     const password = form.value.password;
-
     console.log(user + ' ' + password);
 
     if (this.isLogin) {
-
-      /*
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Cargando servicios...' })
       .then(loadingEl => {
@@ -53,17 +45,14 @@ export class AuthPage {
               loadingEl.dismiss();
               this.router.navigateByUrl('/profile');
             });
-
           });
         });
       });
-      */
-
-      this.router.navigateByUrl('/profile');
 
     } else {
 
     }
+
   }
 }
 

@@ -18,7 +18,6 @@ export class ProfilePage implements OnInit {
   constructor(
   ) { }
   ngOnInit() {
-    /*
     const res = window.localStorage.getItem('user');
     const value = JSON.parse(res);
     this.personId = value.data.personId;
@@ -31,6 +30,5 @@ export class ProfilePage implements OnInit {
     this.rfc = value.data.rfc;
     this.fechaIngresoFormat = value.data.fechaIngresoFormat;
     this.fotoBase64 = value.data.fotoBase64;
-    */
   }
 }

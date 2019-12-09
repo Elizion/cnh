@@ -17,7 +17,12 @@ export class VacationsPage implements OnInit {
 
   isLoading = false;
   isLogin = true;
+  
   b64Data: string = Constants.FILE_PDF_BASE64;
+  host: string = Constants.HOST;
+  base: string = Constants.BASE;
+  module: string = Constants.MODULE[0];
+
   vacations: VacationsModel[];
 
   constructor(
@@ -29,15 +34,7 @@ export class VacationsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoading = true;
-    this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando api fake...' })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.getVacations();
-      this.isLoading = false;
-      loadingEl.dismiss();
-    });
+    this.getVacations();
   }
 
   removeItem(id: number, slidingEl: IonItemSliding) {
@@ -53,7 +50,15 @@ export class VacationsPage implements OnInit {
   }
 
   getVacations(): void {
-    this.vacationsService.getVacations().subscribe(vacations => this.vacations = vacations);
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Cargando api fake...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.vacationsService.getVacations().subscribe(vacations => this.vacations = vacations);
+      this.isLoading = false;
+      loadingEl.dismiss();
+    });
   }
 
   count() {

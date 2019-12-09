@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { Constants as CONST } from '../config/config.const';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _userIsAuthenticated = true;
+  private userAuthenticated = true;
+  private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];
+  private urlEmployee: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[1];
 
   get userIsAuthenticated() {
-    return this._userIsAuthenticated;
+    return this.userAuthenticated;
   }
 
   constructor(
@@ -20,10 +24,20 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': token
+        Authorization: token
       })
     };
     return httpOptions;
+  }
+
+  handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred: ' + error.error.message);
+    } else {
+      console.error('Backend returned code: ' + error.status);
+      console.error('Body was: ' + error.error );
+    }
+    return throwError('Something bad happened; please try again later.');
   }
 
   bearer(token) {
@@ -37,25 +51,36 @@ export class AuthService {
   }
 
   token() {
-    this._userIsAuthenticated = true;
-    return this.httpClient.get('https://siarhqamovil.cnh.gob.mx/api/token/autorizacion?solicitante=app-movil');
+
+    this.userAuthenticated = true;
+
+    return this.httpClient.get( this.urlAuth + 'autorizacion?solicitante=app-movil')
+                          .pipe(
+                              retry(CONST.RETRY),
+                              catchError(this.handleError)
+                            );
+
   }
 
   login(token: string, user: string, password: string) {
-    this._userIsAuthenticated = true;
-    return this.httpClient.get('https://siarhqamovil.cnh.gob.mx/api/token/acceso?usuario=' + user + '&contrasenia=' + password,
-      this.headers(token)
-    );
+    this.userAuthenticated = true;
+    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers(token))
+                          .pipe(
+                              retry(CONST.RETRY),
+                              catchError(this.handleError)
+                            );
   }
 
   user(tokenF: string) {
-    return this.httpClient.get('https://siarhqamovil.cnh.gob.mx/api/empleado/datos/token',
-      this.bearer(tokenF)
-    );
+    return this.httpClient.get(this.urlEmployee + 'datos/token', this.bearer(tokenF))
+                          .pipe(
+                              retry(CONST.RETRY),
+                              catchError(this.handleError)
+                            );
   }
 
   logout() {
-    this._userIsAuthenticated = false;
+    this.userAuthenticated = false;
     window.localStorage.removeItem('user');
   }
 
