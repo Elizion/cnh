@@ -8,37 +8,59 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding>  
   
-    <ion-grid>
-    <ion-row>
-      <ion-col size-md="6" offset-md="3">
-        
-        <ion-list>
-          <ion-item-sliding *ngFor="let vacation of vacations" #slidingBooking>
+  <ion-grid>
+    <ion-row>        
+      <ion-col style="margin-top: 1.3rem;">
+        <ion-button
+          type="submit"
+          color="primary"            
+          expand="block"
+          (click)="restart()"
+        >
+          <ion-icon name="refresh" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col style="margin-top: 1.3rem;">
+        <ion-button
+          type="submit"
+          color="primary"            
+          expand="block"
+          (click)="count()"
+        >          
+          <ion-icon name="eye" slot="icon-only"></ion-icon>          
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-            
-            <ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">        
+        <ion-list>
+          <ion-item-sliding *ngFor="let vacation of vacations" #slidingVacation> 
+            <ion-item-options side="start">
+              <ion-item-option (click)="action(slidingVacation)" color="dark">
+                <ion-icon name="eye" slot="icon-only"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>           
+            <ion-item>                                        
               <ion-label>
                 <h5>{{ vacation.id }}</h5>
                 <p> {{ vacation.title }}</p>
               </ion-label>
             </ion-item>
-
-            <ion-item-options>              
-              <ion-item-option color="danger" (click)="removeItem(vacation.id, slidingBooking)">
+            <ion-item-options side="end" color="danger">
+              <ion-item-option (click)="removeItem(vacation.id, slidingVacation)">
                 <ion-icon name="trash" slot="icon-only"></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
-
-        </ion-list>
-        
+        </ion-list>        
       </ion-col>
     </ion-row>
-  </ion-grid>
-
-
+  </ion-grid>  
 </ion-content>
 
 

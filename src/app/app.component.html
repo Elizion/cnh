@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-menu side="start">
+  <ion-menu side="start">    
     <ion-header>
       <ion-toolbar>
         <ion-title>
@@ -7,53 +7,38 @@
         </ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content>
-
       <ion-list>        
-
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/profile">
             <ion-icon name="contact" slot="start"></ion-icon>
             <ion-label>Profile</ion-label>
           </ion-item>
-        </ion-menu-toggle>
-        
+        </ion-menu-toggle>        
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/notices">
             <ion-icon name="mail" slot="start"></ion-icon>
             <ion-label>Avisos</ion-label>
           </ion-item>
         </ion-menu-toggle>
-
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/payroll">
             <ion-icon name="card" slot="start"></ion-icon>
             <ion-label>Recibos</ion-label>
           </ion-item>
         </ion-menu-toggle>
-
         <ion-menu-toggle>
           <ion-item lines="none" routerLink="/vacations">
             <ion-icon name="calendar" slot="start"></ion-icon>
             <ion-label>Vacaciones</ion-label>
           </ion-item>
-        </ion-menu-toggle>
-        
-        <ion-menu-toggle>
-          <ion-item lines="none" routerLink="/places/tabs/discover">
-            <ion-icon name="business" slot="start"></ion-icon>
-            <ion-label>Discover Places</ion-label>
-          </ion-item>
-        </ion-menu-toggle>        
-        
+        </ion-menu-toggle>                        
         <ion-menu-toggle>
           <ion-item lines="none" (click)="onLogout()" button>
             <ion-icon name="exit" slot="start"></ion-icon>
             <ion-label>Salir</ion-label>
           </ion-item>
-        </ion-menu-toggle>
-        
+        </ion-menu-toggle>        
       </ion-list>
     </ion-content>
   </ion-menu>

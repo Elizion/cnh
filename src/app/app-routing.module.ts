@@ -11,18 +11,13 @@ const routes: Routes = [
     loadChildren: './auth/auth.module#AuthPageModule'
   },
   {
-    path: 'places',
-    loadChildren: './places/places.module#PlacesPageModule',
-    canLoad: [AuthGuard]
-  },
-  {
     path: 'profile',
     loadChildren: './profile/profile.module#ProfilePageModule',
     canLoad: [AuthGuard]
   },
   {
     path: 'notices',
-    loadChildren: './controllers/notices/notices.module#NoticesPageModule',
+    loadChildren: './notices/notices.module#NoticesPageModule',
     canLoad: [AuthGuard]
   },
   {

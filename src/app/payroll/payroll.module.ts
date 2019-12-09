@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { PayrollPageRoutingModule } from './payroll-routing.module';
 import { PayrollPage } from './payroll.page';
 import { Downloader } from '@ionic-native/downloader/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 @NgModule({
   imports: [
     CommonModule,
@@ -13,6 +15,6 @@ import { Downloader } from '@ionic-native/downloader/ngx';
     PayrollPageRoutingModule
   ],
   declarations: [PayrollPage],
-    providers: [Downloader]
+    providers: [Downloader, File, FileOpener]
 })
 export class PayrollPageModule {}
