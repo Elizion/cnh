@@ -14,9 +14,11 @@ import { PayrollService } from '../services/payroll.service';
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
+
   isLoading = false;
   isLogin = true;
   payrolls: PayrollModel[];
+
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
@@ -25,7 +27,9 @@ export class PayrollPage implements OnInit {
     private fileOpener: FileOpener,
     private downloader: Downloader
   ) { }
-  ngOnInit() {   
+
+  ngOnInit() {
+
     this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando api fake...' })
@@ -34,7 +38,8 @@ export class PayrollPage implements OnInit {
       this.getPayrolls();
       this.isLoading = false;
       loadingEl.dismiss();
-    });    
+    });
+
   }
 
   downloadPdf(slidingEl: IonItemSliding) {

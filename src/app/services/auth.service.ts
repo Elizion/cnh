@@ -34,7 +34,7 @@ export class AuthService {
   headers1(token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  CONST.CONTENT_TYPE,
+        'Content-Type':  CONST.APPLICATION_JSON,
         Authorization: token
       })
     };
@@ -44,7 +44,7 @@ export class AuthService {
   headers2(token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  CONST.CONTENT_TYPE,
+        'Content-Type':  CONST.APPLICATION_JSON,
         Authorization: 'Bearer ' + token
       })
     };

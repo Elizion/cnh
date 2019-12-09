@@ -1,39 +1,77 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
-import { VacationsModel } from '../models/vacations.model';
-import { VacationsService } from '../services/vactions.service';
+import { VacationsService } from '../services/vacations.service';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { Constants } from '../config/config.const';
+import { Constants as CONST } from '../config/config.const';
 @Component({
   selector: 'app-vacations',
   templateUrl: './vacations.page.html',
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
+
+
   isLoading = false;
   isLogin = true;
-  b64Data: string = Constants.FILE_PDF_BASE64;
-  host: string = Constants.HOST;
-  base: string = Constants.BASE;
-  module: string = Constants.MODULE[0];
-  vacations: VacationsModel[];
+  vacations: any[];
+
+  botonCancelar: any;
+  botonModificar: any;
+  botonImprimir: any;
+  botonImprimirModificacion: any;
+  personId: number;
+  b64Data = CONST.FILE_PDF_BASE64;
+
   constructor(
     private platform: Platform,
     private loadingCtrl: LoadingController,
+    private vacationsService: VacationsService,
     private file: File,
-    private fileOpener: FileOpener,
-    private vacationsService: VacationsService
-  ) {}
+    private fileOpener: FileOpener
+  ) { }
+
   ngOnInit() {
-    this.getVacations();
+    this.postVacations();
   }
+
+  postVacations(): void {
+
+    const request   = window.localStorage.getItem('user');
+    const response  = JSON.parse(request);
+    this.personId   = response.data.personId;
+
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.vacationsService.postVacations(this.personId).subscribe( (res: {} ) => {
+        this.vacations                  = res['data'].listaDias;
+        this.botonCancelar              = res['data'].botonCancelar;
+        this.botonModificar             = res['data'].botonModificar;
+        this.botonImprimir              = res['data'].botonImprimir;
+        this.botonImprimirModificacion  = res['data'].botonImprimirModificacion;
+        this.isLoading                  = false;
+        loadingEl.dismiss();
+      });
+    });
+  }
+
+  restart() {
+    this.postVacations();
+  }
+
+  count() {
+    alert(this.vacations.length);
+  }
+
   removeItem(id: number, slidingEl: IonItemSliding) {
     let i = 0;
     for ( i; i < this.vacations.length; i++ ) {
-      if (this.vacations[i].id === id) {
+      if (this.vacations[i].idVacaciones === id) {
         console.log(id);
         this.vacations.splice(i, 1);
         console.log(JSON.stringify(this.vacations));
@@ -41,28 +79,12 @@ export class VacationsPage implements OnInit {
     }
     slidingEl.close();
   }
-  getVacations(): void {
-    this.isLoading = true;
-    this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando api fake...' })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.vacationsService.getVacations().subscribe(vacations => this.vacations = vacations);
-      this.isLoading = false;
-      loadingEl.dismiss();
-    });
-  }
-  count() {
-    alert(this.vacations.length);
-  }
-  restart() {
-    this.getVacations();
-  }
-  action(slidingEl: IonItemSliding) {
+
+  download() {
     this.b64toBlob(this.b64Data, 'application/pdf', 512);
-    slidingEl.close();
   }
-  b64toBlob(b64Data, contentType, sliceSize) {
+
+  b64toBlob(b64Data: string, contentType: string, sliceSize: number) {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -87,4 +109,5 @@ export class VacationsPage implements OnInit {
       console.error('Error creating file: ' + err);
       throw err;
     });
-  }}
+  }
+}

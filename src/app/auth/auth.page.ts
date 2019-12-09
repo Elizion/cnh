@@ -38,7 +38,6 @@ export class AuthPage {
               this.isLoading = false;
               window.localStorage.setItem('user', JSON.stringify(resUser));
               loadingEl.dismiss();
-              alert('HERE');
               this.router.navigateByUrl('/profile');
             });
           });

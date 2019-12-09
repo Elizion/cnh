@@ -1,6 +1,9 @@
 export class VacationsModel {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  idVacaciones: number;
+  personId: number;
+  fecha: string;
+  fechaFormat: string;
+  estatus: string;
+  estatusFormat: string;
+  fechaRegistro: string;
 }
