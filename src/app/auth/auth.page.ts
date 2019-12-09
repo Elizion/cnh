@@ -25,8 +25,6 @@ export class AuthPage {
     let tokenFinal = null;
     const user = form.value.user;
     const password = form.value.password;
-    console.log(user + ' ' + password);
-
     if (this.isLogin) {
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Cargando servicios...' })
@@ -40,20 +38,17 @@ export class AuthPage {
               this.isLoading = false;
               window.localStorage.setItem('user', JSON.stringify(resUser));
               loadingEl.dismiss();
+              alert('HERE');
               this.router.navigateByUrl('/profile');
             });
           });
         });
       });
-
     } else {
 
     }
-
   }
 }
-
-
 /*
 [
   {

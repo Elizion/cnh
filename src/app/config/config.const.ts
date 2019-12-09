@@ -1,11 +1,10 @@
 export abstract class Constants {
 
   static readonly CONTENT_TYPE: string = 'application/json';
-
   static readonly PROTOCOL: string = 'https://';
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
-  static readonly MODULE: string[] = ['token/', 'empleado/'];
+  static readonly MODULE: string[] = ['token/', 'empleado/', 'avisos'];
   static readonly RETRY: number = 1;
 
 

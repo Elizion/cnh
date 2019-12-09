@@ -7,36 +7,29 @@ import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Constants } from '../config/config.const';
-
 @Component({
   selector: 'app-vacations',
   templateUrl: './vacations.page.html',
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
-
   isLoading = false;
   isLogin = true;
-  
   b64Data: string = Constants.FILE_PDF_BASE64;
   host: string = Constants.HOST;
   base: string = Constants.BASE;
   module: string = Constants.MODULE[0];
-
   vacations: VacationsModel[];
-
   constructor(
-    private loadingCtrl: LoadingController,
-    private vacationsService: VacationsService,
     private platform: Platform,
+    private loadingCtrl: LoadingController,
     private file: File,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private vacationsService: VacationsService
   ) {}
-
   ngOnInit() {
     this.getVacations();
   }
-
   removeItem(id: number, slidingEl: IonItemSliding) {
     let i = 0;
     for ( i; i < this.vacations.length; i++ ) {
@@ -48,7 +41,6 @@ export class VacationsPage implements OnInit {
     }
     slidingEl.close();
   }
-
   getVacations(): void {
     this.isLoading = true;
     this.loadingCtrl
@@ -60,20 +52,16 @@ export class VacationsPage implements OnInit {
       loadingEl.dismiss();
     });
   }
-
   count() {
     alert(this.vacations.length);
   }
-
   restart() {
     this.getVacations();
   }
-
   action(slidingEl: IonItemSliding) {
     this.b64toBlob(this.b64Data, 'application/pdf', 512);
     slidingEl.close();
   }
-
   b64toBlob(b64Data, contentType, sliceSize) {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];

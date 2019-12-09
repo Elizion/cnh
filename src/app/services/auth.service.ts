@@ -8,12 +8,13 @@ import { Constants as CONST } from '../config/config.const';
 })
 export class AuthService {
 
-  private userAuthenticated = true;
+  private isAuthorization = true;
+
   private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];
   private urlEmployee: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[1];
 
   get userIsAuthenticated() {
-    return this.userAuthenticated;
+    return this.isAuthorization;
   }
 
   constructor(
@@ -51,25 +52,25 @@ export class AuthService {
   }
 
   token() {
-    this.userAuthenticated = true;
+    this.isAuthorization = false;
     return this.httpClient.get( this.urlAuth + 'autorizacion?solicitante=app-movil')
                           .pipe(retry(CONST.RETRY), catchError(this.handleError));
   }
 
   login(token: string, user: string, password: string) {
-    this.userAuthenticated = true;
+    this.isAuthorization = false;
     return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers1(token))
                           .pipe(retry(CONST.RETRY), catchError(this.handleError));
   }
 
   user(tokenF: string) {
-    this.userAuthenticated = true;
+    this.isAuthorization = true;
     return this.httpClient.get(this.urlEmployee + 'datos/token', this.headers2(tokenF))
                           .pipe(retry(CONST.RETRY), catchError(this.handleError));
   }
 
   logout() {
-    this.userAuthenticated = false;
+    this.isAuthorization = false;
     return window.localStorage.removeItem('user');
   }
 

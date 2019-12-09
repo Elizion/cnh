@@ -1,34 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileModel } from '../models/profile.model';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  personId: string;
-  nombre: string;
-  numeroEmpleado: string;
-  unidad: string;
-  puesto: string;
-  cargo: string;
-  nivel: string;
-  rfc: string;
-  fechaIngresoFormat: string;
-  fotoBase64: string;
-  constructor(
-  ) { }
+
+  //profile: ProfileModel = new ProfileModel();
+
+  public profile: ProfileModel;
+
+  constructor() {
+    this.profile = new ProfileModel();
+  }
+
   ngOnInit() {
-    const res = window.localStorage.getItem('user');
-    const value = JSON.parse(res);
-    this.personId = value.data.personId;
-    this.nombre = value.data.nombre;
-    this.numeroEmpleado = value.data.numeroEmpleado;
-    this.unidad = value.data.unidad;
-    this.puesto = value.data.puesto;
-    this.cargo = value.data.cargo;
-    this.nivel = value.data.nivel;
-    this.rfc = value.data.rfc;
-    this.fechaIngresoFormat = value.data.fechaIngresoFormat;
-    this.fotoBase64 = value.data.fotoBase64;
+    const request                       = window.localStorage.getItem('user');
+    const response                      = JSON.parse(request);
+    this.profile.personId               = response.data.personId;
+    this.profile.nombre                 = response.data.nombre;
+    this.profile.numeroEmpleado         = response.data.numeroEmpleado;
+    this.profile.unidad                 = response.data.unidad;
+    this.profile.puesto                 = response.data.puesto;
+    this.profile.cargo                  = response.data.cargo;
+    this.profile.nivel                  = response.data.nivel;
+    this.profile.rfc                    = response.data.rfc;
+    this.profile.fechaIngresoFormat     = response.data.fechaIngresoFormat;
+    this.profile.fotoBase64             = response.data.fotoBase64;
   }
 }
+
