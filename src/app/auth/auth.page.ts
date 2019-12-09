@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { ProfileService } from '../profile/profile.service';
-
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
@@ -16,8 +14,7 @@ export class AuthPage {
   constructor(
     private loadingCtrl: LoadingController,
     private router: Router,
-    private authService: AuthService,
-    private profileService: ProfileService
+    private authService: AuthService
   ) {}
   onSubmit(form: NgForm) {
     if (!form.valid) {

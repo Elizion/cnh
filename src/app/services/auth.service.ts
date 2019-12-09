@@ -18,32 +18,32 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient
-  ) {}
+  ) { }
 
-  headers(token) {
+  handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('Error: ' + error.error.message);
+    } else {
+      console.error('Code: ' + error.status);
+      console.error('Body: ' + JSON.stringify(error.error));
+    }
+    return throwError('Something bad happened; please try again later.');
+  }
+
+  headers1(token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type':  CONST.CONTENT_TYPE,
         Authorization: token
       })
     };
     return httpOptions;
   }
 
-  handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred: ' + error.error.message);
-    } else {
-      console.error('Backend returned code: ' + error.status);
-      console.error('Body was: ' + error.error );
-    }
-    return throwError('Something bad happened; please try again later.');
-  }
-
-  bearer(token) {
+  headers2(token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type':  CONST.CONTENT_TYPE,
         Authorization: 'Bearer ' + token
       })
     };
@@ -51,37 +51,26 @@ export class AuthService {
   }
 
   token() {
-
     this.userAuthenticated = true;
-
     return this.httpClient.get( this.urlAuth + 'autorizacion?solicitante=app-movil')
-                          .pipe(
-                              retry(CONST.RETRY),
-                              catchError(this.handleError)
-                            );
-
+                          .pipe(retry(CONST.RETRY), catchError(this.handleError));
   }
 
   login(token: string, user: string, password: string) {
     this.userAuthenticated = true;
-    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers(token))
-                          .pipe(
-                              retry(CONST.RETRY),
-                              catchError(this.handleError)
-                            );
+    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers1(token))
+                          .pipe(retry(CONST.RETRY), catchError(this.handleError));
   }
 
   user(tokenF: string) {
-    return this.httpClient.get(this.urlEmployee + 'datos/token', this.bearer(tokenF))
-                          .pipe(
-                              retry(CONST.RETRY),
-                              catchError(this.handleError)
-                            );
+    this.userAuthenticated = true;
+    return this.httpClient.get(this.urlEmployee + 'datos/token', this.headers2(tokenF))
+                          .pipe(retry(CONST.RETRY), catchError(this.handleError));
   }
 
   logout() {
     this.userAuthenticated = false;
-    window.localStorage.removeItem('user');
+    return window.localStorage.removeItem('user');
   }
 
 }

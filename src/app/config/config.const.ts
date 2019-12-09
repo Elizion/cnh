@@ -1,5 +1,7 @@
 export abstract class Constants {
 
+  static readonly CONTENT_TYPE: string = 'application/json';
+
   static readonly PROTOCOL: string = 'https://';
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
