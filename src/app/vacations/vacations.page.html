@@ -41,8 +41,18 @@
         <ion-list>
           <ion-item-sliding *ngFor="let vacation of vacations" #slidingVacation> 
             <ion-item-options side="start">
+              <ion-item-option (click)="action(slidingVacation)" color="medium">                                  
+                <ion-label position="floating">                  
+                  Fecha
+                </ion-label>                
+                <ion-datetime 
+                  displayFormat="MM/DD/YYYY"                 
+                  ngModel
+                  name="date">
+                </ion-datetime>                   
+              </ion-item-option>
               <ion-item-option (click)="action(slidingVacation)" color="dark">
-                <ion-icon name="eye" slot="icon-only"></ion-icon>
+                <ion-icon name="download" slot="icon-only"></ion-icon>
               </ion-item-option>
             </ion-item-options>           
             <ion-item>                                        
