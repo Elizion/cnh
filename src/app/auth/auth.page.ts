@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class AuthPage {
   isLoading = false;
   isLogin = true;
+  error: any;
   constructor(
     private loadingCtrl: LoadingController,
     private router: Router,
@@ -25,9 +26,7 @@ export class AuthPage {
     let tokenFinal = null;
     const user = form.value.user;
     const password = form.value.password;
-    
     if (this.isLogin) {
-
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Cargando servicios...' })
       .then(loadingEl => {
@@ -45,80 +44,7 @@ export class AuthPage {
           });
         });
       });
-
     } else {
-
     }
-
   }
 }
-/*
-[
-  {
-    "id": 1,
-    "name": "Luke Cage",
-    "aliases": ["Carl Lucas", "Power Man", "Mr. Bulletproof", "Hero for Hire"],
-    "occupation": "bartender",
-    "gender": "male",
-    "height": {
-      "ft": 6,
-      "in": 3
-    },
-    "hair": "bald",
-    "eyes": "brown",
-    "powers": [
-      "strength",
-      "durability",
-      "healing"
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Luke Cage",
-    "aliases": ["Carl Lucas", "Power Man", "Mr. Bulletproof", "Hero for Hire"],
-    "occupation": "bartender",
-    "gender": "male",
-    "height": {
-      "ft": 6,
-      "in": 3
-    },
-    "hair": "bald",
-    "eyes": "brown",
-    "powers": [
-      "strength",
-      "durability",
-      "healing"
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Luke Cage",
-    "aliases": ["Carl Lucas", "Power Man", "Mr. Bulletproof", "Hero for Hire"],
-    "occupation": "bartender",
-    "gender": "male",
-    "height": {
-      "ft": 6,
-      "in": 3
-    },
-    "hair": "bald",
-    "eyes": "brown",
-    "powers": [
-      "strength",
-      "durability",
-      "healing"
-    ]
-  }
-]
-interface User {
-  id: number;
-  name: string;
-  aliases: string[];
-  occupation: string;
-  gender: string;
-  height: {ft: number; in: number;}
-  hair: string;
-  eyes: string;
-  powers: string[]
-}
-const Users = <User[]>require('../data');
-*/
