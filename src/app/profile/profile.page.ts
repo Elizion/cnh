@@ -10,8 +10,7 @@ export class ProfilePage implements OnInit {
   constructor() {}
   ngOnInit() {
     const request                       = window.localStorage.getItem('user');
-    const storage                       = JSON.parse(request);
-    const response                      = JSON.parse(storage);
+    const response                      = JSON.parse(request);
     this.profile.personId               = response.data.personId;
     this.profile.nombre                 = response.data.nombre;
     this.profile.numeroEmpleado         = response.data.numeroEmpleado;
