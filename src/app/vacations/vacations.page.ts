@@ -44,12 +44,12 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
-        this.diasDisponibles            = res['data'].diasDisponibles;
-        this.listDaysDefault            = res['data'].listaDias;
-        this.botonCancelar              = res['data'].botonCancelar;
-        this.botonModificar             = res['data'].botonModificar;
-        this.botonImprimir              = res['data'].botonImprimir;
-        this.botonImprimirModificacion  = res['data'].botonImprimirModificacion;
+        this.diasDisponibles            = res['data.diasDisponibles'];
+        this.listDaysDefault            = res['data.listaDias'];
+        this.botonCancelar              = res['data.botonCancelar'];
+        this.botonModificar             = res['data.botonModificar'];
+        this.botonImprimir              = res['data.botonImprimir'];
+        this.botonImprimirModificacion  = res['data.botonImprimirModificacion'];
         this.isLoading                  = false;
         loadingEl.dismiss();
       });
@@ -72,7 +72,7 @@ export class VacationsPage implements OnInit {
     .create({ keyboardClose: true, message: 'Agregando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.vacationsService.postAddVacations(this.idPerson, this.diasDisponibles, startDate, endDate, this.listDaysDefault).subscribe( (res: {} ) => {
+      this.vacationsService.postAddVacations(this.idPerson, this.diasDisponibles, startDate, endDate, this.listDaysDefault).subscribe((res: {} ) => {
         this.listDaysGenerate     = res['data'].listaDias;
         this.listDaysDefault      = this.listDaysGenerate;
         this.isLoading            = false;

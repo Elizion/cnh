@@ -25,7 +25,9 @@ export class AuthPage {
     let tokenFinal = null;
     const user = form.value.user;
     const password = form.value.password;
+    
     if (this.isLogin) {
+
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Cargando servicios...' })
       .then(loadingEl => {
@@ -43,9 +45,11 @@ export class AuthPage {
           });
         });
       });
+
     } else {
 
     }
+
   }
 }
 /*

@@ -6,18 +6,12 @@ import { ProfileModel } from '../models/profile.model';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
-  //profile: ProfileModel = new ProfileModel();
-
-  public profile: ProfileModel;
-
-  constructor() {
-    this.profile = new ProfileModel();
-  }
-
+  profile: ProfileModel = new ProfileModel();
+  constructor() {}
   ngOnInit() {
     const request                       = window.localStorage.getItem('user');
-    const response                      = JSON.parse(request);
+    const storage                       = JSON.parse(request);
+    const response                      = JSON.parse(storage);
     this.profile.personId               = response.data.personId;
     this.profile.nombre                 = response.data.nombre;
     this.profile.numeroEmpleado         = response.data.numeroEmpleado;
