@@ -18,14 +18,17 @@ export class AuthPage {
     private authService: AuthService
   ) {}
   onSubmit(form: NgForm) {
+
     if (!form.valid) {
       return;
     }
+
     this.isLoading = true;
     let tokenBase = null;
     let tokenFinal = null;
     const user = form.value.user;
     const password = form.value.password;
+
     if (this.isLogin) {
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Cargando servicios...' })
@@ -45,6 +48,8 @@ export class AuthPage {
         });
       });
     } else {
+
     }
+
   }
 }
