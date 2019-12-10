@@ -40,13 +40,13 @@ export class VacationsService {
     );
   }
 
-  postAddVacations(idPerson: number, startDate: string, endDate: string, array: any[]) {
+  postAddVacations(id: number, avaible: number, start: string, end: string, list: any[]) {
      const data = {
-        personId: idPerson,
-        fechaInicio: startDate,
-        fechaFin: endDate,
-        diasDisponibles: 10,
-        diasVacaciones: array
+      personId: id,
+      fechaInicio: start,
+      fechaFin: end,
+      diasDisponibles: avaible,
+      diasVacaciones: list
     };
     return this.httpClient.post(this.urlVacations+ 'agregar/', data);
   }

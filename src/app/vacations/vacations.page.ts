@@ -34,6 +34,7 @@ export class VacationsPage implements OnInit {
   botonImprimir: any;
   botonImprimirModificacion: any;
   b64Data = CONST.FILE_PDF_BASE64;
+  diasDisponibles: any;
   idPerson = this.globalService.getIdPerson();
 
   postVacations(): void {
@@ -43,7 +44,7 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
-        console.log(JSON.stringify(res));
+        this.diasDisponibles            = res['data'].diasDisponibles;
         this.listDaysDefault            = res['data'].listaDias;
         this.botonCancelar              = res['data'].botonCancelar;
         this.botonModificar             = res['data'].botonModificar;
@@ -71,7 +72,7 @@ export class VacationsPage implements OnInit {
     .create({ keyboardClose: true, message: 'Agregando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.vacationsService.postAddVacations(this.idPerson, startDate, endDate, this.listDaysDefault).subscribe( (res: {} ) => {
+      this.vacationsService.postAddVacations(this.idPerson, this.diasDisponibles, startDate, endDate, this.listDaysDefault).subscribe( (res: {} ) => {
         this.listDaysGenerate     = res['data'].listaDias;
         this.listDaysDefault      = this.listDaysGenerate;
         this.isLoading            = false;
@@ -82,7 +83,7 @@ export class VacationsPage implements OnInit {
         console.log('******');
         console.log('EXEC RESPONSE' + JSON.stringify(this.listDaysGenerate));
       });
-    });
+  });
 
   }
 
@@ -108,16 +109,15 @@ export class VacationsPage implements OnInit {
 
   impress() {
     let i = 0;
+    const newArray = [];
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].estatusFormat === 'A') {
-        console.log(this.listDaysDefault[i].estatus);
-      } else {
-        console.log(this.listDaysDefault[i].estatus);
-        this.listDaysDefault.splice(i, 1);
+        newArray.push(this.listDaysDefault[i]);
       }
     }
-    console.log(JSON.stringify(this.listDaysDefault));
-    return this.listDaysDefault;
+    console.log(JSON.stringify(newArray));
+    this.listDaysDefault = newArray;
+    return newArray;
   }
 
   download() {
