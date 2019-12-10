@@ -6,6 +6,8 @@ import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Constants as CONST } from '../config/config.const';
+import { NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-vacations',
   templateUrl: './vacations.page.html',
@@ -13,10 +15,11 @@ import { Constants as CONST } from '../config/config.const';
 })
 export class VacationsPage implements OnInit {
 
-
   isLoading = false;
   isLogin = true;
+  
   vacations: any[];
+  diasVacaciones: any[];
 
   botonCancelar: any;
   botonModificar: any;
@@ -37,6 +40,33 @@ export class VacationsPage implements OnInit {
     this.postVacations();
   }
 
+  onSubmit(form: NgForm) {
+
+    if (!form.valid) {
+      return;
+    }
+
+    const startDate = form.value.started;
+    const endDate = form.value.finished;
+
+    this.vacationsService.postAddVacations('09/12/2019', '12/12/2019', this.vacations).subscribe( (res: {} ) => {
+
+      this.diasVacaciones = res['data'].listaDias;
+
+      this.vacations = this.diasVacaciones;
+
+      console.log('EXEC REQUEST' + JSON.stringify(this.vacations));
+      console.log('******');
+      console.log('******');
+      console.log('******');
+      console.log('EXEC RESPONSE' + JSON.stringify(this.diasVacaciones));
+
+    });
+
+  }
+
+
+
   postVacations(): void {
 
     const request   = window.localStorage.getItem('user');
@@ -49,13 +79,19 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.personId).subscribe( (res: {} ) => {
+        
+        console.log(JSON.stringify(res));
+        
         this.vacations                  = res['data'].listaDias;
+
         this.botonCancelar              = res['data'].botonCancelar;
         this.botonModificar             = res['data'].botonModificar;
         this.botonImprimir              = res['data'].botonImprimir;
         this.botonImprimirModificacion  = res['data'].botonImprimirModificacion;
+        
         this.isLoading                  = false;
         loadingEl.dismiss();
+
       });
     });
   }

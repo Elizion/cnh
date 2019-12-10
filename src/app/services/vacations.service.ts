@@ -40,4 +40,16 @@ export class VacationsService {
     );
   }
 
+  postAddVacations(startDate: string, endDate: string, array: any[]) {
+    debugger;
+     const data = {
+        personId: 283597,
+        fechaInicio: startDate,
+        fechaFin: endDate,
+        diasDisponibles: 10,
+        diasVacaciones: array
+    };
+    return this.httpClient.post(this.urlVacations+ 'agregar/', data);
+  }
+
 }
