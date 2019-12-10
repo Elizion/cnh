@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
+import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Constants as CONST } from '../config/config.const';
 import { NgForm } from '@angular/forms';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-vacations',
   templateUrl: './vacations.page.html',
@@ -15,85 +16,74 @@ import { NgForm } from '@angular/forms';
 })
 export class VacationsPage implements OnInit {
 
-  isLoading = false;
-  isLogin = true;
-  
-  vacations: any[];
-  diasVacaciones: any[];
-
-  botonCancelar: any;
-  botonModificar: any;
-  botonImprimir: any;
-  botonImprimirModificacion: any;
-  personId: number;
-  b64Data = CONST.FILE_PDF_BASE64;
-
   constructor(
     private platform: Platform,
     private loadingCtrl: LoadingController,
+    private globalService: GlobalService,
     private vacationsService: VacationsService,
     private file: File,
     private fileOpener: FileOpener
   ) { }
+
+  isLoading = false;
+  isLogin = true;
+  listDaysDefault: any[];
+  listDaysGenerate: any[];
+  botonCancelar: any;
+  botonModificar: any;
+  botonImprimir: any;
+  botonImprimirModificacion: any;
+  b64Data = CONST.FILE_PDF_BASE64;
+  idPerson = this.globalService.getIdPerson();
+
+  postVacations(): void {
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
+        console.log(JSON.stringify(res));
+        this.listDaysDefault            = res['data'].listaDias;
+        this.botonCancelar              = res['data'].botonCancelar;
+        this.botonModificar             = res['data'].botonModificar;
+        this.botonImprimir              = res['data'].botonImprimir;
+        this.botonImprimirModificacion  = res['data'].botonImprimirModificacion;
+        this.isLoading                  = false;
+        loadingEl.dismiss();
+      });
+    });
+  }
 
   ngOnInit() {
     this.postVacations();
   }
 
   onSubmit(form: NgForm) {
-
     if (!form.valid) {
       return;
     }
-
-    const startDate = form.value.started;
-    const endDate = form.value.finished;
-
-    this.vacationsService.postAddVacations('09/12/2019', '12/12/2019', this.vacations).subscribe( (res: {} ) => {
-
-      this.diasVacaciones = res['data'].listaDias;
-
-      this.vacations = this.diasVacaciones;
-
-      console.log('EXEC REQUEST' + JSON.stringify(this.vacations));
-      console.log('******');
-      console.log('******');
-      console.log('******');
-      console.log('EXEC RESPONSE' + JSON.stringify(this.diasVacaciones));
-
-    });
-
-  }
-
-
-
-  postVacations(): void {
-
-    const request   = window.localStorage.getItem('user');
-    const response  = JSON.parse(request);
-    this.personId   = response.data.personId;
-
+    const startDate = moment(form.value.started).format('DD/MM/YYYY');
+    const endDate = moment(form.value.finished).format('DD/MM/YYYY');
+    console.log(startDate + ' ' + endDate);
     this.isLoading = true;
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .create({ keyboardClose: true, message: 'Agregando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.vacationsService.postVacations(this.personId).subscribe( (res: {} ) => {
-        
-        console.log(JSON.stringify(res));
-        
-        this.vacations                  = res['data'].listaDias;
-
-        this.botonCancelar              = res['data'].botonCancelar;
-        this.botonModificar             = res['data'].botonModificar;
-        this.botonImprimir              = res['data'].botonImprimir;
-        this.botonImprimirModificacion  = res['data'].botonImprimirModificacion;
-        
-        this.isLoading                  = false;
+      this.vacationsService.postAddVacations(this.idPerson, startDate, endDate, this.listDaysDefault).subscribe( (res: {} ) => {
+        this.listDaysGenerate     = res['data'].listaDias;
+        this.listDaysDefault      = this.listDaysGenerate;
+        this.isLoading            = false;
         loadingEl.dismiss();
-
+        console.log('EXEC REQUEST' + JSON.stringify(this.listDaysDefault));
+        console.log('******');
+        console.log('******');
+        console.log('******');
+        console.log('EXEC RESPONSE' + JSON.stringify(this.listDaysGenerate));
       });
     });
+
   }
 
   restart() {
@@ -101,19 +91,33 @@ export class VacationsPage implements OnInit {
   }
 
   count() {
-    alert(this.vacations.length);
+    alert(this.listDaysDefault.length);
   }
 
   removeItem(id: number, slidingEl: IonItemSliding) {
     let i = 0;
-    for ( i; i < this.vacations.length; i++ ) {
-      if (this.vacations[i].idVacaciones === id) {
+    for ( i; i < this.listDaysDefault.length; i++ ) {
+      if (this.listDaysDefault[i].idVacaciones === id) {
         console.log(id);
-        this.vacations.splice(i, 1);
-        console.log(JSON.stringify(this.vacations));
+        this.listDaysDefault.splice(i, 1);
+        console.log(JSON.stringify(this.listDaysDefault));
       }
     }
     slidingEl.close();
+  }
+
+  impress() {
+    let i = 0;
+    for ( i; i < this.listDaysDefault.length; i++ ) {
+      if (this.listDaysDefault[i].estatusFormat === 'A') {
+        console.log(this.listDaysDefault[i].estatus);
+      } else {
+        console.log(this.listDaysDefault[i].estatus);
+        this.listDaysDefault.splice(i, 1);
+      }
+    }
+    console.log(JSON.stringify(this.listDaysDefault));
+    return this.listDaysDefault;
   }
 
   download() {
@@ -146,4 +150,5 @@ export class VacationsPage implements OnInit {
       throw err;
     });
   }
+
 }

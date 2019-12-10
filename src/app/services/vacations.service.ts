@@ -40,10 +40,9 @@ export class VacationsService {
     );
   }
 
-  postAddVacations(startDate: string, endDate: string, array: any[]) {
-    debugger;
+  postAddVacations(idPerson: number, startDate: string, endDate: string, array: any[]) {
      const data = {
-        personId: 283597,
+        personId: idPerson,
         fechaInicio: startDate,
         fechaFin: endDate,
         diasDisponibles: 10,
