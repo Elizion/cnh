@@ -8,11 +8,8 @@ import { Constants as CONST } from '../config/config.const';
  providedIn: 'root'
 })
 export class NoticesService {
-
-  private urlVacations: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[2];
-
+  private urlNotices: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[3];
   constructor( private httpClient: HttpClient ) {}
-
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('Error: ' + error.error.message);
@@ -21,7 +18,6 @@ export class NoticesService {
     }
     return throwError('Something bad happened; please try again later.');
   }
-
   headers() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -30,13 +26,13 @@ export class NoticesService {
     };
     return httpOptions;
   }
-
   getNotices(): Observable<NoticesModel[]> {
     return this.httpClient.get<NoticesModel[]>('https://jsonplaceholder.typicode.com/posts');
   }
-
-  notices(idPerson: number) {
-    return this.httpClient.get<NoticesModel[]>('https://siarhqamovil.cnh.gob.mx/api/avisos/individual?personId=' + idPerson);
+  personal(idPerson: number) {
+    return this.httpClient.get(this.urlNotices + 'individual?personId=' + idPerson);
   }
-
+  general() {
+    return this.httpClient.get(this.urlNotices + 'general');
+  }
 }

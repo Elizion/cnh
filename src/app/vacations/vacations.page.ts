@@ -36,52 +36,20 @@ export class VacationsPage implements OnInit {
   diasDisponibles: any;
   diasPendientes: any;
   periodoEscalonado: any = false;
-
   b64Data = CONST.FILE_PDF_BASE64;
-
   idPerson = this.globalService.getIdPerson();
 
   postVacations(): void {
     this.isLoading = true;
-    const listDaysDefaultNew = [];
-    let i = 0;
-
-    const nodo = {
-      idVacaciones: '',
-      personId: '',
-      fecha: '',
-      fechaFormat: '',
-      estatus: '',
-      estatusFormat: '',
-      estatusDescripcion: '',
-      fechaRegistro: ''
-    };
-
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
-
         this.diasDisponibles            = res['data'].diasDisponibles;
         this.diasPendientes             = res['data'].diasPendientes;
         this.listDaysDefault            = res['data'].listaDias;
-
-        for (i; i < this.listDaysDefault.length; i++ ) {
-
-          nodo.idVacaciones       = res['data'].listaDias[i].idVacaciones;
-          nodo.personId           = res['data'].listaDias[i].personId;
-          nodo.fecha              = res['data'].listaDias[i].fecha;
-          nodo.fechaFormat        = res['data'].listaDias[i].fechaFormat;
-          nodo.estatusDescripcion = res['data'].listaDias[i].estatusDescripcion;
-          nodo.fechaRegistro      = res['data'].listaDias[i].fechaRegistro;
-          listDaysDefaultNew.push(nodo);
-
-        }
-
-        this.listDaysDefault            = listDaysDefaultNew;
-        console.log(this.listDaysDefault);
-
+        this.detailArray(this.listDaysDefault);
         this.botonCancelar              = res['data'].botonCancelar;
         this.botonModificar             = res['data'].botonModificar;
         this.botonImprimir              = res['data'].botonImprimir;
@@ -90,6 +58,32 @@ export class VacationsPage implements OnInit {
         loadingEl.dismiss();
       });
     });
+  }
+
+  detailArray(listDaysDefault) {
+    const listDaysDefaultNew = [];
+    let i = 0;
+    const nodo = {
+      idVacaciones: String,
+      personId: String,
+      fecha: String,
+      fechaFormat: String,
+      estatus: String,
+      estatusFormat: String,
+      estatusDescripcion: String,
+      fechaRegistro: String
+    };
+    for (i; i < listDaysDefault.length; i++ ) {
+      nodo.idVacaciones       = listDaysDefault[i].idVacaciones;
+      nodo.personId           = listDaysDefault.personId;
+      nodo.fecha              = listDaysDefault.fecha;
+      nodo.fechaFormat        = listDaysDefault.fechaFormat;
+      nodo.estatusDescripcion = listDaysDefault.estatusDescripcion;
+      nodo.fechaRegistro      = listDaysDefault.fechaRegistro;
+      listDaysDefaultNew.push(nodo);
+    }
+    this.listDaysDefault = listDaysDefaultNew;
+    return  this.listDaysDefault;
   }
 
   changeToggle() {
