@@ -15,6 +15,7 @@ import * as moment from 'moment';
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
+
   constructor(
     private platform: Platform,
     private loadingCtrl: LoadingController,
@@ -23,6 +24,7 @@ export class VacationsPage implements OnInit {
     private file: File,
     private fileOpener: FileOpener
   ) { }
+
   isLoading = false;
   isLogin = true;
   listDaysDefault: any[];
@@ -33,6 +35,8 @@ export class VacationsPage implements OnInit {
   botonImprimirModificacion: any;
   b64Data = CONST.FILE_PDF_BASE64;
   diasDisponibles: any;
+  diasPendientes: any;
+  periodoEscalonado: any = false;
   idPerson = this.globalService.getIdPerson();
 
   postVacations(): void {
@@ -43,6 +47,7 @@ export class VacationsPage implements OnInit {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
         this.diasDisponibles            = res['data'].diasDisponibles;
+        this.diasPendientes             = res['data'].diasPendientes;
         this.listDaysDefault            = res['data'].listaDias;
         this.botonCancelar              = res['data'].botonCancelar;
         this.botonModificar             = res['data'].botonModificar;
@@ -54,7 +59,13 @@ export class VacationsPage implements OnInit {
     });
   }
 
+  changeToggle() {
+    console.log(this.periodoEscalonado + ' is checked');
+    return this.periodoEscalonado;
+  }
+
   ngOnInit() {
+    console.log(this.periodoEscalonado);
     this.postVacations();
   }
 
@@ -81,11 +92,6 @@ export class VacationsPage implements OnInit {
         this.listDaysDefault  = this.listDaysGenerate;
         this.isLoading        = false;
         loadingEl.dismiss();
-        console.log('EXEC REQUEST' + JSON.stringify(this.listDaysDefault));
-        console.log('******');
-        console.log('******');
-        console.log('******');
-        console.log('EXEC RESPONSE' + JSON.stringify(this.listDaysGenerate));
       });
     });
   }
@@ -99,7 +105,9 @@ export class VacationsPage implements OnInit {
   }
 
   removeItem(id: number, slidingEl: IonItemSliding): void {
+
     let i = 0;
+
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].idVacaciones === id) {
         console.log(id);
@@ -107,33 +115,43 @@ export class VacationsPage implements OnInit {
         console.log(JSON.stringify(this.listDaysDefault));
       }
     }
+
     slidingEl.close();
+
   }
 
   impress(): void {
     let i = 0;
     const newArray = [];
+    let period = '';
     for ( i; i < this.listDaysDefault.length; i++ ) {
-      if (this.listDaysDefault[i].estatusFormat === 'A') {
+      if (this.listDaysDefault[i].estatusFormat === 'S') {
         newArray.push(this.listDaysDefault[i]);
       }
     }
-    console.log(JSON.stringify(newArray));
-    this.vacationsService.file(newArray).subscribe((res: {} ) => {
-    console.log(JSON.stringify(res));
+    if (this.periodoEscalonado === false) {
+      period = 'N';
+    }
+    if (this.periodoEscalonado === true) {
+      period = 'S';
+    }
+    this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
+      alert(JSON.stringify(res['data'].archivoBase64));
     });
   }
-
   download(): void {
     this.b64toBlob(this.b64Data, 'application/pdf', 512);
   }
-
   b64toBlob(b64Data: string, contentType: string, sliceSize: number): void {
+
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
+
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      
       const slice = byteCharacters.slice(offset, offset + sliceSize);
       const byteNumbers = new Array(slice.length);
+    
       for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
@@ -143,6 +161,7 @@ export class VacationsPage implements OnInit {
     const blob = new Blob(byteArrays, { type: contentType });
     const fileName = 'vacaciones.pdf';
     const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
+
     this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
       console.log('File created!');
       this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
@@ -153,6 +172,7 @@ export class VacationsPage implements OnInit {
       console.error('Error creating file: ' + err);
       throw err;
     });
+
   }
 
 }

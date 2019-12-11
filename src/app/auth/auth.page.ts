@@ -31,7 +31,7 @@ export class AuthPage {
 
     if (this.isLogin) {
       this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Cargando servicios...' })
+      .create({ keyboardClose: true, message: 'Iniciando sesión...' })
       .then(loadingEl => {
         loadingEl.present();
         this.authService.token().subscribe((resToken) => {
