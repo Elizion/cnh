@@ -35,8 +35,8 @@ export class NoticesService {
     return this.httpClient.get<NoticesModel[]>('https://jsonplaceholder.typicode.com/posts');
   }
 
-  notices(): Observable<NoticesModel[]> {
-    return this.httpClient.get<NoticesModel[]>('https://jsonplaceholder.typicode.com/posts');
+  notices(idPerson: number) {
+    return this.httpClient.get<NoticesModel[]>('https://siarhqamovil.cnh.gob.mx/api/avisos/individual?personId=' + idPerson);
   }
 
 }

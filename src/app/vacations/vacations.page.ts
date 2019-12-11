@@ -33,22 +33,55 @@ export class VacationsPage implements OnInit {
   botonModificar: any;
   botonImprimir: any;
   botonImprimirModificacion: any;
-  b64Data = CONST.FILE_PDF_BASE64;
   diasDisponibles: any;
   diasPendientes: any;
   periodoEscalonado: any = false;
+
+  b64Data = CONST.FILE_PDF_BASE64;
+
   idPerson = this.globalService.getIdPerson();
 
   postVacations(): void {
     this.isLoading = true;
+    const listDaysDefaultNew = [];
+    let i = 0;
+
+    const nodo = {
+      idVacaciones: '',
+      personId: '',
+      fecha: '',
+      fechaFormat: '',
+      estatus: '',
+      estatusFormat: '',
+      estatusDescripcion: '',
+      fechaRegistro: ''
+    };
+
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
+
         this.diasDisponibles            = res['data'].diasDisponibles;
         this.diasPendientes             = res['data'].diasPendientes;
         this.listDaysDefault            = res['data'].listaDias;
+
+        for (i; i < this.listDaysDefault.length; i++ ) {
+
+          nodo.idVacaciones       = res['data'].listaDias[i].idVacaciones;
+          nodo.personId           = res['data'].listaDias[i].personId;
+          nodo.fecha              = res['data'].listaDias[i].fecha;
+          nodo.fechaFormat        = res['data'].listaDias[i].fechaFormat;
+          nodo.estatusDescripcion = res['data'].listaDias[i].estatusDescripcion;
+          nodo.fechaRegistro      = res['data'].listaDias[i].fechaRegistro;
+          listDaysDefaultNew.push(nodo);
+
+        }
+
+        this.listDaysDefault            = listDaysDefaultNew;
+        console.log(this.listDaysDefault);
+
         this.botonCancelar              = res['data'].botonCancelar;
         this.botonModificar             = res['data'].botonModificar;
         this.botonImprimir              = res['data'].botonImprimir;
@@ -139,19 +172,17 @@ export class VacationsPage implements OnInit {
       alert(JSON.stringify(res['data'].archivoBase64));
     });
   }
+
   download(): void {
     this.b64toBlob(this.b64Data, 'application/pdf', 512);
   }
-  b64toBlob(b64Data: string, contentType: string, sliceSize: number): void {
 
+  b64toBlob(b64Data: string, contentType: string, sliceSize: number): void {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
-
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      
       const slice = byteCharacters.slice(offset, offset + sliceSize);
       const byteNumbers = new Array(slice.length);
-    
       for (let i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
@@ -161,7 +192,6 @@ export class VacationsPage implements OnInit {
     const blob = new Blob(byteArrays, { type: contentType });
     const fileName = 'vacaciones.pdf';
     const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
-
     this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
       console.log('File created!');
       this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
