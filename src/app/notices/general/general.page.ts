@@ -8,7 +8,8 @@ import { NoticesService } from '../../services/notices.service';
   styleUrls: ['./general.page.scss'],
 })
 export class GeneralPage implements OnInit {
-constructor(
+
+  constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService
   ) {}
