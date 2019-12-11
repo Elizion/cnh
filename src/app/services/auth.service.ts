@@ -9,7 +9,6 @@ import { Constants as CONST } from '../config/config.const';
 export class AuthService {
 
   private isAuthorization = true;
-
   private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];
   private urlEmployee: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[1];
 

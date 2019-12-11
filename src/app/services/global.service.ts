@@ -13,5 +13,5 @@ export class GlobalService {
       const personId  = this.response.data.personId;
       return personId;
    }
-      
+
 }

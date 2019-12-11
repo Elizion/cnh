@@ -15,7 +15,6 @@ import * as moment from 'moment';
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
-
   constructor(
     private platform: Platform,
     private loadingCtrl: LoadingController,
@@ -24,7 +23,6 @@ export class VacationsPage implements OnInit {
     private file: File,
     private fileOpener: FileOpener
   ) { }
-
   isLoading = false;
   isLogin = true;
   listDaysDefault: any[];
@@ -72,10 +70,16 @@ export class VacationsPage implements OnInit {
     .create({ keyboardClose: true, message: 'Agregando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.vacationsService.postAddVacations(this.idPerson, this.diasDisponibles, startDate, endDate, this.listDaysDefault).subscribe((res: {} ) => {
-        this.listDaysGenerate     = res['data'].listaDias;
-        this.listDaysDefault      = this.listDaysGenerate;
-        this.isLoading            = false;
+      this.vacationsService.postAddVacations(
+        this.idPerson,
+        this.diasDisponibles,
+        startDate,
+        endDate,
+        this.listDaysDefault
+      ).subscribe((res: {} ) => {
+        this.listDaysGenerate = res['data'].listaDias;
+        this.listDaysDefault  = this.listDaysGenerate;
+        this.isLoading        = false;
         loadingEl.dismiss();
         console.log('EXEC REQUEST' + JSON.stringify(this.listDaysDefault));
         console.log('******');
@@ -83,19 +87,18 @@ export class VacationsPage implements OnInit {
         console.log('******');
         console.log('EXEC RESPONSE' + JSON.stringify(this.listDaysGenerate));
       });
-  });
-
+    });
   }
 
-  restart() {
+  restart(): void {
     this.postVacations();
   }
 
-  count() {
+  count(): void {
     alert(this.listDaysDefault.length);
   }
 
-  removeItem(id: number, slidingEl: IonItemSliding) {
+  removeItem(id: number, slidingEl: IonItemSliding): void {
     let i = 0;
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].idVacaciones === id) {
@@ -107,7 +110,7 @@ export class VacationsPage implements OnInit {
     slidingEl.close();
   }
 
-  impress() {
+  impress(): void {
     let i = 0;
     const newArray = [];
     for ( i; i < this.listDaysDefault.length; i++ ) {
@@ -116,15 +119,16 @@ export class VacationsPage implements OnInit {
       }
     }
     console.log(JSON.stringify(newArray));
-    this.listDaysDefault = newArray;
-    return newArray;
+    this.vacationsService.file(newArray).subscribe((res: {} ) => {
+    console.log(JSON.stringify(res));
+    });
   }
 
-  download() {
+  download(): void {
     this.b64toBlob(this.b64Data, 'application/pdf', 512);
   }
 
-  b64toBlob(b64Data: string, contentType: string, sliceSize: number) {
+  b64toBlob(b64Data: string, contentType: string, sliceSize: number): void {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {

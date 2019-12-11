@@ -11,6 +11,8 @@ export class VacationsService {
 
   private urlVacations: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[2];
 
+  //https://siarhqamovil.cnh.gob.mx/api/vacaciones/formato/solicitud
+
   constructor(
     private httpClient: HttpClient
   ) {}
@@ -31,6 +33,20 @@ export class VacationsService {
       })
     };
     return httpOptions;
+  }
+
+  file(list: any[]) {
+
+     const data = {
+      personId: 283597,
+      diasDisponibles: 10,
+      periodoEscalonado: 'N',
+      diasPendientes: 0,
+      listaVacaciones: list
+    };
+
+    return this.httpClient.post(this.urlVacations+ 'formato/solicitud/', data);
+
   }
 
   postVacations(personId) {
