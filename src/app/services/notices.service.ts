@@ -26,9 +26,6 @@ export class NoticesService {
     };
     return httpOptions;
   }
-  getNotices(): Observable<NoticesModel[]> {
-    return this.httpClient.get<NoticesModel[]>('https://jsonplaceholder.typicode.com/posts');
-  }
   personal(idPerson: number) {
     return this.httpClient.get(this.urlNotices + 'individual?personId=' + idPerson);
   }
