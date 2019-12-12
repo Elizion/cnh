@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 import { Constants as CONST } from '../config/config.const';
 @Injectable({
  providedIn: 'root'
@@ -37,7 +37,10 @@ export class GlobalService {
    }
 
    apiFake() {
-       return this.httpClient.get('https://jsonplaceholder.typicode.com/postz');
+      return this.httpClient.get('https://jsonplaceholder.typicode.com/posts').pipe(
+         retry(CONST.ONE),
+         catchError(this.handleError)
+      );
    }
 
 }
