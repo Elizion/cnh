@@ -19,6 +19,7 @@ export class PersonalPage implements OnInit {
   isLoading = false;
   isLogin = true;
   listPersonal: any[];
+  base: any;
   idPerson = this.globalService.getIdPerson();
 
   ngOnInit() {
@@ -40,8 +41,15 @@ export class PersonalPage implements OnInit {
     });
   }
 
-  show(id: number, slidingEl: IonItemSliding): void {
-    console.log(id);
+  download(id: string): void {
+    this.noticesService.download(id).subscribe( (res: {} ) => {
+      this.base = res['data'];
+      console.log(JSON.stringify(this.base));
+    });
+  }
+
+  show(id: string, slidingEl: IonItemSliding): void {
+    this.download(id);
     slidingEl.close();
   }
 

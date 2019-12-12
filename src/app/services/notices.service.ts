@@ -32,4 +32,7 @@ export class NoticesService {
   general() {
     return this.httpClient.get(this.urlNotices + 'general');
   }
+  download(id: string) {
+    return this.httpClient.get(this.urlNotices + 'descargaB64?idArchivo=' + id);
+  }
 }
