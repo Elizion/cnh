@@ -17,9 +17,18 @@ export class GeneralPage implements OnInit {
   isLoading = false;
   isLogin = true;
   listGeneral: any[];
+  descripcionAvisoGeneral: any;
+  archivoBase64: any;
 
   ngOnInit() {
     this.general();
+  }
+
+  load(): void{
+    if (this.listGeneral != null && this.listGeneral.length > 0 ){
+      this.descripcionAvisoGeneral = this.listGeneral[0].descripcionAvisoGeneral;
+      this.archivoBase64 = this.listGeneral[0].archivoBase64;
+    }
   }
 
   general(): void {
@@ -30,16 +39,16 @@ export class GeneralPage implements OnInit {
       loadingEl.present();
       this.noticesService.general().subscribe( (res: {} ) => {
         this.listGeneral = res['data'];
-        console.log(JSON.stringify(this.listGeneral));
+        this.load();
         this.isLoading = false;
         loadingEl.dismiss();
       });
     });
   }
 
-  show(id: number, slidingEl: IonItemSliding): void {
-    console.log(id);
-    slidingEl.close();
+  show(id: number, descripcionAvisoGeneral: string, archivoBase64: string): void {
+    this.descripcionAvisoGeneral = descripcionAvisoGeneral;
+    this.archivoBase64 = archivoBase64;
   }
 
 }

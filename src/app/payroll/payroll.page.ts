@@ -122,8 +122,7 @@ export class PayrollPage implements OnInit {
     const fileName = nameFile;
     const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
     this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
-      console.log('File created!');
-      this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
+      this.fileOpener.open(fileEntry.toURL(), CONST.APPLICATION_PDF)
         .then(() => console.log('File is opened'))
         .catch(err => console.error('Error openening file: ' + err));
     })
@@ -132,5 +131,5 @@ export class PayrollPage implements OnInit {
       throw err;
     });
   }
-  
+
 }
