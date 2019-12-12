@@ -17,10 +17,10 @@ import * as moment from 'moment';
 export class VacationsPage implements OnInit {
 
   constructor(
-    private platform: Platform,
     private loadingCtrl: LoadingController,
     private globalService: GlobalService,
     private vacationsService: VacationsService,
+    private platform: Platform,
     private file: File,
     private fileOpener: FileOpener
   ) { }
@@ -196,7 +196,6 @@ export class VacationsPage implements OnInit {
       console.error('Error creating file: ' + err);
       throw err;
     });
-
   }
 
 }

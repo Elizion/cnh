@@ -6,7 +6,48 @@
     <ion-title>Recibos</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>      
+<ion-content padding>     
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>        
+      <ion-row>                  
+      
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Inicio</ion-label>
+            <ion-datetime 
+              displayFormat="DD/MM/YYYY"                 
+              ngModel
+              name="started">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>            
+
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Termino</ion-label>
+            <ion-datetime 
+              displayFormat="DD/MM/YYYY"           
+              ngModel
+              name="finished">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+
+        <ion-col style="margin-top: 1.3rem;">
+          <ion-button
+            type="submit"
+            color="primary"            
+            expand="block"                      
+          >
+            <ion-icon name="search"></ion-icon>
+          </ion-button>
+        </ion-col>     
+         
+      </ion-row>        
+    </ion-grid>
+  </form>
+
   <ion-grid>
     <ion-row>
       <ion-col>                

@@ -32,8 +32,16 @@ export class PayrollService {
     return httpOptions;
   }
 
-  payroll(personId: string) {
-    return this.httpClient.get( this.urlPayroll + 'foliosNomina?personId=' + personId);
+  payroll(personId: string, dateStart: string, dateEnd: string) {
+    return this.httpClient.get(
+      this.urlPayroll + 'foliosNomina?personId=' + personId + '&fechaInicio=' + dateStart + '&fechaFin=' + dateEnd
+    );
+  }
+
+  download(personId: string, consolidationId: string) {
+    return this.httpClient.get(
+      'https://siarhqamovil.cnh.gob.mx/api/recibo/descargaBase64?personId=' + personId + '&consolidationId=' + consolidationId
+    );
   }
 
 }
