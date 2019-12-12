@@ -5,8 +5,8 @@ export abstract class Constants {
   static readonly BASE: string = 'api/';
   static readonly MODULE: string[] = ['token/', 'empleado/', 'vacaciones/', 'avisos/', 'recibo/'];
   static readonly ONE: number = 1;
-  static readonly TWO: number = 1;
-  static readonly THREE: number = 1;
+  static readonly TWO: number = 2;
+  static readonly THREE: number = 3;
   static readonly APPLICATION_JSON: string = 'application/json; charset=UTF-8';
   static readonly X_WWW_FORM_URLENCODED: string = 'application/x-www-form-urlencoded; charset=UTF-8';
   static readonly APPLICATION_PDF: string = 'application/pdf';
@@ -17,4 +17,5 @@ export abstract class Constants {
   static readonly APPLICATION_JPG: string = 'image/jpeg';
   static readonly APPLICATION_JPEG: string = 'image/jpeg';
   static readonly APPLICATION_PNG: string = 'image/png';
+  
 }

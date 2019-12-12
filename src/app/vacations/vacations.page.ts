@@ -36,7 +36,7 @@ export class VacationsPage implements OnInit {
   diasDisponibles: any;
   diasPendientes: any;
   periodoEscalonado: any = false;
-  b64Data = CONST.FILE_PDF_BASE64;
+  b64Data: any;
   idPerson = this.globalService.getIdPerson();
 
   postVacations(): void {
@@ -49,7 +49,7 @@ export class VacationsPage implements OnInit {
         this.diasDisponibles            = res['data'].diasDisponibles;
         this.diasPendientes             = res['data'].diasPendientes;
         this.listDaysDefault            = res['data'].listaDias;
-        this.detailArray(this.listDaysDefault);
+        //this.detailArray(this.listDaysDefault);
         this.botonCancelar              = res['data'].botonCancelar;
         this.botonModificar             = res['data'].botonModificar;
         this.botonImprimir              = res['data'].botonImprimir;
