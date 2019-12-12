@@ -48,16 +48,52 @@ export class PersonalPage implements OnInit {
     });
   }
 
-  download(id: string): void {
+  download(id: string, extension: string): void {
     this.noticesService.download(id).subscribe( (res: {} ) => {
       this.base = res['data'];
-      console.log(JSON.stringify(this.base));
-      this.b64toBlob(this.base, CONST.APPLICATION_XLSX, 512);
+      if (extension === 'pdf') {
+        this.b64toBlob(this.base, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'xls') {
+        this.b64toBlob(this.base, CONST.APPLICATION_XLS, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'xlsx') {
+        this.b64toBlob(this.base, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'xlsx') {
+        this.b64toBlob(this.base, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'doc') {
+        this.b64toBlob(this.base, CONST.APPLICATION_DOC, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'docx') {
+        this.b64toBlob(this.base, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'jpg') {
+        this.b64toBlob(this.base, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'jpeg') {
+        this.b64toBlob(this.base, CONST.APPLICATION_JPEG, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'png') {
+        this.b64toBlob(this.base, CONST.APPLICATION_PNG, CONST.SIZE_BUFFER);
+      }
+      if (extension === 'txt') {
+        this.b64toBlob(this.base, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
+      }
     });
   }
 
-  show(id: string, slidingEl: IonItemSliding): void {
-    this.download(id);
+  getFileExtension(nameFile) {
+    const ext = /^.+\.([^.]+)$/.exec(nameFile);
+    return ext == null ? '' : ext[1];
+  }
+
+  show(id: string, nameFile: string, slidingEl: IonItemSliding): void {
+    const ext = this.getFileExtension(nameFile);
+    console.log(nameFile);
+    console.log(ext);
+    this.download(id, ext);
     slidingEl.close();
   }
 
