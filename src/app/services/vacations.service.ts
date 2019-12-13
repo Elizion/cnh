@@ -58,4 +58,18 @@ export class VacationsService {
     return this.httpClient.post(this.urlVacations+ 'agregar/', data);
   }
 
+  save(id: string, inicial: string, ingreso: string, pendientes: string, array: any[]) {
+
+    const data = {
+      personId: id,
+      fechaInicial: inicial,
+      fechaIngresoFormat: ingreso,
+      diasPendientes: pendientes,
+      diasVacaciones: array
+    };
+
+    return this.httpClient.post(this.urlVacations + 'guardar/', data);
+
+  }
+
 }

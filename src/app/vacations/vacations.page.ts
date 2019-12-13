@@ -35,6 +35,8 @@ export class VacationsPage implements OnInit {
   botonImprimirModificacion: any;
   diasDisponibles: any;
   diasPendientes: any;
+  fechaInicial: any;
+  fechaIngresoFormat: any;
   periodoEscalonado: any = false;
   b64Data: any;
   idPerson = this.globalService.getIdPerson();
@@ -48,6 +50,8 @@ export class VacationsPage implements OnInit {
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
         this.diasDisponibles            = res['data'].diasDisponibles;
         this.diasPendientes             = res['data'].diasPendientes;
+        this.fechaInicial               = res['data'].fechaInicialFormat;
+        this.fechaIngresoFormat         = res['data'].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault            = res['data'].listaDias;
         //this.detailArray(this.listDaysDefault);
         this.botonCancelar              = res['data'].botonCancelar;
@@ -132,9 +136,7 @@ export class VacationsPage implements OnInit {
   }
 
   removeItem(id: number, slidingEl: IonItemSliding): void {
-
     let i = 0;
-
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].idVacaciones === id) {
         console.log(id);
@@ -142,9 +144,7 @@ export class VacationsPage implements OnInit {
         console.log(JSON.stringify(this.listDaysDefault));
       }
     }
-
     slidingEl.close();
-
   }
 
   impress(): void {
@@ -196,6 +196,33 @@ export class VacationsPage implements OnInit {
       console.error('Error creating file: ' + err);
       throw err;
     });
+  }
+
+  save(): void {
+
+    console.log(JSON.stringify(this.listDaysGenerate));
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Guardando fechas...' })
+    .then(loadingEl => {
+
+      loadingEl.present();
+
+      this.vacationsService.save(
+        this.idPerson,
+        this.fechaInicial,
+        this.fechaIngresoFormat,
+        this.diasPendientes,
+        this.listDaysGenerate
+      ).subscribe((res: {} ) => {
+        console.log(JSON.stringify(res));
+        this.listDaysDefault = res['data'].listaDias;
+        this.isLoading       = false;
+        loadingEl.dismiss();
+      });
+
+    });
+
   }
 
 }
