@@ -6,37 +6,25 @@
     <ion-title>General</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content padding *ngIf="visible">
-  
+<ion-content padding *ngIf="visible">  
   <ion-grid>
-    <ion-row>
-      
+    <ion-row>      
       <ion-col *ngIf="descripcionAvisoGeneral">
-        <ion-card>
-          
+        <ion-card>          
           <ion-card-header>
-            <ion-card-subtitle text-center>{{ descripcionAvisoGeneral }}</ion-card-subtitle>
-            <ion-card-title></ion-card-title>
-          </ion-card-header>
-          
+            <ion-card-subtitle text-center>{{ descripcionAvisoGeneral }}</ion-card-subtitle>            
+          </ion-card-header>          
           <ion-img src="data:image/jpeg;base64, {{archivoBase64}}" alt="Noticia" style="height: 10rem;"></ion-img>
-
-          <ion-card-content>
-             
+          <ion-card-content>                                
+            <ion-list>
+              <ion-item *ngFor="let notice of listGeneral" (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)">
+                <ion-icon slot="end" name="eye"></ion-icon>
+                <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>
+              </ion-item>
+            </ion-list>                    
           </ion-card-content>
         </ion-card>
-      </ion-col>
-      
-      <ion-col>        
-        <ion-list>
-          <ion-item *ngFor="let notice of listGeneral" (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)">
-            <ion-icon slot="end" name="eye"></ion-icon>
-            <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>
-          </ion-item>
-        </ion-list>        
-      </ion-col>
-
+      </ion-col>            
     </ion-row>
   </ion-grid>
 </ion-content>
