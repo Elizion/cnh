@@ -59,13 +59,13 @@ export class AuthService {
   login(token: string, user: string, password: string) {
     this.isAuthorization = false;
     return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers1(token))
-                          .pipe(retry(CONST.ONE), catchError(this.handleError));
+                          .pipe(retry(CONST.ZERO), catchError(this.handleError));
   }
 
   user(tokenF: string) {
     this.isAuthorization = true;
     return this.httpClient.get(this.urlEmployee + 'datos/token', this.headers2(tokenF))
-                          .pipe(retry(CONST.ONE), catchError(this.handleError));
+                          .pipe(retry(CONST.ZERO), catchError(this.handleError));
   }
 
   logout() {

@@ -22,15 +22,12 @@ export class AuthPage {
   error: any;
 
   onSubmit(form: NgForm) {
-
     if (!form.valid) {
       return;
     }
-
     this.isLoading = true;
     const user = form.value.user;
     const password = form.value.password;
-
     if (this.isLogin) {
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Iniciando sesión...' })
@@ -38,11 +35,8 @@ export class AuthPage {
         loadingEl.present();
         this.pivote(user, password, loadingEl);
       });
-
     } else {
-
     }
-
   }
 
   pivote(user: any, password: any, loadingEl: any) {
@@ -54,24 +48,35 @@ export class AuthPage {
   }
 
   login(tokenBase: any, user: any, password: any, loadingEl: any) {
-    let tokenFinal = null;
-    this.authService.login(tokenBase.data, user, password).subscribe((resTokenFinal) => {
-      tokenFinal = resTokenFinal;
-      this.token(tokenFinal, loadingEl);
+    let token = null;
+    this.authService.login(tokenBase.data, user, password).subscribe((res) => {
+      token = res;
+      this.token(token, loadingEl);
+    },
+    () => {
+      loadingEl.dismiss(),
+      this.isLoading = false;
+      alert('Usuario y/o contraseñas invalidos.');
     });
   }
 
   token(tokenFinal: any, loadingEl: any) {
     this.authService.user(tokenFinal.data).subscribe((resUser) => {
       window.localStorage.setItem('user', JSON.stringify(resUser));
-      this.redirect(loadingEl);
+      this.close(loadingEl);
+      this.redirect();
     });
+    this.isLoading = false;
   }
 
-  redirect(loadingEl: any) {
-    this.isLoading = false;
+  close(loadingEl: any) {
     loadingEl.dismiss();
+    this.isLoading = false;
+  }
+
+  redirect(): void {
     this.router.navigateByUrl('/profile');
   }
 
 }
+

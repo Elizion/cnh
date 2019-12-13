@@ -1,10 +1,10 @@
 export abstract class Constants {
-
   static readonly ANDROID: string = 'android';
   static readonly PROTOCOL: string = 'https://';
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
   static readonly MODULE: string[] = ['token/', 'empleado/', 'vacaciones/', 'avisos/', 'recibo/'];
+  static readonly ZERO: number = 0;
   static readonly ONE: number = 1;
   static readonly TWO: number = 2;
   static readonly THREE: number = 3;
@@ -20,5 +20,4 @@ export abstract class Constants {
   static readonly APPLICATION_JPEG: string = 'image/jpeg';
   static readonly APPLICATION_PNG: string = 'image/png';
   static readonly APPLICATION_TXT: string = 'text/plain';
-
 }
