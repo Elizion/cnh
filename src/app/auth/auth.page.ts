@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { IonItemSliding } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
@@ -14,26 +15,44 @@ export class AuthPage {
   constructor(
     private loadingCtrl: LoadingController,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertCtrl: AlertController
   ) {}
 
   isLoading = false;
   isLogin = true;
+  user: string;
+  password: string;
+
   error: any;
+  title: any;
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Error',
+      subHeader: 'Autenticación',
+      message: 'Usuario y/o contraseñas invalidos, intente de nuevo porfavor.'
+    });
+    await alert.present();
+    setTimeout (() => {
+      alert.dismiss();
+    }, 3000);
+  }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
     this.isLoading = true;
-    const user = form.value.user;
-    const password = form.value.password;
+    this.user = form.value.user;
+    this.password = form.value.password;
+
     if (this.isLogin) {
       this.loadingCtrl
       .create({ keyboardClose: true, message: 'Iniciando sesión...' })
       .then(loadingEl => {
         loadingEl.present();
-        this.pivote(user, password, loadingEl);
+        this.pivote(this.user, this.password, loadingEl);
       });
     } else {
     }
@@ -54,9 +73,9 @@ export class AuthPage {
       this.token(token, loadingEl);
     },
     () => {
-      loadingEl.dismiss(),
+      loadingEl.dismiss();
       this.isLoading = false;
-      alert('Usuario y/o contraseñas invalidos.');      
+      this.presentAlert();
     });
   }
 

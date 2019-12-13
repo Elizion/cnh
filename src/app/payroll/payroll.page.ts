@@ -101,34 +101,8 @@ export class PayrollPage implements OnInit {
     this.payrollService.download(this.idPerson, id).subscribe( (res: {} ) => {
       this.b64Data = res['data'].archivoBase64;
       const nameFile = res['data'].nombreArchivo;
-      this.b64toBlob(this.b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+      this.globalService.b64toBlob(this.b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
       console.log(this.payrollArray);
-    });
-  }
-
-  b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    const blob = new Blob(byteArrays, { type: contentType });
-    const fileName = nameFile;
-    const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
-    this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
-      this.fileOpener.open(fileEntry.toURL(), CONST.APPLICATION_PDF)
-        .then(() => console.log('File is opened'))
-        .catch(err => console.error('Error openening file: ' + err));
-    })
-    .catch((err) => {
-      console.error('Error creating file: ' + err);
-      throw err;
     });
   }
 

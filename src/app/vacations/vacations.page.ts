@@ -186,12 +186,13 @@ export class VacationsPage implements OnInit {
       period = 'S';
     }
     this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
-      alert(JSON.stringify(res['data'].archivoBase64));
+      console.log(JSON.stringify(res['data'].archivoBase64));
+      this.b64Data = res['data'].archivoBase64;
     });
   }
 
   download(): void {
-    this.globalService.b64toBlob(this.b64Data, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+    this.globalService.b64toBlob(this.b64Data, 'vacaciones.pdf', CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
 
   save(): void {
