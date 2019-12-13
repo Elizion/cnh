@@ -32,6 +32,7 @@ export class PayrollPage implements OnInit {
   payrollArray: any[];
   b64Data: string;
   idPerson = this.globalService.getIdPerson();
+  visible: any = false;
 
   ngOnInit() {
     this.payroll();
@@ -46,6 +47,7 @@ export class PayrollPage implements OnInit {
       this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: {} ) => {
         this.payrollArray = res['data'];
         console.log(this.payrollArray);
+        this.visible = true;
         this.isLoading = false;
         loadingEl.dismiss();
       });

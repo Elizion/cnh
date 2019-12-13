@@ -6,7 +6,8 @@
     <ion-title>Recibos</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>     
+
+<ion-content padding *ngIf="visible">
 
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>        

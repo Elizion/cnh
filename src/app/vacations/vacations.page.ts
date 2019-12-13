@@ -27,12 +27,16 @@ export class VacationsPage implements OnInit {
 
   isLoading = false;
   isLogin = true;
+
+  btnCancelar: any;
+  btnModificar: any;
+  btnImprimir: any;
+  btnImprimirModificacion: any;
+  checkPeriodoEscalonado: any;
+
   listDaysDefault: any[];
   listDaysGenerate: any[];
-  botonCancelar: any;
-  botonModificar: any;
-  botonImprimir: any;
-  botonImprimirModificacion: any;
+
   diasDisponibles: any;
   diasPendientes: any;
   fechaInicial: any;
@@ -41,6 +45,16 @@ export class VacationsPage implements OnInit {
   b64Data: any;
   idPerson = this.globalService.getIdPerson();
 
+  visible: any = false;
+
+  buttonsRefresh(res: any): void {
+    this.btnCancelar              = res['data'].botonCancelar;
+    this.btnModificar             = res['data'].botonModificar;
+    this.btnImprimir              = res['data'].botonImprimir;
+    this.btnImprimirModificacion  = res['data'].botonImprimirModificacion;
+    this.checkPeriodoEscalonado   = res['data'].checkPeriodoEscalonado;
+  }
+
   postVacations(): void {
     this.isLoading = true;
     this.loadingCtrl
@@ -48,17 +62,14 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
-        this.diasDisponibles            = res['data'].diasDisponibles;
-        this.diasPendientes             = res['data'].diasPendientes;
-        this.fechaInicial               = res['data'].fechaInicialFormat;
-        this.fechaIngresoFormat         = res['data'].periodoEmpleado.fechaIngresoFormat;
-        this.listDaysDefault            = res['data'].listaDias;
-        //this.detailArray(this.listDaysDefault);
-        this.botonCancelar              = res['data'].botonCancelar;
-        this.botonModificar             = res['data'].botonModificar;
-        this.botonImprimir              = res['data'].botonImprimir;
-        this.botonImprimirModificacion  = res['data'].botonImprimirModificacion;
-        this.isLoading                  = false;
+        this.diasDisponibles      = res['data'].diasDisponibles;
+        this.diasPendientes       = res['data'].diasPendientes;
+        this.fechaInicial         = res['data'].fechaInicialFormat;
+        this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
+        this.listDaysDefault      = res['data'].listaDias;
+        this.buttonsRefresh(res);
+        this.isLoading            = false;
+        this.visible = true;
         loadingEl.dismiss();
       });
     });
@@ -90,13 +101,24 @@ export class VacationsPage implements OnInit {
     return  this.listDaysDefault;
   }
 
+  cancel(): void {
+    alert('Trabajando este modulo...');
+  }
+
+  impressUpdate(): void {
+    alert('Trabajando este modulo...');
+  }
+
+  update(): void {
+    alert('Trabajando este modulo...');
+  }
+
   changeToggle() {
     console.log(this.periodoEscalonado + ' is checked');
     return this.periodoEscalonado;
   }
 
   ngOnInit() {
-    console.log(this.periodoEscalonado);
     this.postVacations();
   }
 
@@ -127,7 +149,7 @@ export class VacationsPage implements OnInit {
     });
   }
 
-  restart(): void {
+  refresh(): void {
     this.postVacations();
   }
 
@@ -199,15 +221,12 @@ export class VacationsPage implements OnInit {
   }
 
   save(): void {
-
     console.log(JSON.stringify(this.listDaysGenerate));
     this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
     .then(loadingEl => {
-
       loadingEl.present();
-
       this.vacationsService.save(
         this.idPerson,
         this.fechaInicial,
@@ -217,12 +236,11 @@ export class VacationsPage implements OnInit {
       ).subscribe((res: {} ) => {
         console.log(JSON.stringify(res));
         this.listDaysDefault = res['data'].listaDias;
+        this.buttonsRefresh(res);
         this.isLoading       = false;
         loadingEl.dismiss();
       });
-
     });
-
   }
 
 }

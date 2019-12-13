@@ -19,6 +19,7 @@ export class GeneralPage implements OnInit {
   listGeneral: any[];
   descripcionAvisoGeneral: any;
   archivoBase64: any;
+  visible: any = false;
 
   ngOnInit() {
     this.general();
@@ -40,6 +41,7 @@ export class GeneralPage implements OnInit {
       this.noticesService.general().subscribe( (res: {} ) => {
         this.listGeneral = res['data'];
         this.load();
+        this.visible = true;
         this.isLoading = false;
         loadingEl.dismiss();
       });

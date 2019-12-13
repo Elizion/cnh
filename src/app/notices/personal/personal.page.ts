@@ -28,6 +28,7 @@ export class PersonalPage implements OnInit {
   listPersonal: any[];
   base: any;
   idPerson = this.globalService.getIdPerson();
+  visible: any = false;
 
   ngOnInit() {
     this.personal();
@@ -42,6 +43,7 @@ export class PersonalPage implements OnInit {
       this.noticesService.personal(this.idPerson).subscribe( (res: {} ) => {
         this.listPersonal = res['data'];
         console.log(JSON.stringify(this.listPersonal));
+        this.visible = true;
         this.isLoading = false;
         loadingEl.dismiss();
       });
@@ -49,36 +51,41 @@ export class PersonalPage implements OnInit {
   }
 
   download(id: string, extension: string): void {
+
     this.noticesService.download(id).subscribe( (res: {} ) => {
+
       this.base = res['data'];
+
       if (extension === 'pdf') {
         this.b64toBlob(this.base, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
       }
-      if (extension == 'xls') {
+      if (extension === 'xls') {
         this.b64toBlob(this.base, CONST.APPLICATION_XLS, CONST.SIZE_BUFFER);
       }
-      if (extension == 'xlsx') {
+      if (extension === 'xlsx') {
         this.b64toBlob(this.base, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
       }
-      if (extension == 'doc') {
+      if (extension === 'doc') {
         this.b64toBlob(this.base, CONST.APPLICATION_DOC, CONST.SIZE_BUFFER);
       }
-      if (extension == 'docx') {
+      if (extension === 'docx') {
         this.b64toBlob(this.base, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
       }
-      if (extension == 'jpg') {
+      if (extension === 'jpg') {
         this.b64toBlob(this.base, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
       }
-      if (extension == 'jpeg') {
+      if (extension === 'jpeg') {
         this.b64toBlob(this.base, CONST.APPLICATION_JPEG, CONST.SIZE_BUFFER);
       }
-      if (extension == 'png') {
+      if (extension === 'png') {
         this.b64toBlob(this.base, CONST.APPLICATION_PNG, CONST.SIZE_BUFFER);
       }
-      if (extension == 'txt') {
+      if (extension === 'txt') {
         this.b64toBlob(this.base, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
       }
+
     });
+
   }
 
   getFileExtension(nameFile) {

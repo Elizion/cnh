@@ -7,12 +7,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>  
+<ion-content padding *ngIf="visible">  
 
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>        
-      <ion-row>                  
-      
+      <ion-row>                        
         <ion-col>
           <ion-item>
             <ion-label position="floating">Inicio</ion-label>
@@ -23,7 +22,6 @@
             </ion-datetime>
           </ion-item>
         </ion-col>            
-
         <ion-col>
           <ion-item>
             <ion-label position="floating">Termino</ion-label>
@@ -34,7 +32,6 @@
             </ion-datetime>
           </ion-item>
         </ion-col>
-
         <ion-col style="margin-top: 1.3rem;">
           <ion-button
             type="submit"
@@ -43,13 +40,12 @@
           >
             <ion-icon name="add-circle"></ion-icon>
           </ion-button>
-        </ion-col>     
-         
+        </ion-col>              
       </ion-row>        
     </ion-grid>
   </form>      
 
-  <ion-grid>
+  <ion-grid *ngIf="this.checkPeriodoEscalonado">
     <ion-row>
       <ion-col>
         <ion-list>
@@ -68,7 +64,7 @@
     <ion-row>
       <ion-col size-md="6" offset-md="3">        
         <ion-list>                    
-          <ion-item-sliding *ngFor="let item of listDaysDefault" #slidingVacation>                                               
+          <ion-item-sliding *ngFor="let item of listDaysDefault" #slidingVacation [disabled]="item.estatusFormat != 'S' && item.estatusFormat != 'N' ">                                               
             <ion-item>                                        
               <ion-label>
                 <h5>{{ item.fechaFormat }}</h5>
@@ -85,24 +81,24 @@
       </ion-col>
     </ion-row>
   </ion-grid>    
-  
+  <!--
   <ion-grid>
-    <ion-row>   
+    <ion-row>             
       <ion-col>
         <ion-button color="primary" expand="block" (click)="download()">  
           <ion-icon name="document" slot="icon-only"></ion-icon>          
         </ion-button>        
-      </ion-col>
+      </ion-col>      
       <ion-col>
         <ion-button color="primary" expand="block" (click)="impress()">          
           <ion-icon name="document" slot="icon-only"></ion-icon>
         </ion-button>        
-      </ion-col>      
+      </ion-col>            
       <ion-col>
         <ion-button color="primary" expand="block" (click)="restart()">          
           <ion-icon name="close-circle" slot="icon-only"></ion-icon>
         </ion-button>        
-      </ion-col>
+      </ion-col>      
       <ion-col>
         <ion-button color="primary" expand="block" (click)="save()">          
           <ion-icon name="done-all" slot="icon-only"></ion-icon>
@@ -110,20 +106,47 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!--
+  -->
   <ion-grid>
-    <ion-row>              
-      <ion-col>
-        <ion-button type="submit" color="primary" expand="block" (click)="download()">
-          <ion-icon name="download" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button type="submit" color="primary" expand="block" (click)="count()">          
-          <ion-icon name="eye" slot="icon-only"></ion-icon>          
-        </ion-button>
+    <ion-row>             
+            
+      <ion-col *ngIf="this.btnModificar" (click)="update()">
+        <ion-button color="primary" expand="block">          
+          <ion-icon name="create" slot="icon-only"></ion-icon>          
+        </ion-button>        
+      </ion-col>            
+
+      <ion-col *ngIf="this.btnImprimir" (click)="impress()">
+        <ion-button color="primary" expand="block">          
+          <ion-icon name="print" slot="icon-only"></ion-icon>
+        </ion-button>        
+      </ion-col>            
+
+      <ion-col *ngIf="this.btnImprimirModificacion" (click)="impressUpdate()">
+        <ion-button color="primary" expand="block">          
+          <ion-icon name="print" slot="icon-only"></ion-icon>
+        </ion-button>        
+      </ion-col>            
+
+      <ion-col *ngIf="this.btnCancelar" (click)="cancel()">
+        <ion-button color="primary" expand="block">  
+          <ion-icon name="close-circle" slot="icon-only"></ion-icon>          
+        </ion-button>        
+      </ion-col>   
+
+      <ion-col (click)="refresh()">
+        <ion-button color="primary" expand="block">  
+          <ion-icon name="refresh" slot="icon-only"></ion-icon>          
+        </ion-button>        
       </ion-col>      
+      
+      <ion-col>
+        <ion-button color="primary" expand="block" (click)="save()">          
+          <ion-icon name="paper-plane" slot="icon-only"></ion-icon>
+        </ion-button>        
+      </ion-col>
+          
     </ion-row>
   </ion-grid>
-  -->
+    
 </ion-content>
