@@ -19,7 +19,8 @@
             <ion-datetime 
               displayFormat="DD/MM/YYYY"                 
               ngModel
-              name="started">
+              name="started"
+              required>
             </ion-datetime>
           </ion-item>
         </ion-col>            
@@ -30,7 +31,8 @@
             <ion-datetime 
               displayFormat="DD/MM/YYYY"           
               ngModel
-              name="finished">
+              name="finished"
+              required>
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -40,6 +42,7 @@
             type="submit"
             color="primary"            
             expand="block"                      
+            [disabled]="!f.valid"
           >
             <ion-icon name="search"></ion-icon>
           </ion-button>

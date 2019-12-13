@@ -14,6 +14,7 @@
         </ion-col>
     </ion-row>
   </ion-grid>  
+
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row>
@@ -30,6 +31,7 @@
               <ion-label position="floating">Contraseña</ion-label>              
               <ion-input type="password" ngModel name="password" required minlength="3" #passwordCtrl="ngModel"></ion-input>                            
             </ion-item>
+
             <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
               <ion-label>
                 Debe ser mayor a 3 caracteres
@@ -53,4 +55,5 @@
       </ion-row>
     </ion-grid>
   </form>
+
 </ion-content>

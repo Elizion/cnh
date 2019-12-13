@@ -33,12 +33,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    /*
     this.globalService.apiFake().subscribe( data => {
       console.log(data);
     },
     error => console.log(error));
-  
+    */
+   console.log('START APP');
   }
 
 }
