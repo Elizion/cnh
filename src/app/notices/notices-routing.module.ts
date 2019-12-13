@@ -27,14 +27,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/notices/tabs/personal',
+        redirectTo: '/notices/tabs/general',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/notices/tabs/personal',
+    redirectTo: '/notices/tabs/general',
     pathMatch: 'full'
   }
 ];
