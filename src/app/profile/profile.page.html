@@ -9,7 +9,6 @@
 >
 <ion-content padding>
   <ion-grid>    
-
     <ion-row class="custom">
       <ion-col>
         <div>
@@ -19,10 +18,9 @@
         </div>        
       </ion-col>
     </ion-row>
-
     <ion-row>      
       <ion-col text-center>        
-        <h3>{{ profile.nombre }} {{ profile.numeroEmpleado }}</h3>         
+        <h3>{{ profile.nombre }}</h3>         
         <ion-card text-center>                           
           <ion-list>
             <ion-item>  
@@ -60,7 +58,8 @@
                 <h3>Fecha ingreso</h3>
                 <p>{{ profile.fechaIngresoFormat }}</p>
               </ion-label>
-            </ion-item>                          
+            </ion-item>         
+            <h3>{{ profile.numeroEmpleado }}</h3>                          
           </ion-list>        
         </ion-card>        
       </ion-col>
