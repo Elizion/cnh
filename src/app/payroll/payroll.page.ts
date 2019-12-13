@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { Downloader, NotificationVisibility, DownloadRequest } from '@ionic-native/downloader/ngx';
 import { IonItemSliding } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
@@ -21,7 +20,6 @@ export class PayrollPage implements OnInit {
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
     private globalService: GlobalService,
-    private downloader: Downloader,
     private platform: Platform,
     private file: File,
     private fileOpener: FileOpener

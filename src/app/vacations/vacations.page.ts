@@ -61,6 +61,7 @@ export class VacationsPage implements OnInit {
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
+      
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
         this.diasDisponibles      = res['data'].diasDisponibles;
         this.diasPendientes       = res['data'].diasPendientes;
@@ -131,7 +132,7 @@ export class VacationsPage implements OnInit {
     console.log(startDate + ' ' + endDate);
     this.isLoading = true;
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Agregando fechas...' })
+    .create({ keyboardClose: true, message: 'Carcando datos...' })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postAddVacations(
@@ -190,34 +191,7 @@ export class VacationsPage implements OnInit {
   }
 
   download(): void {
-    this.b64toBlob(this.b64Data, 'application/pdf', 512);
-  }
-
-  b64toBlob(b64Data: string, contentType: string, sliceSize: number): void {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    const blob = new Blob(byteArrays, { type: contentType });
-    const fileName = 'vacaciones.pdf';
-    const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
-    this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
-      console.log('File created!');
-      this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
-        .then(() => console.log('File is opened'))
-        .catch(err => console.error('Error openening file: ' + err));
-    })
-    .catch((err) => {
-      console.error('Error creating file: ' + err);
-      throw err;
-    });
+    this.globalService.b64toBlob(this.b64Data, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
 
   save(): void {

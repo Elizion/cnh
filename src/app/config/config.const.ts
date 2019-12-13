@@ -1,5 +1,6 @@
 export abstract class Constants {
 
+  static readonly ANDROID: string = 'android';
   static readonly PROTOCOL: string = 'https://';
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
