@@ -3,9 +3,6 @@ import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
-import { Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { NgForm } from '@angular/forms';
 import * as moment from 'moment';
 import { Constants as CONST } from '../config/config.const';
@@ -15,27 +12,20 @@ import { Constants as CONST } from '../config/config.const';
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
-
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
-    private globalService: GlobalService,
-    private platform: Platform,
-    private file: File,
-    private fileOpener: FileOpener
+    private globalService: GlobalService
   ) { }
-
   isLoading = false;
   isLogin = true;
   payrollArray: any[];
   b64Data: string;
   idPerson = this.globalService.getIdPerson();
   visible: any = false;
-
   ngOnInit() {
     this.payroll();
   }
-
   payroll(): void {
     this.isLoading = true;
     this.loadingCtrl
@@ -75,35 +65,26 @@ export class PayrollPage implements OnInit {
       });
     });
   }
-
-  /*
-  open() {
-    const request: DownloadRequest = {
-      uri: 'https://devdactic.com/html/5-simple-hacks-LBT.pdf',
-      title: 'vacaciones',
-      description: '',
-      mimeType: '',
-      visibleInDownloadsUi: true,
-      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
-      destinationInExternalFilesDir: {
-        dirType: 'Downloads',
-        subPath: 'app-debug.apk'
-      }
-    };
-    this.downloader.download(request)
-    .then((location: string) => console.log('File downloaded at:' + location))
-    .catch((error: any) => console.error(error));
-  }
-  */
-
-  download(id: string, slidingEl: IonItemSliding): void {
+  impress(id: string, slidingEl: IonItemSliding): void {
     console.log(id);
-    this.payrollService.download(this.idPerson, id).subscribe( (res: {} ) => {
-      this.b64Data = res['data'].archivoBase64;
-      const nameFile = res['data'].nombreArchivo;
-      this.globalService.b64toBlob(this.b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
-      console.log(this.payrollArray);
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Descargando solicitud...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.payrollService.download(this.idPerson, id).subscribe( (res: {} ) => {
+        this.b64Data = res['data'].archivoBase64;
+        const nameFile = res['data'].nombreArchivo;
+        this.download(this.b64Data, nameFile);
+        console.log(this.payrollArray);
+        this.isLoading = false;
+        loadingEl.dismiss();
+      });
     });
+  }
+
+  download(b64Data: string, nameFile: string): void {
+    this.globalService.b64toBlob(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
 
 }

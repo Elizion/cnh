@@ -5,27 +5,68 @@
     </ion-buttons>
     <ion-title>Usuario</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header
+>
 <ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col text-center>                
-        <ion-card>
-          <ion-img src="data:image/jpeg;base64, {{profile.fotoBase64}}"></ion-img>
-          <ion-card-header>
-            <ion-card-subtitle>{{ profile.nombre }} {{ profile.numeroEmpleado }}</ion-card-subtitle>
-            <ion-card-title>{{ profile.rfc }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <p>{{ profile.unidad }}</p>
-            <p>{{ profile.puesto }}</p>
-            <p>{{ profile.cargo }}</p>
-            <p>{{ profile.nivel }}</p>            
-            <p>{{ profile.fechaIngresoFormat }}</p>
-          </ion-card-content>
+  <ion-grid>    
+
+    <ion-row class="custom">
+      <ion-col>
+        <div>
+          <ion-avatar class="image">
+            <ion-img src="data:image/jpeg;base64, {{profile.fotoBase64}}"></ion-img>
+          </ion-avatar>
+        </div>        
+      </ion-col>
+    </ion-row>
+
+    <ion-row>      
+      <ion-col text-center>        
+        <h3>{{ profile.nombre }} {{ profile.numeroEmpleado }}</h3>         
+        <ion-card text-center>                           
+          <ion-list>
+            <ion-item>  
+              <ion-label>            
+                <h3>RFC</h3>
+                <p>{{ profile.rfc }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>  
+              <ion-label>            
+                <h3>Unidad</h3>
+                <p>{{ profile.unidad }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>  
+              <ion-label>            
+                <h3>Puesto</h3>
+                <p>{{ profile.puesto }}</p>
+              </ion-label>
+            </ion-item>            
+            <ion-item>  
+              <ion-label>            
+                <h3>Cargo</h3>
+                <p>{{ profile.cargo }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>  
+              <ion-label>            
+                <h3>Nivel</h3>
+                <p>{{ profile.nivel }}</p>
+              </ion-label>
+            </ion-item>
+            <ion-item>  
+              <ion-label>            
+                <h3>Fecha ingreso</h3>
+                <p>{{ profile.fechaIngresoFormat }}</p>
+              </ion-label>
+            </ion-item>                          
+          </ion-list>        
         </ion-card>        
       </ion-col>
     </ion-row>
   </ion-grid>
+
+
 </ion-content>
 

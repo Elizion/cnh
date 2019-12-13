@@ -185,14 +185,24 @@ export class VacationsPage implements OnInit {
     if (this.periodoEscalonado === true) {
       period = 'S';
     }
-    this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
-      console.log(JSON.stringify(res['data'].archivoBase64));
-      this.b64Data = res['data'].archivoBase64;
+    this.isLoading = true;
+    this.loadingCtrl
+    .create({ keyboardClose: true, message: 'Descargando solicitud...' })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
+        console.log(JSON.stringify(res['data'].archivoBase64));
+        const nameFile = res['data'].nombreArchivo;
+        this.b64Data = res['data'].archivoBase64;
+        this.download(this.b64Data, nameFile);
+        this.isLoading = false;
+        loadingEl.dismiss();
+      });
     });
   }
 
-  download(): void {
-    this.globalService.b64toBlob(this.b64Data, 'vacaciones.pdf', CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+  download(b64Data: string, nameFile: string): void {
+    this.globalService.b64toBlob(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
 
   save(): void {
