@@ -56,7 +56,7 @@ export class AuthPage {
     () => {
       loadingEl.dismiss(),
       this.isLoading = false;
-      alert('Usuario y/o contraseñas invalidos.');
+      alert('Usuario y/o contraseñas invalidos.');      
     });
   }
 
