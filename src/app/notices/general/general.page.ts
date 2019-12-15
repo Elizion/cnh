@@ -26,7 +26,7 @@ export class GeneralPage implements OnInit {
   }
 
   load(): void{
-    if (this.listGeneral != null && this.listGeneral.length > 0 ){
+    if (this.listGeneral != null && this.listGeneral.length > 0 ) {
       this.descripcionAvisoGeneral = this.listGeneral[0].descripcionAvisoGeneral;
       this.archivoBase64 = this.listGeneral[0].archivoBase64;
     }

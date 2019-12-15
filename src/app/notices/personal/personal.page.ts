@@ -25,7 +25,7 @@ export class PersonalPage implements OnInit {
   isLogin = true;
   listPersonal: any[];
   base: any;
-  idPerson = this.globalService.getIdPerson();
+  idPerson = this.globalService.personId();
   visible: any = false;
   ngOnInit() {
     this.personal();

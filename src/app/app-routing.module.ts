@@ -12,29 +12,20 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: './profile/profile.module#ProfilePageModule',
-    canLoad: [AuthGuard]
+    loadChildren: './profile/profile.module#ProfilePageModule'
   },
   {
     path: 'notices',
-    loadChildren: './notices/notices.module#NoticesPageModule',
-    canLoad: [AuthGuard]
+    loadChildren: './notices/notices.module#NoticesPageModule'
   },
   {
     path: 'payroll',
-    loadChildren: './payroll/payroll.module#PayrollPageModule',
-    canLoad: [AuthGuard]
+    loadChildren: './payroll/payroll.module#PayrollPageModule'
   },
   {
     path: 'vacations',
-    loadChildren: './vacations/vacations.module#VacationsPageModule',
-    canLoad: [AuthGuard]
-  },  {
-    path: 'test',
-    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+    loadChildren: './vacations/vacations.module#VacationsPageModule'
   }
-
-
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

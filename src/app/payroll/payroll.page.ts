@@ -21,7 +21,7 @@ export class PayrollPage implements OnInit {
   isLogin = true;
   payrollArray: any[];
   b64Data: string;
-  idPerson = this.globalService.getIdPerson();
+  idPerson = this.globalService.personId();
   visible: any = false;
   ngOnInit() {
     this.payroll();

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
@@ -15,10 +16,18 @@ export class GlobalService {
       private file: File,
       private fileOpener: FileOpener,
    ) {}
-   request   = window.localStorage.getItem('user');
-   response  = JSON.parse(this.request);
    isLoading = false;
    isLogin   = true;
+   token() {
+      const token   = window.localStorage.getItem('token');
+      const parseToken = JSON.parse(token);
+      return parseToken;
+   }
+   personId() {
+      const id   = window.localStorage.getItem('personId');
+      const parseId = JSON.parse(id);
+      return parseId;
+   }
    handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          console.error('Error: ' + error.error.message);
@@ -35,18 +44,11 @@ export class GlobalService {
       };
       return httpOptions;
    }
-   getIdPerson() {
-      const personId  = this.response.data.personId;
-      return personId;
-   }
    apiFake() {
-      /*
       return this.httpClient.get('https://jsonplaceholder.typicode.com/posts').pipe(
          retry(CONST.ZERO),
          catchError(this.handleError)
       );
-      */
-     return null;
    }
    b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);

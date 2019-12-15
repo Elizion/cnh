@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../services/profile.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  constructor() {}
+  constructor(
+    private profileService: ProfileService
+  ) {}
   ngOnInit() {
     /*
     const request                       = window.localStorage.getItem('user');
@@ -21,6 +24,14 @@ export class ProfilePage implements OnInit {
     this.profile.fechaIngresoFormat     = response.data.fechaIngresoFormat;
     this.profile.fotoBase64             = response.data.fotoBase64;
     */
+    this.profile();
   }
+
+  profile() {
+    this.profileService.profile().subscribe((res) => {
+      console.log(JSON.stringify(res));
+    });
+  }
+
 }
 

@@ -37,7 +37,7 @@ export class VacationsPage implements OnInit {
   fechaIngresoFormat: any;
   periodoEscalonado: any = false;
   b64Data: any;
-  idPerson = this.globalService.getIdPerson();
+  idPerson = this.globalService.personId();
 
   visible: any = false;
 

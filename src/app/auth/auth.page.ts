@@ -19,12 +19,13 @@ export class AuthPage {
     private alertCtrl: AlertController
   ) {}
 
-  isLoading = false;
   isLogin = true;
+
   user: string;
   password: string;
-  error: any;
-  title: any;
+
+  status: string;
+  token: string;
 
   async presentAlert() {
     const alert = await this.alertCtrl.create({
@@ -39,49 +40,55 @@ export class AuthPage {
   }
 
   onSubmit(form: NgForm) {
+
     if (!form.valid) {
       return;
     }
-    this.isLoading = true;
+
     this.user = form.value.user;
     this.password = form.value.password;
 
     if (this.isLogin) {
+
       this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Iniciando sesión...' })
+      .create({ keyboardClose: true, message: 'Validando datos...' })
       .then(loadingEl => {
         loadingEl.present();
         this.pivote(this.user, this.password, loadingEl);
       });
+
     } else {
+
     }
+
   }
 
   pivote(user: any, password: any, loadingEl: any): void {
-    let tokenBase = null;
-    this.authService.token().subscribe((resToken) => {
-      tokenBase = resToken;
-      this.login(tokenBase, user, password, loadingEl);
+    this.authService.token().subscribe((res) => {
+      this.login(res, user, password, loadingEl);
     });
   }
 
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
-    let token = null;
     this.authService.login(tokenBase.data, user, password).subscribe((res) => {
-      token = res;
-      window.localStorage.setItem('token', JSON.stringify(token));
-      this.close(loadingEl);
+      this.status = res['metadata'].response;
+      this.token = res['data'];
+      loadingEl.dismiss();
+      if (this.status === 'EXITO') {
+        window.localStorage.setItem('token', JSON.stringify(this.token));
+        this.router.navigateByUrl('/profile');
+      } else {
+        window.localStorage.removeItem('token');
+        this.router.navigateByUrl('/auth');
+      }
     },
-    () => {
-      this.close(loadingEl);
+    (err) => {
+      console.log(err);
+      loadingEl.dismiss();
       this.presentAlert();
+      this.router.navigateByUrl('/auth');
     });
-  }
 
-  close(loadingEl: any): void {
-    loadingEl.dismiss();
-    this.isLoading = false;
-    this.router.navigateByUrl('/profile');
   }
 
 }

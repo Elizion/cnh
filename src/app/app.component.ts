@@ -4,7 +4,6 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
-import { GlobalService } from './services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -16,18 +15,20 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private globalService: GlobalService,
     private router: Router,
   ) {
     this.initializeApp();
   }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
+
   onLogout() {
+    window.localStorage.removeItem('token');
     this.authService.logout();
     this.router.navigateByUrl('/auth');
   }

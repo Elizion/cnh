@@ -9,8 +9,7 @@ import { Constants as CONST } from '../config/config.const';
 export class AuthService {
 
   private isAuthorization = true;
-  private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];
-  private urlEmployee: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[1];
+  private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];  
 
   get userIsAuthenticated() {
     return this.isAuthorization;
@@ -30,7 +29,7 @@ export class AuthService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  headers1(token: string) {
+  headers(token: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  CONST.APPLICATION_JSON,
@@ -40,15 +39,7 @@ export class AuthService {
     return httpOptions;
   }
 
-  headers2(token: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  CONST.APPLICATION_JSON,
-        Authorization: 'Bearer ' + token
-      })
-    };
-    return httpOptions;
-  }
+
 
   token() {
     this.isAuthorization = false;
@@ -58,15 +49,11 @@ export class AuthService {
 
   login(token: string, user: string, password: string) {
     this.isAuthorization = false;
-    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers1(token))
+    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers(token))
                           .pipe(retry(CONST.ZERO), catchError(this.handleError));
   }
 
-  user(tokenF: string) {
-    this.isAuthorization = true;
-    return this.httpClient.get(this.urlEmployee + 'datos/token', this.headers2(tokenF))
-                          .pipe(retry(CONST.ZERO), catchError(this.handleError));
-  }
+
 
   logout() {
     this.isAuthorization = false;
