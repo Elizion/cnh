@@ -13,7 +13,6 @@ import { Constants as CONST } from '../../config/config.const';
   styleUrls: ['./personal.page.scss'],
 })
 export class PersonalPage implements OnInit {
-
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
@@ -22,18 +21,15 @@ export class PersonalPage implements OnInit {
     private file: File,
     private fileOpener: FileOpener
   ) {}
-
   isLoading = false;
   isLogin = true;
   listPersonal: any[];
   base: any;
   idPerson = this.globalService.getIdPerson();
   visible: any = false;
-
   ngOnInit() {
     this.personal();
   }
-
   personal(): void {
     this.isLoading = true;
     this.loadingCtrl

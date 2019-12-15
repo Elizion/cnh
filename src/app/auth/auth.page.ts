@@ -23,7 +23,6 @@ export class AuthPage {
   isLogin = true;
   user: string;
   password: string;
-
   error: any;
   title: any;
 
@@ -58,7 +57,7 @@ export class AuthPage {
     }
   }
 
-  pivote(user: any, password: any, loadingEl: any) {
+  pivote(user: any, password: any, loadingEl: any): void {
     let tokenBase = null;
     this.authService.token().subscribe((resToken) => {
       tokenBase = resToken;
@@ -66,34 +65,22 @@ export class AuthPage {
     });
   }
 
-  login(tokenBase: any, user: any, password: any, loadingEl: any) {
+  login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     let token = null;
     this.authService.login(tokenBase.data, user, password).subscribe((res) => {
       token = res;
-      this.token(token, loadingEl);
+      window.localStorage.setItem('token', JSON.stringify(token));
+      this.close(loadingEl);
     },
     () => {
-      loadingEl.dismiss();
-      this.isLoading = false;
+      this.close(loadingEl);
       this.presentAlert();
     });
   }
 
-  token(tokenFinal: any, loadingEl: any) {
-    this.authService.user(tokenFinal.data).subscribe((resUser) => {
-      window.localStorage.setItem('user', JSON.stringify(resUser));
-      this.close(loadingEl);
-      this.redirect();
-    });
-    this.isLoading = false;
-  }
-
-  close(loadingEl: any) {
+  close(loadingEl: any): void {
     loadingEl.dismiss();
     this.isLoading = false;
-  }
-
-  redirect(): void {
     this.router.navigateByUrl('/profile');
   }
 

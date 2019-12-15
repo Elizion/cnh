@@ -3,9 +3,6 @@ import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
-import { Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Constants as CONST } from '../config/config.const';
 import { NgForm } from '@angular/forms';
 import * as moment from 'moment';
@@ -19,10 +16,7 @@ export class VacationsPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private globalService: GlobalService,
-    private vacationsService: VacationsService,
-    private platform: Platform,
-    private file: File,
-    private fileOpener: FileOpener
+    private vacationsService: VacationsService
   ) { }
 
   isLoading = false;
