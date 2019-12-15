@@ -82,9 +82,7 @@ export class PayrollPage implements OnInit {
       });
     });
   }
-
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlob(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
 }

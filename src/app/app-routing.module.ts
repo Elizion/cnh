@@ -29,7 +29,11 @@ const routes: Routes = [
     path: 'vacations',
     loadChildren: './vacations/vacations.module#VacationsPageModule',
     canLoad: [AuthGuard]
+  },  {
+    path: 'test',
+    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
   }
+
 
 ];
 @NgModule({
