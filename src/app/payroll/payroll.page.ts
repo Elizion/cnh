@@ -12,35 +12,46 @@ import { Constants as CONST } from '../config/config.const';
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
+
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
     private globalService: GlobalService
   ) { }
+
   isLoading = false;
   isLogin = true;
   payrollArray: any[];
   b64Data: string;
   idPerson = this.globalService.personId();
   visible: any = false;
+
   ngOnInit() {
     this.payroll();
   }
+
   payroll(): void {
     this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: {} ) => {
+      this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: Response ) => {
         this.payrollArray = res['data'];
         console.log(this.payrollArray);
         this.visible = true;
         this.isLoading = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertPayroll();
+        this.globalService.routerNavigatePayroll();
       });
     });
   }
+
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
@@ -65,6 +76,7 @@ export class PayrollPage implements OnInit {
       });
     });
   }
+
   impress(id: string, slidingEl: IonItemSliding): void {
     console.log(id);
     this.isLoading = true;
@@ -72,17 +84,25 @@ export class PayrollPage implements OnInit {
     .create({ keyboardClose: true, message: 'Descargando solicitud...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.payrollService.download(this.idPerson, id).subscribe( (res: {} ) => {
+      this.payrollService.download(this.idPerson, id).subscribe( (res: Response ) => {
         this.b64Data = res['data'].archivoBase64;
         const nameFile = res['data'].nombreArchivo;
         this.download(this.b64Data, nameFile);
         console.log(this.payrollArray);
         this.isLoading = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertAddDate();
+        this.globalService.routerNavigatePayroll();
       });
     });
   }
+
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlob(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
+
 }

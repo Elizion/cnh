@@ -78,6 +78,9 @@ export class GlobalService {
    routerNavigateNotices() {
       return this.router.navigateByUrl('/notices');
    }
+   routerNavigatePayroll() {
+      return this.router.navigateByUrl('/payroll');
+   }
    async alertLogin() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
@@ -115,7 +118,7 @@ export class GlobalService {
       const alert = await this.alertCtrl.create({
          header: 'Error',
          subHeader: 'Carga noticias generales',
-         message: 'No se ha cargado la información correctamente.'
+         message: 'Error al cargar los datos.'
       });
       await alert.present();
       setTimeout (() => {
@@ -126,13 +129,36 @@ export class GlobalService {
       const alert = await this.alertCtrl.create({
          header: 'Error',
          subHeader: 'Carga noticias generales',
-         message: 'No se ha cargado la información correctamente.'
+         message: 'Error al cargar los datos.'
       });
       await alert.present();
       setTimeout (() => {
          alert.dismiss();
       }, 3000);
    }
+   async alertPayroll() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Carga noticias generales',
+         message: 'Error al cargar los datos.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertAddDate() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Carga noticias generales',
+         message: 'Error al enviar la solicitud.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+
 
   /*
   README: Open from url file content:
