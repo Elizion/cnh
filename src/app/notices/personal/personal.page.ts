@@ -36,12 +36,18 @@ export class PersonalPage implements OnInit {
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.noticesService.personal(this.idPerson).subscribe( (res: {} ) => {
+      this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
         this.listPersonal = res['data'];
         console.log(JSON.stringify(this.listPersonal));
         this.visible = true;
         this.isLoading = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertPersonal();
+        this.globalService.routerNavigateNotices();
       });
     });
   }

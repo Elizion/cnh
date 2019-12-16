@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { IonItemSliding } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
+import { GlobalService } from '../../services/global.service';
 @Component({
   selector: 'app-general',
   templateUrl: './general.page.html',
@@ -11,7 +11,8 @@ export class GeneralPage implements OnInit {
 
   constructor(
     private loadingCtrl: LoadingController,
-    private noticesService: NoticesService
+    private noticesService: NoticesService,
+    private globalService: GlobalService
   ) {}
 
   isLoading = false;
@@ -25,7 +26,7 @@ export class GeneralPage implements OnInit {
     this.general();
   }
 
-  load(): void{
+  load(): void {
     if (this.listGeneral != null && this.listGeneral.length > 0 ) {
       this.descripcionAvisoGeneral = this.listGeneral[0].descripcionAvisoGeneral;
       this.archivoBase64 = this.listGeneral[0].archivoBase64;
@@ -38,12 +39,18 @@ export class GeneralPage implements OnInit {
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.noticesService.general().subscribe( (res: {} ) => {
+      this.noticesService.general().subscribe( (res: Response) => {
         this.listGeneral = res['data'];
         this.load();
         this.visible = true;
         this.isLoading = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertGeneral();
+        this.globalService.routerNavigateNotices();
       });
     });
   }

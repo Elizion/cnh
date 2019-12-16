@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { Platform } from '@ionic/angular';
@@ -6,10 +5,9 @@ import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-@Injectable({
- providedIn: 'root'
-})
+
 export class GlobalService {
+
    constructor(
       private platform: Platform,
       private file: File,
@@ -17,8 +15,10 @@ export class GlobalService {
       private alertCtrl: AlertController,
       private router: Router
    ) {}
+
    isLoading = false;
    isLogin   = true;
+
    token() {
       const token   = window.localStorage.getItem('token');
       const parseToken = JSON.parse(token);
@@ -56,7 +56,7 @@ export class GlobalService {
       });
   }
 
-     handleError(error: HttpErrorResponse) {
+   handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          console.error('Error: ' + error.error.message);
       } else {
@@ -79,6 +79,9 @@ export class GlobalService {
    }
    routerNavigateProfile() {
       return this.router.navigateByUrl('/profile');
+   }
+   routerNavigateNotices() {
+      return this.router.navigateByUrl('/notices');
    }
    async alertLogin() {
       const alert = await this.alertCtrl.create({
@@ -107,6 +110,28 @@ export class GlobalService {
          header: 'Error',
          subHeader: 'Generación de token',
          message: 'No se ha generadodo el token correctamente, intente de nuevo porfavor.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertGeneral() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Carga noticias generales',
+         message: 'No se ha cargado la información correctamente.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertPersonal() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Carga noticias generales',
+         message: 'No se ha cargado la información correctamente.'
       });
       await alert.present();
       setTimeout (() => {
