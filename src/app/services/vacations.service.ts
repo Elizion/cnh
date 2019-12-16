@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Constants as CONST } from '../config/config.const';
 @Injectable({
  providedIn: 'root'
