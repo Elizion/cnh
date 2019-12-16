@@ -94,7 +94,18 @@ export class GlobalService {
    async alertProfile() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga profile.',
+         subHeader: 'Carga del profile',
+         message: 'No se ha cargado el profile correctamente, intente de nuevo porfavor.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertToken() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Generación de token',
          message: 'No se ha generadodo el token correctamente, intente de nuevo porfavor.'
       });
       await alert.present();

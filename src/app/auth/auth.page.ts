@@ -37,8 +37,14 @@ export class AuthPage {
   }
 
   pivote(user: any, password: any, loadingEl: any): void {
-    this.authService.token().subscribe((res) => {
+    this.authService.token().subscribe((res: Response) => {
       this.login(res, user, password, loadingEl);
+    },
+    (err) => {
+      console.log(err);
+      loadingEl.dismiss();
+      this.globalService.alertToken();
+      this.globalService.routerNavigateAuth();
     });
   }
 
