@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
@@ -10,7 +9,6 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 })
 export class GlobalService {
    constructor(
-      private httpClient: HttpClient,
       private platform: Platform,
       private file: File,
       private fileOpener: FileOpener,
