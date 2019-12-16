@@ -68,11 +68,17 @@ export class PayrollPage implements OnInit {
         this.idPerson,
         startDate,
         endDate
-      ).subscribe( (res: {} ) => {
+      ).subscribe( (res: Response ) => {
         console.log(JSON.stringify(res['data']));
         this.payrollArray = res['data'];
         this.isLoading        = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertAddDate();
+        this.globalService.routerNavigatePayroll();
       });
     });
   }
@@ -95,7 +101,7 @@ export class PayrollPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertAddDate();
+        this.globalService.alertImpress();
         this.globalService.routerNavigatePayroll();
       });
     });

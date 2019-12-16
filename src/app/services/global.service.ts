@@ -158,7 +158,17 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
-
+   async alertImpress() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Carga noticias generales',
+         message: 'Error al imprimir archivo.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
 
   /*
   README: Open from url file content:
