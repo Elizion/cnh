@@ -53,7 +53,6 @@ export class PersonalPage implements OnInit {
   }
 
   download(id: string, extension: string): void {
-
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
     .then(loadingEl => {
@@ -87,18 +86,14 @@ export class PersonalPage implements OnInit {
         if (extension === 'txt') {
           this.b64toBlob(this.base, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
         }
-
       },
       (err) => {
         console.log(err);
-        //loadingEl.dismiss();
+        loadingEl.dismiss();
         this.globalService.alertImpressPersonal();
         this.globalService.routerNavigateNotices();
       });
-
     });
-
-
   }
 
   getFileExtension(nameFile) {
