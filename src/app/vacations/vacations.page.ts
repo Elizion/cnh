@@ -21,16 +21,13 @@ export class VacationsPage implements OnInit {
 
   isLoading = false;
   isLogin = true;
-
   btnCancelar: any;
   btnModificar: any;
   btnImprimir: any;
   btnImprimirModificacion: any;
   checkPeriodoEscalonado: any;
-
   listDaysDefault: any[];
   listDaysGenerate: any[];
-
   diasDisponibles: any;
   diasPendientes: any;
   fechaInicial: any;
@@ -38,8 +35,11 @@ export class VacationsPage implements OnInit {
   periodoEscalonado: any = false;
   b64Data: any;
   idPerson = this.globalService.personId();
-
   visible: any = false;
+
+  ngOnInit() {
+    this.postVacations();
+  }
 
   buttonsRefresh(res: any): void {
     this.btnCancelar              = res['data'].botonCancelar;
@@ -61,6 +61,12 @@ export class VacationsPage implements OnInit {
         this.fechaInicial         = res['data'].fechaInicialFormat;
         this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res['data'].listaDias;
+
+        if (this.listDaysDefault.length === 0 ) {
+          this.globalService.alertListVoidVacations();
+        }
+
+        console.log(this.listDaysDefault);
         this.buttonsRefresh(res);
         this.isLoading            = false;
         this.visible = true;
@@ -116,10 +122,6 @@ export class VacationsPage implements OnInit {
   changeToggle() {
     console.log(this.periodoEscalonado + ' is checked');
     return this.periodoEscalonado;
-  }
-
-  ngOnInit() {
-    this.postVacations();
   }
 
   onSubmit(form: NgForm) {
@@ -195,8 +197,11 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
+        
         console.log(JSON.stringify(res['data'].archivoBase64));
+        
         const nameFile = res['data'].nombreArchivo;
+
         this.b64Data = res['data'].archivoBase64;
         this.download(this.b64Data, nameFile);
         loadingEl.dismiss();
@@ -227,7 +232,7 @@ export class VacationsPage implements OnInit {
         this.diasPendientes,
         this.listDaysGenerate
       ).subscribe((res: Response ) => {
-        console.log(JSON.stringify(res));
+        console.log('FINAL: ' + JSON.stringify(res));
         this.listDaysDefault = res['data'].listaDias;
         this.buttonsRefresh(res);
         loadingEl.dismiss();

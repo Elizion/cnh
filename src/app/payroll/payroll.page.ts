@@ -93,6 +93,7 @@ export class PayrollPage implements OnInit {
       this.payrollService.download(this.idPerson, id).subscribe( (res: Response ) => {
         this.b64Data = res['data'].archivoBase64;
         const nameFile = res['data'].nombreArchivo;
+        console.log(this.b64Data, nameFile);
         this.download(this.b64Data, nameFile);
         console.log(this.payrollArray);
         this.isLoading = false;

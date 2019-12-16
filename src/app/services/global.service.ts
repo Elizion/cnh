@@ -25,7 +25,7 @@ export class GlobalService {
       const parseId = JSON.parse(id);
       return parseId;
    }
-   b64toBlob(b64Data: string, fileName: string, contentType: string, sliceSize: number): void {
+   b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
       for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -38,7 +38,7 @@ export class GlobalService {
          byteArrays.push(byteArray);
       }
       const blob = new Blob(byteArrays, { type: contentType });
-      console.log(blob);
+      const fileName = nameFile;
       const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
       this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
          console.log('File created!');
@@ -220,14 +220,24 @@ export class GlobalService {
       const alert = await this.alertCtrl.create({
          header: 'Error',
          subHeader: 'Vacaciones',
-         message: 'Error al imprimir archivo.'
+         message: 'Error al enviar la solicitud.'
       });
       await alert.present();
       setTimeout (() => {
          alert.dismiss();
       }, 3000);
    }
-
+   async alertListVoidVacations() {
+      const alert = await this.alertCtrl.create({
+         header: 'Sin datos',
+         subHeader: 'Vacaciones',
+         message: 'Lista de dias vacias.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
 }
 /*
 README: Open from url file content:
