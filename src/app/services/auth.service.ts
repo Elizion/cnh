@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { GlobalService } from './global.service';
 import { Constants as CONST } from '../config/config.const';
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,15 @@ import { Constants as CONST } from '../config/config.const';
 export class AuthService {
 
   private isAuthorization = true;
-  private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];  
+  private urlAuth: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[0];
 
   get userIsAuthenticated() {
     return this.isAuthorization;
   }
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private globalService: GlobalService
   ) { }
 
   handleError(error: HttpErrorResponse) {
@@ -29,16 +31,6 @@ export class AuthService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  headers(token: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  CONST.APPLICATION_JSON,
-        Authorization: token
-      })
-    };
-    return httpOptions;
-  }
-
 
   token() {
     this.isAuthorization = false;
@@ -46,13 +38,12 @@ export class AuthService {
                           .pipe(retry(CONST.ONE), catchError(this.handleError));
   }
 
-  login(token: string, user: string, password: string) {
+  login(token: string, contentType: string, user: string, password: string) {
     this.isAuthorization = false;
-    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password, this.headers(token))
+    return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password,
+        this.globalService.headers(token, contentType))
                           .pipe(retry(CONST.ZERO), catchError(this.handleError));
   }
-
-
 
   logout() {
     this.isAuthorization = false;

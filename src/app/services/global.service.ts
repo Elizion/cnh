@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { Constants as CONST } from '../config/config.const';
 @Injectable({
  providedIn: 'root'
 })
@@ -18,6 +17,24 @@ export class GlobalService {
    ) {}
    isLoading = false;
    isLogin   = true;
+   handleError(error: HttpErrorResponse) {
+      if (error.error instanceof ErrorEvent) {
+         console.error('Error: ' + error.error.message);
+      } else {
+         console.error('Code: ' + error.status);
+         console.error('Body: ' + JSON.stringify(error.error));
+      }
+      return throwError('Something bad happened; please try again later.');
+   }
+   headers(token: string, contentType: string) {
+      const httpOptions = {
+         headers: new HttpHeaders({
+            'Content-Type':  contentType,
+            Authorization: token
+         })
+      };
+      return httpOptions;
+   }
    token() {
       const token   = window.localStorage.getItem('token');
       const parseToken = JSON.parse(token);
@@ -28,14 +45,6 @@ export class GlobalService {
       const parseId = JSON.parse(id);
       return parseId;
    }
-   /*
-   apiFake() {
-      return this.httpClient.get('https://jsonplaceholder.typicode.com/posts').pipe(
-         retry(CONST.ZERO),
-         catchError(this.handleError)
-      );
-   }
-   */
    b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
