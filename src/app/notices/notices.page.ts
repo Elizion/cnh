@@ -1,17 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
-import { IonItemSliding } from '@ionic/angular';
-import { NoticesModel } from '../models/notices.model';
-import { NoticesService } from '../services/notices.service';
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-notices',
   templateUrl: './notices.page.html',
   styleUrls: ['./notices.page.scss'],
 })
-export class NoticesPage implements OnInit {
-
+export class NoticesPage {
   constructor() {}
-
-  ngOnInit() {}
-
 }

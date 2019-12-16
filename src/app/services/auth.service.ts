@@ -29,6 +29,8 @@ export class AuthService {
   }
   logout() {
     this.isAuthorization = false;
-    return window.localStorage.removeItem('user');
+    window.localStorage.removeItem('user');
+    window.localStorage.removeItem('token');
+    return this.isAuthorization;
   }
 }
