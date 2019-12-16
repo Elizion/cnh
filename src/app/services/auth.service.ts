@@ -40,7 +40,6 @@ export class AuthService {
   }
 
 
-
   token() {
     this.isAuthorization = false;
     return this.httpClient.get( this.urlAuth + 'autorizacion?solicitante=app-movil')

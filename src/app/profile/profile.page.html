@@ -9,15 +9,15 @@
 
 <ion-content padding *ngIf="visible">
   <ion-grid>    
-    <ion-row class="custom">
-      <ion-col>
-        <div>
-          <ion-avatar class="image">
-            <ion-img src="data:image/jpeg;base64, {{ fotoBase64 }}"></ion-img>
-          </ion-avatar>
-        </div>        
+
+    <ion-row>
+      <ion-col>        
+        <ion-thumbnail class="image">
+          <ion-img src="data:image/jpeg;base64, {{ fotoBase64 }}"></ion-img>
+        </ion-thumbnail>      
       </ion-col>
     </ion-row>
+
     <ion-row>      
       <ion-col text-center>        
         <h3>{{ nombre }}</h3>         

@@ -40,27 +40,22 @@ export class AuthPage {
   }
 
   onSubmit(form: NgForm) {
-
     if (!form.valid) {
       return;
     }
-
     this.user = form.value.user;
     this.password = form.value.password;
-
     if (this.isLogin) {
 
       this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Validando datos...' })
+      .create({ keyboardClose: true, message: 'Validando...' })
       .then(loadingEl => {
         loadingEl.present();
         this.pivote(this.user, this.password, loadingEl);
       });
-
     } else {
 
     }
-
   }
 
   pivote(user: any, password: any, loadingEl: any): void {
@@ -88,7 +83,6 @@ export class AuthPage {
       this.presentAlert();
       this.router.navigateByUrl('/auth');
     });
-
   }
 
 }

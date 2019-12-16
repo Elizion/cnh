@@ -28,28 +28,14 @@ export class GlobalService {
       const parseId = JSON.parse(id);
       return parseId;
    }
-   handleError(error: HttpErrorResponse) {
-      if (error.error instanceof ErrorEvent) {
-         console.error('Error: ' + error.error.message);
-      } else {
-         console.error('Body: ' + JSON.stringify(error.error));
-      }
-      return throwError('Something bad happened; please try again later.');
-   }
-   headers() {
-      const httpOptions = {
-         headers: new HttpHeaders({
-         'Content-Type':  CONST.X_WWW_FORM_URLENCODED,
-         })
-      };
-      return httpOptions;
-   }
+   /*
    apiFake() {
       return this.httpClient.get('https://jsonplaceholder.typicode.com/posts').pipe(
          retry(CONST.ZERO),
          catchError(this.handleError)
       );
    }
+   */
    b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
