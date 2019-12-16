@@ -18,10 +18,6 @@ export class ProfileService {
 
   token: string;
 
-  personal(personId: string) {
-    return this.httpClient.get('https://siarhqamovil.cnh.gob.mx/api/avisos/empleado?personId=' + personId);
-  }
-
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('Error: ' + error.error.message);
