@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { Observable } from 'rxjs';
-import { PayrollModel } from '../models/payroll.model';
 import { Constants as CONST } from '../config/config.const';
 
 @Injectable({
@@ -39,9 +37,7 @@ export class PayrollService {
   }
 
   download(personId: string, consolidationId: string) {
-    return this.httpClient.get(
-      'https://siarhqamovil.cnh.gob.mx/api/recibo/descargaBase64?personId=' + personId + '&consolidationId=' + consolidationId
-    );
+    return this.httpClient.get(this.urlPayroll + 'descargaBase64?personId=' + personId + '&consolidationId=' + consolidationId);
   }
 
 }
