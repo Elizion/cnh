@@ -190,7 +190,6 @@ export class VacationsPage implements OnInit {
     if (this.periodoEscalonado === true) {
       period = 'S';
     }
-    this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Descargando solicitud...' })
     .then(loadingEl => {
@@ -200,7 +199,6 @@ export class VacationsPage implements OnInit {
         const nameFile = res['data'].nombreArchivo;
         this.b64Data = res['data'].archivoBase64;
         this.download(this.b64Data, nameFile);
-        this.isLoading = false;
         loadingEl.dismiss();
       },
       (err) => {
@@ -218,7 +216,6 @@ export class VacationsPage implements OnInit {
 
   save(): void {
     console.log(JSON.stringify(this.listDaysGenerate));
-    this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
     .then(loadingEl => {
@@ -233,7 +230,6 @@ export class VacationsPage implements OnInit {
         console.log(JSON.stringify(res));
         this.listDaysDefault = res['data'].listaDias;
         this.buttonsRefresh(res);
-        this.isLoading       = false;
         loadingEl.dismiss();
       },
       (err) => {

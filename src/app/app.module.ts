@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { GlobalService } from './services/global.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -23,6 +24,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
     SplashScreen,
     File,
     FileOpener,
+    GlobalService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

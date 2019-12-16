@@ -139,6 +139,17 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
+   async alertImpressPersonal() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Noticias',
+         message: 'Error al imprimir archivos.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
    async alertPayroll() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
@@ -153,7 +164,7 @@ export class GlobalService {
    async alertFormPayroll() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga noticias generales',
+         subHeader: 'Recibos',
          message: 'Error al enviar la solicitud.'
       });
       await alert.present();
@@ -164,7 +175,7 @@ export class GlobalService {
    async alertImpressPayroll() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Noticias',
+         subHeader: 'Recibos',
          message: 'Error al imprimir archivo.'
       });
       await alert.present();
@@ -197,7 +208,7 @@ export class GlobalService {
    async alertImpressVacations() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Noticias',
+         subHeader: 'Vacaciones',
          message: 'Error al imprimir archivo.'
       });
       await alert.present();
@@ -208,7 +219,7 @@ export class GlobalService {
    async alertSaveVacations() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Noticias',
+         subHeader: 'Vacaciones',
          message: 'Error al imprimir archivo.'
       });
       await alert.present();
@@ -216,24 +227,26 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
-  /*
-  README: Open from url file content:
-  open() {
-    const request: DownloadRequest = {
-      uri: 'https://devdactic.com/html/5-simple-hacks-LBT.pdf',
-      title: 'vacaciones',
-      description: '',
-      mimeType: '',
-      visibleInDownloadsUi: true,
-      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
-      destinationInExternalFilesDir: {
-        dirType: 'Downloads',
-        subPath: 'app-debug.apk'
-      }
-    };
-    this.downloader.download(request)
-    .then((location: string) => console.log('File downloaded at:' + location))
-    .catch((error: any) => console.error(error));
-  }
-  */
+
 }
+/*
+README: Open from url file content:
+open() {
+   const request: DownloadRequest = {
+   uri: 'https://devdactic.com/html/5-simple-hacks-LBT.pdf',
+   title: 'vacaciones',
+   description: '',
+   mimeType: '',
+   visibleInDownloadsUi: true,
+   notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+   destinationInExternalFilesDir: {
+      dirType: 'Downloads',
+      subPath: 'app-debug.apk'
+   }
+   };
+   this.downloader.download(request)
+   .then((location: string) => console.log('File downloaded at:' + location))
+   .catch((error: any) => console.error(error));
+}
+*/
+
