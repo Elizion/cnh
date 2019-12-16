@@ -3,9 +3,6 @@ import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
-import { Platform } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Constants as CONST } from '../../config/config.const';
 @Component({
   selector: 'app-personal',
@@ -17,16 +14,13 @@ export class PersonalPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
-    private globalService: GlobalService,
-    private platform: Platform,
-    private file: File,
-    private fileOpener: FileOpener
+    private globalService: GlobalService
   ) {}
 
   isLoading = false;
   isLogin = true;
   listPersonal: any[];
-  base: any;
+  base64: any;
   idPerson = this.globalService.personId();
   visible: any = false;
   nameFile: any;
@@ -60,35 +54,35 @@ export class PersonalPage implements OnInit {
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
-      this.noticesService.download(id).subscribe( (res: {} ) => {
-        this.base = res['data'];
+      this.noticesService.download(id).subscribe( (res: Response ) => {
+        this.base64 = res['data'];
         this.nameFile = res['data'].nombreArchivo;
         if (extension === 'pdf') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
         }
         if (extension === 'xls') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_XLS, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_XLS, CONST.SIZE_BUFFER);
         }
         if (extension === 'xlsx') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
         }
         if (extension === 'doc') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_DOC, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_DOC, CONST.SIZE_BUFFER);
         }
         if (extension === 'docx') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
         }
         if (extension === 'jpg') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
         }
         if (extension === 'jpeg') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_JPEG, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_JPEG, CONST.SIZE_BUFFER);
         }
         if (extension === 'png') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_PNG, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_PNG, CONST.SIZE_BUFFER);
         }
         if (extension === 'txt') {
-          this.globalService.b64toBlob(this.base, this.nameFile, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
         }
       },
       (err) => {
