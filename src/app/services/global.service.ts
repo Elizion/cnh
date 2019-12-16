@@ -81,10 +81,13 @@ export class GlobalService {
    routerNavigatePayroll() {
       return this.router.navigateByUrl('/payroll');
    }
+   routerNavigateVacations() {
+      return this.router.navigateByUrl('/vacations');
+   }
    async alertLogin() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Autenticación',
+         subHeader: 'Auth',
          message: 'Usuario y/o contraseñas invalidos, intente de nuevo porfavor.'
       });
       await alert.present();
@@ -95,7 +98,7 @@ export class GlobalService {
    async alertProfile() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga del profile',
+         subHeader: 'Profile',
          message: 'No se ha cargado el profile correctamente, intente de nuevo porfavor.'
       });
       await alert.present();
@@ -106,7 +109,7 @@ export class GlobalService {
    async alertToken() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Generación de token',
+         subHeader: 'Token',
          message: 'No se ha generadodo el token correctamente, intente de nuevo porfavor.'
       });
       await alert.present();
@@ -117,7 +120,7 @@ export class GlobalService {
    async alertGeneral() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga noticias generales',
+         subHeader: 'Noticias',
          message: 'Error al cargar los datos.'
       });
       await alert.present();
@@ -128,7 +131,7 @@ export class GlobalService {
    async alertPersonal() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga noticias generales',
+         subHeader: 'Noticias',
          message: 'Error al cargar los datos.'
       });
       await alert.present();
@@ -139,7 +142,7 @@ export class GlobalService {
    async alertPayroll() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga noticias generales',
+         subHeader: 'Recibos',
          message: 'Error al cargar los datos.'
       });
       await alert.present();
@@ -147,7 +150,7 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
-   async alertAddDate() {
+   async alertFormPayroll() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
          subHeader: 'Carga noticias generales',
@@ -158,10 +161,10 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
-   async alertImpress() {
+   async alertImpressPayroll() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
-         subHeader: 'Carga noticias generales',
+         subHeader: 'Noticias',
          message: 'Error al imprimir archivo.'
       });
       await alert.present();
@@ -169,7 +172,50 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
-
+   async alertVacations() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Vacaciones',
+         message: 'Error al cargar los datos.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertFormVacations() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Vacaciones',
+         message: 'Error al enviar la solicitud.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertImpressVacations() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Noticias',
+         message: 'Error al imprimir archivo.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertSaveVacations() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Noticias',
+         message: 'Error al imprimir archivo.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
   /*
   README: Open from url file content:
   open() {

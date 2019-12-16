@@ -77,7 +77,7 @@ export class PayrollPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertAddDate();
+        this.globalService.alertFormPayroll();
         this.globalService.routerNavigatePayroll();
       });
     });
@@ -101,7 +101,7 @@ export class PayrollPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertImpress();
+        this.globalService.alertImpressPayroll();
         this.globalService.routerNavigatePayroll();
       });
     });

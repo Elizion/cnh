@@ -55,8 +55,7 @@ export class VacationsPage implements OnInit {
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
       loadingEl.present();
-      
-      this.vacationsService.postVacations(this.idPerson).subscribe( (res: {} ) => {
+      this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
         this.diasDisponibles      = res['data'].diasDisponibles;
         this.diasPendientes       = res['data'].diasPendientes;
         this.fechaInicial         = res['data'].fechaInicialFormat;
@@ -66,11 +65,17 @@ export class VacationsPage implements OnInit {
         this.isLoading            = false;
         this.visible = true;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertVacations();
+        this.globalService.routerNavigateVacations();
       });
     });
   }
-
-  detailArray(listDaysDefault) {
+  /*
+  detailArray(listDaysDefault: any) {
     const listDaysDefaultNew = [];
     let i = 0;
     const nodo = {
@@ -95,7 +100,7 @@ export class VacationsPage implements OnInit {
     this.listDaysDefault = listDaysDefaultNew;
     return  this.listDaysDefault;
   }
-
+  */
   cancel(): void {
     alert('Trabajando este modulo...');
   }
@@ -135,11 +140,17 @@ export class VacationsPage implements OnInit {
         startDate,
         endDate,
         this.listDaysDefault
-      ).subscribe((res: {} ) => {
+      ).subscribe((res: Response ) => {
         this.listDaysGenerate = res['data'].listaDias;
         this.listDaysDefault  = this.listDaysGenerate;
         this.isLoading        = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertFormVacations();
+        this.globalService.routerNavigateVacations();
       });
     });
   }
@@ -191,6 +202,12 @@ export class VacationsPage implements OnInit {
         this.download(this.b64Data, nameFile);
         this.isLoading = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertImpressVacations();
+        this.globalService.routerNavigateVacations();
       });
     });
   }
@@ -212,12 +229,18 @@ export class VacationsPage implements OnInit {
         this.fechaIngresoFormat,
         this.diasPendientes,
         this.listDaysGenerate
-      ).subscribe((res: {} ) => {
+      ).subscribe((res: Response ) => {
         console.log(JSON.stringify(res));
         this.listDaysDefault = res['data'].listaDias;
         this.buttonsRefresh(res);
         this.isLoading       = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertSaveVacations();
+        this.globalService.routerNavigateVacations();
       });
     });
   }
