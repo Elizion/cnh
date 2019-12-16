@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { ProfileService } from '../services/profile.service';
+import { GlobalService } from '../services/global.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -10,10 +11,10 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private loadingCtrl: LoadingController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private globalService: GlobalService
   ) {}
 
-  isLoading = true;
   visible: any = false;
   personId: any;
   nombre: any;
@@ -31,7 +32,6 @@ export class ProfilePage implements OnInit {
   }
 
   profile(): void {
-    this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
@@ -50,8 +50,13 @@ export class ProfilePage implements OnInit {
         this.fechaIngresoFormat = res['data'].fechaIngresoFormat;
         this.fotoBase64         = res['data'].fotoBase64;
         this.visible            = true;
-        this.isLoading          = false;
         loadingEl.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loadingEl.dismiss();
+        this.globalService.alertProfile();
+        this.globalService.routerNavigateAuth();
       });
     });
   }

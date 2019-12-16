@@ -4,6 +4,8 @@ import { throwError } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Injectable({
  providedIn: 'root'
 })
@@ -12,27 +14,11 @@ export class GlobalService {
       private platform: Platform,
       private file: File,
       private fileOpener: FileOpener,
+      private alertCtrl: AlertController,
+      private router: Router
    ) {}
    isLoading = false;
    isLogin   = true;
-   handleError(error: HttpErrorResponse) {
-      if (error.error instanceof ErrorEvent) {
-         console.error('Error: ' + error.error.message);
-      } else {
-         console.error('Code: ' + error.status);
-         console.error('Body: ' + JSON.stringify(error.error));
-      }
-      return throwError('Something bad happened; please try again later.');
-   }
-   headers(token: string, contentType: string) {
-      const httpOptions = {
-         headers: new HttpHeaders({
-            'Content-Type':  contentType,
-            Authorization: token
-         })
-      };
-      return httpOptions;
-   }
    token() {
       const token   = window.localStorage.getItem('token');
       const parseToken = JSON.parse(token);
@@ -69,6 +55,54 @@ export class GlobalService {
          throw err;
       });
   }
+
+     handleError(error: HttpErrorResponse) {
+      if (error.error instanceof ErrorEvent) {
+         console.error('Error: ' + error.error.message);
+      } else {
+         console.error('Code: ' + error.status);
+         console.error('Body: ' + JSON.stringify(error.error));
+      }
+      return throwError('Something bad happened; please try again later.');
+   }
+   headers(token: string, contentType: string) {
+      const httpOptions = {
+         headers: new HttpHeaders({
+            'Content-Type':  contentType,
+            Authorization: token
+         })
+      };
+      return httpOptions;
+   }
+   routerNavigateAuth() {
+      return this.router.navigateByUrl('/auth');
+   }
+   routerNavigateProfile() {
+      return this.router.navigateByUrl('/profile');
+   }
+   async alertLogin() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Autenticación',
+         message: 'Usuario y/o contraseñas invalidos, intente de nuevo porfavor.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+   async alertProfile() {
+      const alert = await this.alertCtrl.create({
+         header: 'Error',
+         subHeader: 'Carga profile.',
+         message: 'No se ha generadodo el token correctamente, intente de nuevo porfavor.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+
   /*
   README: Open from url file content:
   open() {

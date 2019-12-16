@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { retry, catchError } from 'rxjs/operators';
 import { GlobalService } from './global.service';
 import { Constants as CONST } from '../config/config.const';
@@ -22,10 +21,10 @@ export class AuthService {
     return this.httpClient.get( this.urlAuth + 'autorizacion?solicitante=app-movil')
                           .pipe(retry(CONST.ONE), catchError(this.globalService.handleError));
   }
-  login(token: string, contentType: string, user: string, password: string) {
+  login(token: string, user: string, password: string) {
     this.isAuthorization = false;
     return this.httpClient.get(this.urlAuth + 'acceso?usuario=' + user + '&contrasenia=' + password,
-        this.globalService.headers(token, contentType))
+        this.globalService.headers(token, CONST.APPLICATION_JSON))
                           .pipe(retry(CONST.ZERO), catchError(this.globalService.handleError));
   }
   logout() {
