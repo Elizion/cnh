@@ -11,24 +11,6 @@ export class VacationsService {
 
   constructor( private httpClient: HttpClient ) {}
 
-  handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('Error: ' + error.error.message);
-    } else {
-      console.error('Body: ' + JSON.stringify(error.error));
-    }
-    return throwError('Something bad happened; please try again later.');
-  }
-
-  headers() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  CONST.X_WWW_FORM_URLENCODED,
-      })
-    };
-    return httpOptions;
-  }
-
   file(id: number, avaible: number, period: string, pending: number, list: any[]) {
      const data = {
       personId: id,
@@ -59,7 +41,6 @@ export class VacationsService {
   }
 
   save(id: string, inicial: string, ingreso: string, pendientes: string, array: any[]) {
-
     const data = {
       personId: id,
       fechaInicial: inicial,
@@ -67,9 +48,7 @@ export class VacationsService {
       diasPendientes: pendientes,
       diasVacaciones: array
     };
-
     return this.httpClient.post(this.urlVacations + 'guardar/', data);
-
   }
 
 }
