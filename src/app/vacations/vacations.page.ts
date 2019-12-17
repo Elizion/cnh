@@ -216,7 +216,7 @@ export class VacationsPage implements OnInit {
   }
 
   download(b64Data: string, nameFile: string): void {
-    this.globalService.b64toBlob(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+    this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
 
   save(): void {

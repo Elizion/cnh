@@ -221,7 +221,19 @@ export class GlobalService {
       }, 3000);
    }
 
-   b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+   async alertExtensionNotAvaible() {
+      const alert = await this.alertCtrl.create({
+         header: 'Descarga',
+         subHeader: 'Avisos',
+         message: 'Archivo no disponible.'
+      });
+      await alert.present();
+      setTimeout (() => {
+         alert.dismiss();
+      }, 3000);
+   }
+
+   b64toBlobPdf(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
       for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -248,7 +260,91 @@ export class GlobalService {
       });
    }
 
-   b64toBlobDoc(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+   b64toBlobDocx(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+      const byteCharacters = atob(b64Data);
+      const byteArrays = [];
+      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+         const slice = byteCharacters.slice(offset, offset + sliceSize);
+         const byteNumbers = new Array(slice.length);
+         for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         byteArrays.push(byteArray);
+      }
+      const blob = new Blob(byteArrays, { type: contentType });
+      console.log(blob);
+      const fileName = nameFile;
+      const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
+      this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
+         console.log('File created!');
+         this.fileOpener.open(fileEntry.toURL(), contentType)
+         .then(() => console.log('File is opened'))
+         .catch(err => console.error('Error openening file: ' + err));
+      })
+      .catch((err) => {
+         console.error('Error creating file: ' + err);
+         throw err;
+      });
+   }
+
+   b64toBlobTxt(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+      const byteCharacters = atob(b64Data);
+      const byteArrays = [];
+      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+         const slice = byteCharacters.slice(offset, offset + sliceSize);
+         const byteNumbers = new Array(slice.length);
+         for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         byteArrays.push(byteArray);
+      }
+      const blob = new Blob(byteArrays, { type: contentType });
+      console.log(blob);
+      const fileName = nameFile;
+      const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
+      this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
+         console.log('File created!');
+         this.fileOpener.open(fileEntry.toURL(), contentType)
+         .then(() => console.log('File is opened'))
+         .catch(err => console.error('Error openening file: ' + err));
+      })
+      .catch((err) => {
+         console.error('Error creating file: ' + err);
+         throw err;
+      });
+   }
+
+   b64toBlobXlsx(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+      const byteCharacters = atob(b64Data);
+      const byteArrays = [];
+      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+         const slice = byteCharacters.slice(offset, offset + sliceSize);
+         const byteNumbers = new Array(slice.length);
+         for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         byteArrays.push(byteArray);
+      }
+      const blob = new Blob(byteArrays, { type: contentType });
+      console.log(blob);
+      const fileName = nameFile;
+      const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
+      this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
+         console.log('File created!');
+         this.fileOpener.open(fileEntry.toURL(), contentType)
+         .then(() => console.log('File is opened'))
+         .catch(err => console.error('Error openening file: ' + err));
+      })
+      .catch((err) => {
+         console.error('Error creating file: ' + err);
+         throw err;
+      });
+   }
+
+   b64toBlobJpg(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
       for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {

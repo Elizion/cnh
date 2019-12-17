@@ -48,73 +48,50 @@ export class PersonalPage implements OnInit {
     });
   }
 
-  download(id: string, nameFile: string): void {
+  getFileExtension(nameFile: string) {
+    const ext = /^.+\.([^.]+)$/.exec(nameFile);
+    return ext == null ? '' : ext[1];
+  }
 
+  download(id: string, nameFile: string, slidingEl: IonItemSliding): void {
     const extension = this.getFileExtension(nameFile);
-
     console.log(nameFile);
     console.log(extension);
-
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Decargando ' + nameFile })
+    .create({ keyboardClose: true, message: 'Procesando archivo...' })
     .then(loadingEl => {
-
       loadingEl.present();
-
       this.noticesService.download(id).subscribe( (res: Response ) => {
-
         this.base64 = res['data'];
-
-        if (extension === 'pdf') {
-          this.globalService.b64toBlob(this.base64, nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+        switch (extension) {
+          case 'pdf':
+            this.globalService.b64toBlobPdf(this.base64, nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+            break;
+          case 'docx':
+            this.globalService.b64toBlobDocx(this.base64, nameFile, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
+            break;
+          case 'txt':
+            this.globalService.b64toBlobTxt(this.base64, nameFile, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
+            break;
+          case 'xlsx':
+            this.globalService.b64toBlobXlsx(this.base64, nameFile, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
+            break;
+          case 'jpg':
+            this.globalService.b64toBlobJpg(this.base64, nameFile, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
+            break;
+          default:
+            this.globalService.alertExtensionNotAvaible();
         }
-        if (extension === 'docx') {
-          this.globalService.b64toBlobDoc(this.base64, nameFile, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
-        }
-
-        /*
-        if (extension === 'xls') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_XLS, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'xlsx') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_XLSX, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'doc') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_DOC, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'docx') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'jpg') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'jpeg') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_JPEG, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'png') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_PNG, CONST.SIZE_BUFFER);
-        }
-        if (extension === 'txt') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
-        }*/
+        slidingEl.close();
       },
       (err) => {
         console.log(err);
+        slidingEl.close();
         loadingEl.dismiss();
         this.globalService.alertImpressPersonal();
         this.globalService.routerNavigateNotices();
       });
     });
-  }
-
-  getFileExtension(nameFile) {
-    const ext = /^.+\.([^.]+)$/.exec(nameFile);
-    return ext == null ? '' : ext[1];
-  }
-
-  show(id: string, nameFile: string, slidingEl: IonItemSliding): void {
-    this.download(id, nameFile);
-    slidingEl.close();
   }
 
 }
