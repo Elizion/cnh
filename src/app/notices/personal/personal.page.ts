@@ -83,6 +83,7 @@ export class PersonalPage implements OnInit {
             this.globalService.alertExtensionNotAvaible();
         }
         slidingEl.close();
+        loadingEl.dismiss();
       },
       (err) => {
         console.log(err);
