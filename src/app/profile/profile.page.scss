@@ -1,6 +1,9 @@
 .image {
- height: 15em!important; 
- width: 10em!important;
+ height: 11em!important; 
+ width: 8em!important;
  margin: auto!important; 
+ -webkit-box-shadow: 10px 10px 41px 1px rgba(0,0,0,0.75);
+ -moz-box-shadow: 10px 10px 41px 1px rgba(0,0,0,0.75);
+ box-shadow: 10px 10px 41px 1px rgba(0,0,0,0.75);
 }
    
