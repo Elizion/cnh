@@ -23,7 +23,6 @@ export class PersonalPage implements OnInit {
   base64: any;
   idPerson = this.globalService.personId();
   visible: any = false;
-  nameFile: any;
 
   ngOnInit() {
     this.personal();
@@ -49,17 +48,31 @@ export class PersonalPage implements OnInit {
     });
   }
 
-  download(id: string, extension: string): void {
+  download(id: string, nameFile: string): void {
+
+    const extension = this.getFileExtension(nameFile);
+
+    console.log(nameFile);
+    console.log(extension);
+
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Guardando fechas...' })
+    .create({ keyboardClose: true, message: 'Decargando ' + nameFile })
     .then(loadingEl => {
+
       loadingEl.present();
+
       this.noticesService.download(id).subscribe( (res: Response ) => {
+
         this.base64 = res['data'];
-        this.nameFile = res['data'].nombreArchivo;
+
         if (extension === 'pdf') {
-          this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+          this.globalService.b64toBlob(this.base64, nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
         }
+        if (extension === 'docx') {
+          this.globalService.b64toBlobDoc(this.base64, nameFile, CONST.APPLICATION_DOCX, CONST.SIZE_BUFFER);
+        }
+
+        /*
         if (extension === 'xls') {
           this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_XLS, CONST.SIZE_BUFFER);
         }
@@ -83,7 +96,7 @@ export class PersonalPage implements OnInit {
         }
         if (extension === 'txt') {
           this.globalService.b64toBlob(this.base64, this.nameFile, CONST.APPLICATION_TXT, CONST.SIZE_BUFFER);
-        }
+        }*/
       },
       (err) => {
         console.log(err);
@@ -100,10 +113,7 @@ export class PersonalPage implements OnInit {
   }
 
   show(id: string, nameFile: string, slidingEl: IonItemSliding): void {
-    const ext = this.getFileExtension(nameFile);
-    console.log(nameFile);
-    console.log(ext);
-    this.download(id, ext);
+    this.download(id, nameFile);
     slidingEl.close();
   }
 

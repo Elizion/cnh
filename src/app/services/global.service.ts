@@ -261,6 +261,7 @@ export class GlobalService {
          byteArrays.push(byteArray);
       }
       const blob = new Blob(byteArrays, { type: contentType });
+      console.log(blob);
       const fileName = nameFile;
       const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
       this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
