@@ -6,6 +6,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 export class GlobalService {
+
    constructor(
       private platform: Platform,
       private file: File,
@@ -13,44 +14,22 @@ export class GlobalService {
       private alertCtrl: AlertController,
       private router: Router
    ) {}
+
    isLoading = false;
    isLogin   = true;
+
    token() {
       const token   = window.localStorage.getItem('token');
       const parseToken = JSON.parse(token);
       return parseToken;
    }
+
    personId() {
       const id   = window.localStorage.getItem('personId');
       const parseId = JSON.parse(id);
       return parseId;
    }
-   b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
-      const byteCharacters = atob(b64Data);
-      const byteArrays = [];
-      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-         const slice = byteCharacters.slice(offset, offset + sliceSize);
-         const byteNumbers = new Array(slice.length);
-         for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-         }
-         const byteArray = new Uint8Array(byteNumbers);
-         byteArrays.push(byteArray);
-      }
-      const blob = new Blob(byteArrays, { type: contentType });
-      const fileName = nameFile;
-      const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
-      this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
-         console.log('File created!');
-         this.fileOpener.open(fileEntry.toURL(), contentType)
-         .then(() => console.log('File is opened'))
-         .catch(err => console.error('Error openening file: ' + err));
-      })
-      .catch((err) => {
-         console.error('Error creating file: ' + err);
-         throw err;
-      });
-   }
+
    handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          console.error('Error: ' + error.error.message);
@@ -60,6 +39,7 @@ export class GlobalService {
       }
       return throwError('Something bad happened; please try again later.');
    }
+
    headers(token: string, contentType: string) {
       const httpOptions = {
          headers: new HttpHeaders({
@@ -69,6 +49,7 @@ export class GlobalService {
       };
       return httpOptions;
    }
+
    routerNavigateAuth() {
       return this.router.navigateByUrl('/auth');
    }
@@ -84,6 +65,7 @@ export class GlobalService {
    routerNavigateVacations() {
       return this.router.navigateByUrl('/vacations');
    }
+
    async alertLogin() {
       const alert = await this.alertCtrl.create({
          header: 'Error',
@@ -238,6 +220,61 @@ export class GlobalService {
          alert.dismiss();
       }, 3000);
    }
+
+   b64toBlob(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+      const byteCharacters = atob(b64Data);
+      const byteArrays = [];
+      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+         const slice = byteCharacters.slice(offset, offset + sliceSize);
+         const byteNumbers = new Array(slice.length);
+         for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         byteArrays.push(byteArray);
+      }
+      const blob = new Blob(byteArrays, { type: contentType });
+      const fileName = nameFile;
+      const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
+      this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
+         console.log('File created!');
+         this.fileOpener.open(fileEntry.toURL(), contentType)
+         .then(() => console.log('File is opened'))
+         .catch(err => console.error('Error openening file: ' + err));
+      })
+      .catch((err) => {
+         console.error('Error creating file: ' + err);
+         throw err;
+      });
+   }
+
+   b64toBlobDoc(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
+      const byteCharacters = atob(b64Data);
+      const byteArrays = [];
+      for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+         const slice = byteCharacters.slice(offset, offset + sliceSize);
+         const byteNumbers = new Array(slice.length);
+         for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         byteArrays.push(byteArray);
+      }
+      const blob = new Blob(byteArrays, { type: contentType });
+      const fileName = nameFile;
+      const filePath = (this.platform.is('android')) ? this.file.externalRootDirectory : this.file.cacheDirectory;
+      this.file.writeFile(filePath, fileName, blob, { replace: true }).then((fileEntry) => {
+         console.log('File created!');
+         this.fileOpener.open(fileEntry.toURL(), contentType)
+         .then(() => console.log('File is opened'))
+         .catch(err => console.error('Error openening file: ' + err));
+      })
+      .catch((err) => {
+         console.error('Error creating file: ' + err);
+         throw err;
+      });
+   }
+
 }
 /*
 README: Open from url file content:
