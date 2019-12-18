@@ -13,14 +13,12 @@ import * as moment from 'moment';
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
-
   constructor(
     private loadingCtrl: LoadingController,
     private utilsMessage: UtilsMessage,
     private globalService: GlobalService,
     private vacationsService: VacationsService
   ) { }
-
   isLoading = false;
   isLogin = true;
   btnCancelar: any;
@@ -37,19 +35,15 @@ export class VacationsPage implements OnInit {
   b64Data: any;
   idPerson = this.globalService.personId();
   visible: any = false;
-
   ngOnInit() {
     this.postVacations();
   }
-
   buttonsRefresh(res: any): void {
     this.btnCancelar              = res['data'].botonCancelar;
     this.btnModificar             = res['data'].botonModificar;
     this.btnImprimir              = res['data'].botonImprimir;
-    console.log(this.btnImprimir);
     this.checkPeriodoEscalonado   = res['data'].checkPeriodoEscalonado;
   }
-
   postVacations(): void {
     this.isLoading = true;
     this.loadingCtrl
@@ -58,7 +52,7 @@ export class VacationsPage implements OnInit {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
         this.diasDisponibles      = res['data'].diasDisponibles;
-        this.diasPendientes       = res['data'].diasPendientes;        
+        this.diasPendientes       = res['data'].diasPendientes;
         this.fechaInicial         = res['data'].fechaInicialFormat;
         this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res['data'].listaDias;
@@ -115,12 +109,10 @@ export class VacationsPage implements OnInit {
   update(): void {
     alert('Trabajando este modulo...');
   }
-
   changeToggle() {
     console.log(this.periodoEscalonado + ' is checked');
     return this.periodoEscalonado;
   }
-
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
@@ -161,15 +153,12 @@ export class VacationsPage implements OnInit {
       });
     });
   }
-
   refresh(): void {
     this.postVacations();
   }
-
   count(): void {
     alert(this.listDaysDefault.length);
   }
-
   removeItem(id: number, slidingEl: IonItemSliding): void {
     let i = 0;
     for ( i; i < this.listDaysDefault.length; i++ ) {
@@ -181,7 +170,6 @@ export class VacationsPage implements OnInit {
     }
     slidingEl.close();
   }
-
   impress(): void {
     let i = 0;
     const newArray = [];
@@ -216,11 +204,9 @@ export class VacationsPage implements OnInit {
       });
     });
   }
-
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
   save(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
@@ -260,5 +246,4 @@ export class VacationsPage implements OnInit {
       loadingEl.dismiss();
     });
   }
-
 }
