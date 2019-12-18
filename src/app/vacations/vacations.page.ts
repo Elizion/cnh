@@ -30,11 +30,13 @@ export class VacationsPage implements OnInit {
   diasDisponibles: any;
   diasPendientes: any;
   fechaInicial: any;
-  fechaIngresoFormat: any;
+  fechaIngresoFormat: string;
+  fechaInicialFormat: any;
   periodoEscalonado: any = false;
   b64Data: any;
   idPerson = this.globalService.personId();
   visible: any = false;
+  
   ngOnInit() {
     this.postVacations();
   }
@@ -56,6 +58,9 @@ export class VacationsPage implements OnInit {
         this.fechaInicial         = res['data'].fechaInicialFormat;
         this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res['data'].listaDias;
+        this.fechaInicialFormat   = res['data'].fechaInicialFormat;
+        console.log(res['data'].fechaInicialFormat);
+        localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.alertListVoidVacations();
         }
@@ -106,7 +111,7 @@ export class VacationsPage implements OnInit {
   impressUpdate(): void {
     alert('Trabajando este modulo...');
   }
-  update(): void {
+  update(date: string): void {
     this.utilsMessage.routerNavigateVacationsUpdate();
   }
   changeToggle() {
@@ -221,7 +226,6 @@ export class VacationsPage implements OnInit {
         this.listDaysDefault
       ).subscribe((res: Response ) => {
         this.diasPendientes = res['data'].diasPendientes;
-        console.log(JSON.stringify(res));
         console.log(res['data'].mensajes);
         if (res['data'].mensajes !== 'undefined') {
           const mensajes: string[] = res['data'].mensajes;
@@ -246,4 +250,5 @@ export class VacationsPage implements OnInit {
       loadingEl.dismiss();
     });
   }
+  
 }

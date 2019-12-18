@@ -44,6 +44,9 @@ export class VacationsService {
     return this.httpClient.post(this.urlVacations + 'guardar/', data);
   }
 
-  
+  update(id: string, date: string) {
+    return this.httpClient.get(this.urlVacations + 'modificar?personId=' + id + '&fechaUltimoPeriodo=' + date);
+  }
+
 
 }

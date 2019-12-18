@@ -51,8 +51,7 @@ export class AuthPage {
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     this.authService.login(tokenBase.data, user, password).subscribe((res: Response) => {
       this.status = res['metadata'].response;
-      this.token = res['data'];
-      loadingEl.dismiss();
+      this.token = res['data'];      
       if (this.status === 'EXITO') {
         window.localStorage.setItem('token', JSON.stringify(this.token));
         this.globalService.routerNavigateProfile();
@@ -60,6 +59,7 @@ export class AuthPage {
         window.localStorage.removeItem('token');
         this.globalService.routerNavigateAuth();
       }
+      loadingEl.dismiss();
     },
     (err) => {
       console.log(err);

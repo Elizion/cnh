@@ -25,6 +25,11 @@ export class GlobalService {
       const parseId = JSON.parse(id);
       return parseId;
    }
+   date() {
+      const date = window.localStorage.getItem('date');
+      const obj = JSON.parse(date);
+      return obj;
+   }
    handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          console.error('Error: ' + error.error.message);
