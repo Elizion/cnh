@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UtilsMessage } from '../../utils/utils.message';
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdatePage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private utilsMessage: UtilsMessage
+  ) { }
 
   ngOnInit() {
+  }
+
+  back() {
+    return this.utilsMessage.routerNavigateVacations();
   }
 
 }

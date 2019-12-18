@@ -107,7 +107,7 @@ export class VacationsPage implements OnInit {
     alert('Trabajando este modulo...');
   }
   update(): void {
-    alert('Trabajando este modulo...');
+    this.utilsMessage.routerNavigateVacationsUpdate();
   }
   changeToggle() {
     console.log(this.periodoEscalonado + ' is checked');

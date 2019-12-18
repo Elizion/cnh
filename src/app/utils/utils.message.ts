@@ -23,6 +23,9 @@ export class UtilsMessage {
   routerNavigateVacations() {
    return this.router.navigateByUrl('/vacations');
   }
+  routerNavigateVacationsUpdate() {
+   return this.router.navigateByUrl('/vacations/update');
+  }
 
  async alertLogin() {
   const alert = await this.alertCtrl.create({
