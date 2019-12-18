@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { GlobalService } from './services/global.service';
+import { UtilsMessage } from './utils/utils.message';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -25,6 +26,7 @@ import { GlobalService } from './services/global.service';
     File,
     FileOpener,
     GlobalService,
+    UtilsMessage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

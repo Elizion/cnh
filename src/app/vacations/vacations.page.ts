@@ -5,6 +5,7 @@ import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
 import { Constants as CONST } from '../config/config.const';
 import { NgForm } from '@angular/forms';
+import { UtilsMessage } from '../utils/utils.message';
 import * as moment from 'moment';
 @Component({
   selector: 'app-vacations',
@@ -15,6 +16,7 @@ export class VacationsPage implements OnInit {
 
   constructor(
     private loadingCtrl: LoadingController,
+    private utilsMessage: UtilsMessage,
     private globalService: GlobalService,
     private vacationsService: VacationsService
   ) { }
@@ -24,7 +26,6 @@ export class VacationsPage implements OnInit {
   btnCancelar: any;
   btnModificar: any;
   btnImprimir: any;
-  btnImprimirModificacion: any;
   checkPeriodoEscalonado: any;
   listDaysDefault: any[];
   listDaysGenerate: any[];
@@ -45,7 +46,7 @@ export class VacationsPage implements OnInit {
     this.btnCancelar              = res['data'].botonCancelar;
     this.btnModificar             = res['data'].botonModificar;
     this.btnImprimir              = res['data'].botonImprimir;
-    this.btnImprimirModificacion  = res['data'].botonImprimirModificacion;
+    console.log(this.btnImprimir);
     this.checkPeriodoEscalonado   = res['data'].checkPeriodoEscalonado;
   }
 
@@ -57,15 +58,13 @@ export class VacationsPage implements OnInit {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
         this.diasDisponibles      = res['data'].diasDisponibles;
-        this.diasPendientes       = res['data'].diasPendientes;
+        this.diasPendientes       = res['data'].diasPendientes;        
         this.fechaInicial         = res['data'].fechaInicialFormat;
         this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res['data'].listaDias;
-
         if (this.listDaysDefault.length === 0 ) {
-          this.globalService.alertListVoidVacations();
+          this.utilsMessage.alertListVoidVacations();
         }
-
         console.log(this.listDaysDefault);
         this.buttonsRefresh(res);
         this.isLoading            = false;
@@ -75,8 +74,8 @@ export class VacationsPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertVacations();
-        this.globalService.routerNavigateVacations();
+        this.utilsMessage.alertVacations();
+        this.utilsMessage.routerNavigateVacations();
       });
     });
   }
@@ -110,11 +109,9 @@ export class VacationsPage implements OnInit {
   cancel(): void {
     alert('Trabajando este modulo...');
   }
-
   impressUpdate(): void {
     alert('Trabajando este modulo...');
   }
-
   update(): void {
     alert('Trabajando este modulo...');
   }
@@ -145,14 +142,22 @@ export class VacationsPage implements OnInit {
       ).subscribe((res: Response ) => {
         this.listDaysGenerate = res['data'].listaDias;
         this.listDaysDefault  = this.listDaysGenerate;
+        console.log(JSON.stringify(this.listDaysDefault));
+        console.log('# ' + JSON.stringify(res['data'].mensajes));
+        if (res['data'].mensajes !== 'undefined') {
+          const mensajes: string[] = res['data'].mensajes;
+          if (mensajes != null && mensajes.length > 0) {
+            this.utilsMessage.alertMensajeFechas(mensajes);
+          }
+        }
         this.isLoading        = false;
         loadingEl.dismiss();
       },
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertFormVacations();
-        this.globalService.routerNavigateVacations();
+        this.utilsMessage.alertFormVacations();
+        this.utilsMessage.routerNavigateVacations();
       });
     });
   }
@@ -197,11 +202,8 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
-        
         console.log(JSON.stringify(res['data'].archivoBase64));
-        
         const nameFile = res['data'].nombreArchivo;
-
         this.b64Data = res['data'].archivoBase64;
         this.download(this.b64Data, nameFile);
         loadingEl.dismiss();
@@ -209,8 +211,8 @@ export class VacationsPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertImpressVacations();
-        this.globalService.routerNavigateVacations();
+        this.utilsMessage.alertImpressVacations();
+        this.utilsMessage.routerNavigateVacations();
       });
     });
   }
@@ -220,29 +222,42 @@ export class VacationsPage implements OnInit {
   }
 
   save(): void {
-    console.log(JSON.stringify(this.listDaysGenerate));
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
+      console.log(this.listDaysDefault);
       this.vacationsService.save(
         this.idPerson,
         this.fechaInicial,
         this.fechaIngresoFormat,
         this.diasPendientes,
-        this.listDaysGenerate
+        this.listDaysDefault
       ).subscribe((res: Response ) => {
-        console.log('FINAL: ' + JSON.stringify(res));
-        this.listDaysDefault = res['data'].listaDias;
-        this.buttonsRefresh(res);
+        this.diasPendientes = res['data'].diasPendientes;
+        console.log(JSON.stringify(res));
+        console.log(res['data'].mensajes);
+        if (res['data'].mensajes !== 'undefined') {
+          const mensajes: string[] = res['data'].mensajes;
+          if ( mensajes != null && mensajes.length > 0) {
+            this.utilsMessage.alertGuardarFechas(res['data'].mensajes);
+          } else {
+            this.listDaysDefault = res['data'].listaDias;
+            this.buttonsRefresh(res);
+          }
+        } else {
+          this.listDaysDefault = res['data'].listaDias;
+          this.buttonsRefresh(res);
+        }
         loadingEl.dismiss();
       },
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertSaveVacations();
-        this.globalService.routerNavigateVacations();
+        this.utilsMessage.alertSaveVacations();
+        this.utilsMessage.routerNavigateVacations();
       });
+      loadingEl.dismiss();
     });
   }
 

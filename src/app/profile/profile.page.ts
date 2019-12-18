@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { ProfileService } from '../services/profile.service';
 import { GlobalService } from '../services/global.service';
+import { UtilsMessage } from '../utils/utils.message';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -12,10 +13,10 @@ export class ProfilePage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private profileService: ProfileService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private utilsMessage: UtilsMessage
   ) {}
 
-  visible: any = false;
   personId: any;
   nombre: any;
   numeroEmpleado: any;
@@ -26,6 +27,7 @@ export class ProfilePage implements OnInit {
   rfc: any;
   fechaIngresoFormat: any;
   fotoBase64: any;
+  visible: any = false;
 
   ngOnInit() {
     this.profile();
@@ -56,8 +58,8 @@ export class ProfilePage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertProfile();
-        this.globalService.routerNavigateAuth();
+        this.utilsMessage.alertProfile();
+        this.utilsMessage.routerNavigateAuth();
       });
     });
   }

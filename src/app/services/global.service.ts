@@ -6,7 +6,6 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 export class GlobalService {
-
    constructor(
       private platform: Platform,
       private file: File,
@@ -14,22 +13,18 @@ export class GlobalService {
       private alertCtrl: AlertController,
       private router: Router
    ) {}
-
    isLoading = false;
    isLogin   = true;
-
    token() {
       const token   = window.localStorage.getItem('token');
       const parseToken = JSON.parse(token);
       return parseToken;
    }
-
    personId() {
       const id   = window.localStorage.getItem('personId');
       const parseId = JSON.parse(id);
       return parseId;
    }
-
    handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          console.error('Error: ' + error.error.message);
@@ -39,7 +34,6 @@ export class GlobalService {
       }
       return throwError('Something bad happened; please try again later.');
    }
-
    headers(token: string, contentType: string) {
       const httpOptions = {
          headers: new HttpHeaders({
@@ -49,7 +43,6 @@ export class GlobalService {
       };
       return httpOptions;
    }
-
    routerNavigateAuth() {
       return this.router.navigateByUrl('/auth');
    }
@@ -65,7 +58,6 @@ export class GlobalService {
    routerNavigateVacations() {
       return this.router.navigateByUrl('/vacations');
    }
-
    async alertLogin() {
       const alert = await this.alertCtrl.create({
          header: 'Error',

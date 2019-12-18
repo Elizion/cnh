@@ -18,7 +18,7 @@ export class VacationsService {
       diasPendientes: pending,
       listaVacaciones: list
     };
-    return this.httpClient.post(this.urlVacations+ 'formato/solicitudBase64/', data);
+     return this.httpClient.post(this.urlVacations + 'formato/solicitudBase64/', data);
   }
 
   postVacations(personId) {
@@ -36,7 +36,7 @@ export class VacationsService {
       diasDisponibles: avaible,
       diasVacaciones: list
     };
-    return this.httpClient.post(this.urlVacations+ 'agregar/', data);
+     return this.httpClient.post(this.urlVacations + 'agregar/', data);
   }
 
   save(id: string, inicial: string, ingreso: string, pendientes: string, array: any[]) {
