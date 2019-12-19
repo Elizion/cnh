@@ -4,40 +4,23 @@ import { UtilsMessage } from '../../utils/utils.message';
 import { VacationsService } from '../../services/vacations.service';
 import { GlobalService } from '../../services/global.service';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { ValueTransformer } from '@angular/compiler/src/util';
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
 })
 export class UpdatePage implements OnInit {
-
-  form: FormGroup;
-  Data: Array<any> = [
-    { name: 'Pear', value: 'pear' },
-    { name: 'Plum', value: 'plum' },
-    { name: 'Kiwi', value: 'kiwi' },
-    { name: 'Apple', value: 'apple' },
-    { name: 'Lime', value: 'lime' }
-  ];
-
-
-  constructor(
-    private utilsMessage: UtilsMessage,
-    private vacationsService: VacationsService,
-    private loadingCtrl: LoadingController,
-    private globalService: GlobalService,
-    private fb: FormBuilder
-  ) {
-    this.form = this.fb.group({
-      checkArray: this.fb.array([], [Validators.required])
-    });
-  }
-
   listDaysDefault: any = [];
   listDaysGenerate: any = [];
   date: any = false;
   visible: any = false;
+  checked = [];
+  constructor(
+    private utilsMessage: UtilsMessage,
+    private vacationsService: VacationsService,
+    private loadingCtrl: LoadingController,
+    private globalService: GlobalService
+  ) {}
 
   ngOnInit() {
     this.update();
@@ -67,32 +50,26 @@ export class UpdatePage implements OnInit {
       });
     });
   }
-
-  onCheckboxChange(e) {
-    const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
+  addCheckbox(event, checkbox: string) {
+    if ( event.target.checked ) {
+      this.checked.push(checkbox);
     } else {
-      let i: number = 0;
-      checkArray.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
-          checkArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
+      const index = this.removeCheckedFromArray(checkbox);
+      this.checked.splice(index, 1);
     }
   }
-
-  submitForm() {
-    alert(JSON.stringify(this.form.value));
+  removeCheckedFromArray(checkbox: string) {
+    return this.checked.findIndex((category) => {
+      return category === checkbox;
+    });
   }
-
-
-
+  emptyCheckedArray() {
+    this.checked = [];
+  }
+  getCheckedBoxes() {
+    alert(JSON.stringify(this.checked));
+  }
   back() {
     return this.utilsMessage.routerNavigateVacations();
   }
-
 }
