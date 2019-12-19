@@ -47,7 +47,6 @@ export class VacationsPage implements OnInit {
     this.checkPeriodoEscalonado   = res['data'].checkPeriodoEscalonado;
   }
   postVacations(): void {
-    this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
@@ -66,7 +65,6 @@ export class VacationsPage implements OnInit {
         }
         console.log(this.listDaysDefault);
         this.buttonsRefresh(res);
-        this.isLoading            = false;
         this.visible = true;
         loadingEl.dismiss();
       },
