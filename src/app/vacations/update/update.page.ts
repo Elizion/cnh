@@ -3,26 +3,35 @@ import { LoadingController } from '@ionic/angular';
 import { UtilsMessage } from '../../utils/utils.message';
 import { VacationsService } from '../../services/vacations.service';
 import { GlobalService } from '../../services/global.service';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
 })
 export class UpdatePage implements OnInit {
+
   listDaysDefault: any = [];
   listDaysGenerate: any = [];
   date: any = false;
   visible: any = false;
   checked = [];
+  myArray = [];
+
   constructor(
     private utilsMessage: UtilsMessage,
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
+    this.update();
+  }
+
+  refresh() {
     this.update();
   }
 
@@ -50,26 +59,83 @@ export class UpdatePage implements OnInit {
       });
     });
   }
+
+
+
+  submitForm(formBuilder: any) {
+    const obj = formBuilder.value;
+    const array = Object.entries(obj);
+    let k = 0;
+    let id = '';
+    let date = '';
+    for (k; k < array.length; k++ ) {
+      id = array[k][0];
+      date =  moment(array[k][1]).format('DD/MM/YYYY');
+      if (date === 'Invalid date') {
+      } else {
+        let i = 0;
+        let idVacaciones = 0;
+        let fechaFormat = '';
+        const nodo = {
+          idVacaciones: String,
+          personId: String,
+          fecha: '',
+          fechaFormat: String,
+          estatus: String,
+          estatusFormat: String,
+          estatusDescripcion: String,
+          fechaRegistro: String
+        };
+        for (i; i < this.listDaysDefault.length; i++ ) {
+          idVacaciones = this.listDaysDefault[i].idVacaciones;
+          fechaFormat = this.listDaysDefault[i].fechaFormat;
+          if (idVacaciones.toString() === id) {
+            console.log('AFTER: ' + idVacaciones + ' ' + fechaFormat);
+            console.log('NOW: ' + id + ' ' + date);
+            nodo.idVacaciones       = this.listDaysDefault[i].idVacaciones;
+            nodo.personId           = this.listDaysDefault[i].personId;
+            nodo.fecha              = date;
+            nodo.fechaFormat        = this.listDaysDefault[i].fechaFormat;
+            nodo.estatusDescripcion = this.listDaysDefault[i].estatusDescripcion;
+            nodo.fechaRegistro      = this.listDaysDefault[i].fechaRegistro;
+            this.listDaysGenerate.push(nodo);
+          }
+        }
+      }
+    }
+
+    console.log(JSON.stringify(this.listDaysGenerate));
+
+  }
+
+
   addCheckbox(event, checkbox: string) {
+
+    console.log(JSON.stringify(checkbox));
+
     if ( event.target.checked ) {
       this.checked.push(checkbox);
     } else {
       const index = this.removeCheckedFromArray(checkbox);
       this.checked.splice(index, 1);
     }
+
+
+    console.log(JSON.stringify(this.checked));
   }
+
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category) => {
       return category === checkbox;
     });
   }
+
   emptyCheckedArray() {
     this.checked = [];
   }
-  getCheckedBoxes() {
-    alert(JSON.stringify(this.checked));
-  }
+
   back() {
     return this.utilsMessage.routerNavigateVacations();
   }
+
 }

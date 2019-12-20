@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx'
 import { GlobalService } from './services/global.service';
 import { UtilsMessage } from './utils/utils.message';
 @NgModule({
