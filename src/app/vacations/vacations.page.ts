@@ -104,7 +104,7 @@ export class VacationsPage implements OnInit {
   }
   */
   cancel(): void {
-    alert('Trabajando este modulo...');
+    this.utilsMessage.routerNavigateVacationsCancel();
   }
   impressUpdate(): void {
     alert('Trabajando este modulo...');

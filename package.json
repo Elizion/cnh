@@ -27,7 +27,6 @@
     "@ionic/angular": "^4.7.1",
     "cordova-android": "^8.1.0",
     "cordova-plugin-file": "^6.0.2",
-    "cordova-plugin-file-opener": "^1.0.0",
     "cordova-plugin-file-opener2": "^2.2.1",
     "core-js": "^2.5.4",
     "moment": "^2.24.0",
@@ -70,8 +69,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "com.wmjalak.cordova.fileopener": {},
-      "cordova-plugin-file": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
@@ -80,6 +77,7 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-file": {},
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       }

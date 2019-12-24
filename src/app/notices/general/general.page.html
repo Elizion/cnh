@@ -3,13 +3,16 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>      
     </ion-buttons>
-    <ion-title>General</ion-title>
+    <ion-title>Avisos</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding *ngIf="visible">  
   <ion-grid>
+    <ion-toolbar color="secondary">
+      <ion-title>Avisos generales</ion-title>
+    </ion-toolbar>
     <ion-row>      
-      <ion-col *ngIf="descripcionAvisoGeneral">
+      <ion-col *ngIf="descripcionAvisoGeneral">        
         <ion-card>          
           <ion-card-header>
             <ion-card-subtitle text-center>{{ descripcionAvisoGeneral }}</ion-card-subtitle>            

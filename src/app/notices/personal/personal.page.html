@@ -3,14 +3,17 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>      
     </ion-buttons>
-    <ion-title>Personal</ion-title>
+    <ion-title>Avisos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding *ngIf="visible">
   <ion-grid>
+    <ion-toolbar color="secondary">
+      <ion-title>Avisos personales</ion-title>
+    </ion-toolbar>
     <ion-row>
-      <ion-col size-md="6" offset-md="3">        
+      <ion-col size-md="6" offset-md="3">                
         <ion-list>
           <ion-item-sliding *ngFor="let notice of listPersonal" #slidingPersonal>
             <ion-item>

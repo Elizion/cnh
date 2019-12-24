@@ -41,7 +41,6 @@ export class ProfilePage implements OnInit {
       this.profileService.profile().subscribe((res: Response) => {
         console.log(JSON.stringify(res));
         this.personId           = res['data'].personId;
-        window.localStorage.setItem('personId', JSON.stringify(this.personId));
         this.nombre             = res['data'].nombre;
         this.numeroEmpleado     = res['data'].numeroEmpleado;
         this.unidad             = res['data'].unidad;
@@ -53,6 +52,7 @@ export class ProfilePage implements OnInit {
         this.fechaIngresoFormat = res['data'].fechaIngresoFormat;
         this.fotoBase64         = res['data'].fotoBase64;
         this.visible            = true;
+        window.localStorage.setItem('personId', JSON.stringify(res['data'].personId));
         loadingEl.dismiss();
       },
       (err) => {

@@ -6,10 +6,14 @@ const routes: Routes = [
   {
     path: '',
     component: VacationsPage
-  },  
+  },
   {
     path: 'update',
     loadChildren: './update/update.module#UpdatePageModule'
+  },
+  {
+    path: 'cancel',
+    loadChildren: './cancel/cancel.module#CancelPageModule'
   }
 ];
 

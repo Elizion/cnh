@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content padding *ngIf="visible">  
-
+  <ion-toolbar color="secondary">
+    <ion-title>Solicitud de vacaciones</ion-title>
+  </ion-toolbar>
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>        
       <ion-row>                        
@@ -89,31 +91,31 @@
     <ion-row>             
             
       <ion-col *ngIf="this.btnModificar" routerLink="update">
-        <ion-button color="secondary" expand="block">          
+        <ion-button color="primary" expand="block">          
           <ion-icon name="create" slot="icon-only"></ion-icon>          
         </ion-button>        
       </ion-col>            
 
       <ion-col *ngIf="this.btnImprimir" (click)="impress()">
-        <ion-button color="secondary" expand="block">          
+        <ion-button color="primary" expand="block">          
           <ion-icon name="print" slot="icon-only"></ion-icon>
         </ion-button>        
       </ion-col>            
 
       <ion-col *ngIf="this.btnCancelar" (click)="cancel()">
-        <ion-button color="secondary" expand="block">  
+        <ion-button color="primary" expand="block">  
           <ion-icon name="close-circle" slot="icon-only"></ion-icon>          
         </ion-button>        
       </ion-col>   
 
       <ion-col (click)="refresh()">
-        <ion-button color="secondary" expand="block">  
+        <ion-button color="primary" expand="block">  
           <ion-icon name="refresh" slot="icon-only"></ion-icon>          
         </ion-button>        
       </ion-col>      
       
       <ion-col>
-        <ion-button color="secondary" expand="block" (click)="save()">          
+        <ion-button color="primary" expand="block" (click)="save()">          
           <ion-icon name="folder" slot="icon-only"></ion-icon>
         </ion-button>        
       </ion-col>

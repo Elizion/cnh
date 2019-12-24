@@ -7,28 +7,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding *ngIf="visible">    
+<ion-content padding *ngIf="visible">  
+  <ion-toolbar color="secondary" text-center>
+    <ion-title>Cancelación de fechas</ion-title>
+  </ion-toolbar>
   <ion-grid>    
-
-    <form #myform="ngForm" (ngSubmit)="submitForm()">
+    <form #myform="ngForm" (ngSubmit)="submitForm(myform)">
       <ion-row>
-
         <ion-col size-md="6" offset-md="3">                              
           <ion-list>                                                      
+          
             <ion-item *ngFor="let item of listDaysDefault">                          
-              <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)"></ion-checkbox>
+              <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item,item.idVacaciones)"></ion-checkbox>
               <ion-label>                              
                 <ion-datetime 
                   displayFormat="DD/MM/YYYY"
                   placeholder="{{item.fechaFormat}}"
                   name={{item.idVacaciones}}
                   ngModel required
+                  class="disabled"
                   id={{item.idVacaciones}}
-                  (ionChange)="dataFromList($event, item.idVacaciones, myform)"
                 >
                 </ion-datetime>                
               </ion-label>            
             </ion-item>          
+
           </ion-list>           
         </ion-col>
       </ion-row>
@@ -57,7 +60,7 @@
           <ion-icon name="refresh"></ion-icon>    
         </ion-button>        
       </ion-col>                      
-      <ion-col (click)="downloadUpdate()">
+      <ion-col (click)="downloadCancel()">
         <ion-button color="primary" expand="block">          
           <ion-icon name="download"></ion-icon>    
         </ion-button>        
