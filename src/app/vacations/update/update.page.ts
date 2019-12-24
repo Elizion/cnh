@@ -12,6 +12,7 @@ import * as moment from 'moment';
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
 })
+
 export class UpdatePage implements OnInit {
 
   listDaysDefault: any = [];
@@ -28,14 +29,14 @@ export class UpdatePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.update();
+    this.updateList();
   }
 
   refresh() {
     window.location.reload();
   }
 
-  update(): void {
+  updateList(): void {
     const id = this.globalService.personId();
     const date = this.globalService.date();
     this.loadingCtrl
@@ -43,7 +44,7 @@ export class UpdatePage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
-        this.listDaysDefault = res['data'].listaDias;        
+        this.listDaysDefault = res['data'].listaDias;
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.alertListVoidVacations();
         }
@@ -61,62 +62,39 @@ export class UpdatePage implements OnInit {
   }
 
   submitForm() {
-
     console.log(this.listDaysDefault);
-
     const modifiedList = [];
-
     if (this.checked != null && this.checked.length > 0) {
-
       let i = 0;
-
       for (i; i < this.checked.length; i++) {
-
         let j = 0;
-
         for (j; j < this.listDaysDefault.length; j++) {
-
           if (this.checked[i].toString() === this.listDaysDefault[j].idVacaciones.toString() ) {
             modifiedList.push(this.listDaysDefault[j]);
           }
-
         }
-
       }
-
       console.log(modifiedList);
-      
     } else {
       alert('Mensaje de alerta');
     }
-  
-
   }
 
-
   dataFromList(event: any, idVacaciones: any, formBuilder: any) {
-
     const obj = formBuilder.value;
     const array = Object.entries(obj);
     let date = '';
-
-    
-    console.log(idVacaciones);    
+    console.log(idVacaciones);
     const position = this.indexOf(idVacaciones);
-    //id = array[position][0];
     date = this.indexOfDate(idVacaciones, array);
-    
-    console.log(position + ": " + date);
-    this.listDaysDefault[position].fechaFormat=date;
-
-    //console.log(idVacaciones);
-    
+    console.log(position + ' : ' + date);
+    this.listDaysDefault[position].fechaFormat = date;
   }
 
-  addCheckbox(event, idVacaciones: string) {
+  addCheckbox(event: any, idVacaciones: string) {
     //CHECKBOX False(SI EDITAR) CON ESTATUS 'A'
     //CHECKBOX render (false) CON ESTATUS 'PM'
-    //Mostrar estatus en cada registro 
+    //Mostrar estatus en cada registro
     if ( event.target.checked ) {
       this.checked.push(idVacaciones);
     } else {
@@ -137,81 +115,24 @@ export class UpdatePage implements OnInit {
   }
 
   indexOf(id: number) {
-    //debugger;
     for (let i = 0; i < this.listDaysDefault.length; i++) {
-
       if ( id === this.listDaysDefault[i].idVacaciones ) {
-
         return i;
-
       }
-
     }
-
     return -1;
-
   }
 
   indexOfDate(id: string, array: any) {
     let date = '';
-    //debugger;
-    for (let i = 0; i < array.length; i++) {
-
+    let i = 0;
+    for (i; i < array.length; i++) {
       if ( id.toString() === array[i][0] ) {
         date =  moment(array[i][1]).format('DD/MM/YYYY');
         return date;
-
       }
-
     }
-
     return null;
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
