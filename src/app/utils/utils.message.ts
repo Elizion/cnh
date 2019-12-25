@@ -2,6 +2,7 @@ import { AlertController } from '@ionic/angular';
 export class UtilsMessage {
     timeOk: any = 3000;
     timeError: any = 4000;
+    timeArray: any = 6000;
     constructor(
         private alertCtrl: AlertController
     ) {}
@@ -33,6 +34,41 @@ export class UtilsMessage {
             alert.dismiss();
         }, this.timeError);
     }
+
+    async messageParamethersArray(mensajes: string[], className: string, methodName: string) {
+        let i = 0;
+        for (i; i < mensajes.length; i++) {
+            console.log(i + '---' + mensajes[i]);
+        }
+        const alert = await this.alertCtrl.create({
+            header: className,
+            subHeader: methodName,
+            message: mensajes.toString()
+        });
+        await alert.present();
+        setTimeout(() => {
+            alert.dismiss();
+        }, this.timeArray);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -171,21 +207,7 @@ export class UtilsMessage {
         }, 3000);
     }
 
-    async alertMensajeFechas(mensajes: string[]) {
-        let i = 0;
-        for (i; i < mensajes.length; i++) {
-            console.log(i + '---' + mensajes[i]);
-        }
-        const alert = await this.alertCtrl.create({
-            header: 'Agregar',
-            subHeader: 'Vacaciones',
-            message: mensajes.toString()
-        });
-        await alert.present();
-        setTimeout(() => {
-            alert.dismiss();
-        }, 3000);
-    }
+
 
     async alertGuardarFechas(mensajes: string[]) {
         let i = 0;

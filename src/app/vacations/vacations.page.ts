@@ -85,29 +85,12 @@ export class VacationsPage implements OnInit {
     });
   }
 
-  update(date: string): void {
-    this.utilsNavigate.routerNavigateVacationsUpdate();
-  }
-
-  cancel(): void {
-    this.utilsNavigate.routerNavigateVacationsCancel();
-  }
-
-  impressUpdate(): void {
-    alert('Trabajando este modulo...');
-  }
-
-  changeToggle() {
-    return this.periodoEscalonado;
-  }
-
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
-    this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
@@ -125,33 +108,17 @@ export class VacationsPage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if (mensajes != null && mensajes.length > 0) {
-            this.utilsMessage.alertMensajeFechas(mensajes);
+            this.utilsMessage.messageParamethersArray(mensajes, 'VacationsPage', 'onSubmit()');
           }
         }
-        this.isLoading        = false;
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
         loadingEl.dismiss();
-        this.utilsMessage.alertFormVacations();
+        this.utilsMessage.messageApiError(err, 'VacationsPage', 'onSubmit()');
         this.utilsNavigate.routerNavigateVacations();
       });
     });
-  }
-
-  refresh(): void {
-    this.vacationsInit();
-  }
-
-  removeItem(id: number, slidingEl: IonItemSliding): void {
-    let i = 0;
-    for ( i; i < this.listDaysDefault.length; i++ ) {
-      if (this.listDaysDefault[i].idVacaciones === id) {
-        this.listDaysDefault.splice(i, 1);
-      }
-    }
-    slidingEl.close();
   }
 
   impress(): void {
@@ -182,7 +149,7 @@ export class VacationsPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.alertImpressVacations();
+        this.utilsMessage.messageApiError(err, 'VacationsPage', 'impress()');
         this.utilsNavigate.routerNavigateVacations();
       });
     });
@@ -209,7 +176,7 @@ export class VacationsPage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if ( mensajes != null && mensajes.length > 0) {
-            this.utilsMessage.alertGuardarFechas(res[key].mensajes);
+            this.utilsMessage.messageParamethersArray(res[key].mensajes, 'VacationsPage', 'save()');
           } else {
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
@@ -222,11 +189,41 @@ export class VacationsPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.alertSaveVacations();
+        this.utilsMessage.messageApiError(err, 'VacationsPage', 'impress()');
         this.utilsNavigate.routerNavigateVacations();
       });
       loadingEl.dismiss();
     });
+  }
+
+  removeItem(id: number, slidingEl: IonItemSliding): void {
+    let i = 0;
+    for ( i; i < this.listDaysDefault.length; i++ ) {
+      if (this.listDaysDefault[i].idVacaciones === id) {
+        this.listDaysDefault.splice(i, 1);
+      }
+    }
+    slidingEl.close();
+  }
+
+  update(): void {
+    this.utilsNavigate.routerNavigateVacationsUpdate();
+  }
+
+  cancel(): void {
+    this.utilsNavigate.routerNavigateVacationsCancel();
+  }
+
+  impressUpdate(): void {
+    alert('Trabajando este modulo...');
+  }
+
+  changeToggle() {
+    return this.periodoEscalonado;
+  }
+
+  refresh(): void {
+    this.vacationsInit();
   }
 
 }
