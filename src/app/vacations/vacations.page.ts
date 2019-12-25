@@ -70,7 +70,7 @@ export class VacationsPage implements OnInit {
         this.fechaInicialFormat   = res[key].fechaInicialFormat;
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
-          this.utilsMessage.alertListVoidVacations();
+          this.utilsMessage.messageListVoid();
         }
         this.buttonsRefresh(res);
         this.visible = this.utilsHidden.visibleContent();
@@ -78,7 +78,6 @@ export class VacationsPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.alertVacations();
         this.utilsMessage.messageApiError(err, 'VacationsPage', 'vacationsInit()');
         this.utilsNavigate.routerNavigateVacations();
       });

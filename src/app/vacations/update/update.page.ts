@@ -90,6 +90,27 @@ export class UpdatePage implements OnInit {
     this.listDaysDefault[position].fechaFormat = date;
   }
 
+  indexOf(id: number) {
+    for (let i = 0; i < this.listDaysDefault.length; i++) {
+      if ( id === this.listDaysDefault[i].idVacaciones ) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  indexOfDate(id: string, array: any) {
+    let date = '';
+    let i = 0;
+    for (i; i < array.length; i++) {
+      if ( id.toString() === array[i][0] ) {
+        date =  moment(array[i][1]).format('DD/MM/YYYY');
+        return date;
+      }
+    }
+    return null;
+  }
+
   addCheckbox(event: any, idVacaciones: string) {
     //CHECKBOX False(SI EDITAR) CON ESTATUS 'A'
     //CHECKBOX render (false) CON ESTATUS 'PM'
@@ -110,27 +131,6 @@ export class UpdatePage implements OnInit {
 
   emptyCheckedArray() {
     this.checked = [];
-  }
-
-  indexOf(id: number) {
-    for (let i = 0; i < this.listDaysDefault.length; i++) {
-      if ( id === this.listDaysDefault[i].idVacaciones ) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  indexOfDate(id: string, array: any) {
-    let date = '';
-    let i = 0;
-    for (i; i < array.length; i++) {
-      if ( id.toString() === array[i][0] ) {
-        date =  moment(array[i][1]).format('DD/MM/YYYY');
-        return date;
-      }
-    }
-    return null;
   }
 
 }
