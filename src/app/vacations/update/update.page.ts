@@ -75,10 +75,15 @@ export class UpdatePage implements OnInit {
           }
         }
       }
-      console.log(modifiedList);
+
+      alert(modifiedList);
+
     } else {
-      alert('Mensaje de alerta');
+
+      this.utilsMessage.messageListVoid();
+
     }
+
   }
 
   dataFromList(event: any, idVacaciones: any, formBuilder: any) {
