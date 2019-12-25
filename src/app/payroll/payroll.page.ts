@@ -3,6 +3,8 @@ import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
+import { UtilsMessage } from '../utils/utils.message';
+import { UtilsNavigate } from '../utils/utils.navigate';
 import { NgForm } from '@angular/forms';
 import * as moment from 'moment';
 import { Constants as CONST } from '../config/config.const';
@@ -16,7 +18,9 @@ export class PayrollPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate
   ) { }
 
   isLoading = false;
@@ -46,8 +50,8 @@ export class PayrollPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertPayroll();
-        this.globalService.routerNavigatePayroll();
+        this.utilsMessage.alertPayroll();
+        this.utilsNavigate.routerNavigatePayroll();
       });
     });
   }
@@ -77,8 +81,8 @@ export class PayrollPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertFormPayroll();
-        this.globalService.routerNavigatePayroll();
+        this.utilsMessage.alertFormPayroll();
+        this.utilsNavigate.routerNavigatePayroll();
       });
     });
   }
@@ -102,8 +106,8 @@ export class PayrollPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertImpressPayroll();
-        this.globalService.routerNavigatePayroll();
+        this.utilsMessage.alertImpressPayroll();
+        this.utilsNavigate.routerNavigatePayroll();
       });
     });
   }

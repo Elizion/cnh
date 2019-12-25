@@ -3,7 +3,10 @@ import { LoadingController } from '@ionic/angular';
 import { IonItemSliding } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
+import { UtilsMessage } from '../../utils/utils.message';
+import { UtilsNavigate } from '../../utils/utils.navigate';
 import { Constants as CONST } from '../../config/config.const';
+
 @Component({
   selector: 'app-personal',
   templateUrl: './personal.page.html',
@@ -14,7 +17,9 @@ export class PersonalPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate
   ) {}
 
   isLoading = false;
@@ -42,8 +47,8 @@ export class PersonalPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertPersonal();
-        this.globalService.routerNavigateNotices();
+        this.utilsMessage.alertPersonal();
+        this.utilsNavigate.routerNavigateNotices();
       });
     });
   }
@@ -80,7 +85,7 @@ export class PersonalPage implements OnInit {
             this.globalService.b64toBlobJpg(this.base64, nameFile, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
             break;
           default:
-            this.globalService.alertExtensionNotAvaible();
+            this.utilsMessage.alertExtensionNotAvaible();
         }
         slidingEl.close();
         loadingEl.dismiss();
@@ -89,8 +94,8 @@ export class PersonalPage implements OnInit {
         console.log(err);
         slidingEl.close();
         loadingEl.dismiss();
-        this.globalService.alertImpressPersonal();
-        this.globalService.routerNavigateNotices();
+        this.utilsMessage.alertImpressPersonal();
+        this.utilsNavigate.routerNavigateNotices();
       });
     });
   }

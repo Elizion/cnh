@@ -6,6 +6,8 @@ import { VacationsService } from '../services/vacations.service';
 import { Constants as CONST } from '../config/config.const';
 import { NgForm } from '@angular/forms';
 import { UtilsMessage } from '../utils/utils.message';
+import { UtilsNavigate } from '../utils/utils.navigate';
+import { UtilsHidden } from '../utils/utils.hidden';
 import * as moment from 'moment';
 @Component({
   selector: 'app-vacations',
@@ -13,12 +15,16 @@ import * as moment from 'moment';
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
+
   constructor(
     private loadingCtrl: LoadingController,
     private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate,
+    private utilsHidden: UtilsHidden,
     private globalService: GlobalService,
     private vacationsService: VacationsService
   ) { }
+
   isLoading = false;
   isLogin = true;
   btnCancelar: any;
@@ -35,18 +41,20 @@ export class VacationsPage implements OnInit {
   periodoEscalonado: any = false;
   b64Data: any;
   idPerson = this.globalService.personId();
-  visible: any = false;
-  
+  visible: boolean;
+
   ngOnInit() {
     this.postVacations();
   }
+
   buttonsRefresh(res: any): void {
     this.btnCancelar              = res['data'].botonCancelar;
     this.btnModificar             = res['data'].botonModificar;
     this.btnImprimir              = res['data'].botonImprimir;
     this.checkPeriodoEscalonado   = res['data'].checkPeriodoEscalonado;
   }
-  postVacations(): void {
+
+  vacationsInit(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Cargando datos...' })
     .then(loadingEl => {
@@ -58,71 +66,42 @@ export class VacationsPage implements OnInit {
         this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res['data'].listaDias;
         this.fechaInicialFormat   = res['data'].fechaInicialFormat;
-        console.log(res['data'].fechaInicialFormat);
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.alertListVoidVacations();
         }
-        console.log(this.listDaysDefault);
         this.buttonsRefresh(res);
-        this.visible = true;
+        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertVacations();
-        this.utilsMessage.routerNavigateVacations();
+        this.utilsMessage.messageApiError(err, 'VacationsPage', 'vacationsInit()');
+        this.utilsNavigate.routerNavigateVacations();
       });
     });
   }
-  /*
-  detailArray(listDaysDefault: any) {
-    const listDaysDefaultNew = [];
-    let i = 0;
-    const nodo = {
-      idVacaciones: String,
-      personId: String,
-      fecha: String,
-      fechaFormat: String,
-      estatus: String,
-      estatusFormat: String,
-      estatusDescripcion: String,
-      fechaRegistro: String
-    };
-    for (i; i < listDaysDefault.length; i++ ) {
-      nodo.idVacaciones       = listDaysDefault[i].idVacaciones;
-      nodo.personId           = listDaysDefault.personId;
-      nodo.fecha              = listDaysDefault.fecha;
-      nodo.fechaFormat        = listDaysDefault.fechaFormat;
-      nodo.estatusDescripcion = listDaysDefault.estatusDescripcion;
-      nodo.fechaRegistro      = listDaysDefault.fechaRegistro;
-      listDaysDefaultNew.push(nodo);
-    }
-    this.listDaysDefault = listDaysDefaultNew;
-    return  this.listDaysDefault;
-  }
-  */
+
   cancel(): void {
-    this.utilsMessage.routerNavigateVacationsCancel();
+    this.utilsNavigate.routerNavigateVacationsCancel();
   }
   impressUpdate(): void {
     alert('Trabajando este modulo...');
   }
   update(date: string): void {
-    this.utilsMessage.routerNavigateVacationsUpdate();
+    this.utilsNavigate.routerNavigateVacationsUpdate();
   }
   changeToggle() {
-    console.log(this.periodoEscalonado + ' is checked');
     return this.periodoEscalonado;
   }
+
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
     }
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
-    console.log(startDate + ' ' + endDate);
     this.isLoading = true;
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Carcando datos...' })
@@ -135,14 +114,21 @@ export class VacationsPage implements OnInit {
         endDate,
         this.listDaysDefault
       ).subscribe((res: Response ) => {
-        this.listDaysGenerate = res['data'].listaDias;
+
+        const key = 'data';
+        this.listDaysGenerate = res[key].listaDias;
         this.listDaysDefault  = this.listDaysGenerate;
-        console.log(JSON.stringify(this.listDaysDefault));
-        console.log('# ' + JSON.stringify(res['data'].mensajes));
-        if (res['data'].mensajes !== 'undefined') {
-          const mensajes: string[] = res['data'].mensajes;
+
+        if (res[key].mensajes !== 'undefined') {
+
+          const mensajes: string[] = res[key].mensajes;
+
           if (mensajes != null && mensajes.length > 0) {
+
+
             this.utilsMessage.alertMensajeFechas(mensajes);
+
+
           }
         }
         this.isLoading        = false;
@@ -152,7 +138,7 @@ export class VacationsPage implements OnInit {
         console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertFormVacations();
-        this.utilsMessage.routerNavigateVacations();
+        this.utilsNavigate.routerNavigateVacations();
       });
     });
   }
@@ -203,7 +189,7 @@ export class VacationsPage implements OnInit {
         console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertImpressVacations();
-        this.utilsMessage.routerNavigateVacations();
+        this.utilsNavigate.routerNavigateVacations();
       });
     });
   }
@@ -243,10 +229,9 @@ export class VacationsPage implements OnInit {
         console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertSaveVacations();
-        this.utilsMessage.routerNavigateVacations();
+        this.utilsNavigate.routerNavigateVacations();
       });
       loadingEl.dismiss();
     });
   }
-  
 }

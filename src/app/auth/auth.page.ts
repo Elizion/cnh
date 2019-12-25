@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { GlobalService } from '../services/global.service';
+import { UtilsMessage } from '../utils/utils.message';
+import { UtilsNavigate } from '../utils/utils.navigate';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
@@ -12,8 +13,9 @@ export class AuthPage {
 
   constructor(
     private loadingCtrl: LoadingController,
-    private authService: AuthService,
-    private globalService: GlobalService
+    private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate,
+    private authService: AuthService
   ) {}
 
   isLogin = true;
@@ -43,29 +45,28 @@ export class AuthPage {
     (err) => {
       console.log(err);
       loadingEl.dismiss();
-      this.globalService.alertToken();
-      this.globalService.routerNavigateAuth();
+      this.utilsMessage.messageApiError(err, 'AuthPage', 'pivote()');
+      this.utilsNavigate.routerNavigateAuth();
     });
   }
 
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     this.authService.login(tokenBase.data, user, password).subscribe((res: Response) => {
       this.status = res['metadata'].response;
-      this.token = res['data'];      
+      this.token = res['data'];
       if (this.status === 'EXITO') {
         window.localStorage.setItem('token', JSON.stringify(this.token));
-        this.globalService.routerNavigateProfile();
+        this.utilsNavigate.routerNavigateProfile();
       } else {
         window.localStorage.removeItem('token');
-        this.globalService.routerNavigateAuth();
+        this.utilsNavigate.routerNavigateAuth();
       }
       loadingEl.dismiss();
     },
     (err) => {
-      console.log(err);
       loadingEl.dismiss();
-      this.globalService.alertLogin();
-      this.globalService.routerNavigateAuth();
+      this.utilsMessage.messageApiError(err, 'AuthPage', 'login()');
+      this.utilsNavigate.routerNavigateAuth();
     });
   }
 

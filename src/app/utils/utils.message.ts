@@ -1,78 +1,41 @@
-import {
-    AlertController
-} from '@ionic/angular';
-import {
-    Router
-} from '@angular/router';
-import {
-    VacationsService
-} from '../services/vacations.service';
-import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 export class UtilsMessage {
 
     constructor(
-        private alertCtrl: AlertController,
-        private loadingCtrl: LoadingController,
-        private router: Router,
-        private vacationsService: VacationsService
+        private alertCtrl: AlertController
     ) {}
 
-    routerNavigateAuth() {
-        return this.router.navigateByUrl('/auth');
-    }
-    routerNavigateProfile() {
-        return this.router.navigateByUrl('/profile');
-    }
-    routerNavigateNotices() {
-        return this.router.navigateByUrl('/notices');
-    }
-    routerNavigatePayroll() {
-        return this.router.navigateByUrl('/payroll');
-    }
-    routerNavigateVacations() {
-        return this.router.navigateByUrl('/vacations');
-    }
-    routerNavigateVacationsUpdate() {
-        return this.router.navigateByUrl('/vacations/update');
-    }
-    routerNavigateVacationsCancel() {
-        return this.router.navigateByUrl('/vacations/cancel');
+    timeOk: any = 3000;
+    timeError: any = 4000;
+
+    async messageApiOk(messageOk: string, className: string, methodName: string) {
+        const alert = await this.alertCtrl.create({
+            header: className,
+            subHeader: methodName,
+            message: messageOk
+        });
+        await alert.present();
+        setTimeout(() => {
+            alert.dismiss();
+        }, this.timeOk);
     }
 
-    async alertLogin() {
+    async messageApiError(messageError: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
-            header: 'Error',
-            subHeader: 'Auth',
-            message: 'Usuario y/o contraseñas invalidos, intente de nuevo porfavor.'
+            header: className,
+            subHeader: methodName,
+            message: messageError
         });
         await alert.present();
         setTimeout(() => {
             alert.dismiss();
-        }, 3000);
+        }, this.timeError);
     }
-    async alertProfile() {
-        const alert = await this.alertCtrl.create({
-            header: 'Error',
-            subHeader: 'Profile',
-            message: 'No se ha cargado el profile correctamente, intente de nuevo porfavor.'
-        });
-        await alert.present();
-        setTimeout(() => {
-            alert.dismiss();
-        }, 3000);
-    }
-    async alertToken() {
-        const alert = await this.alertCtrl.create({
-            header: 'Error',
-            subHeader: 'Token',
-            message: 'No se ha generadodo el token correctamente, intente de nuevo porfavor.'
-        });
-        await alert.present();
-        setTimeout(() => {
-            alert.dismiss();
-        }, 3000);
-    }
+
+
+
+
     async alertGeneral() {
         const alert = await this.alertCtrl.create({
             header: 'Error',
@@ -207,10 +170,7 @@ export class UtilsMessage {
         }, 3000);
     }
 
-
-
     async alertMensajeFechas(mensajes: string[]) {
-        //con boton de okay 
         let i = 0;
         for (i; i < mensajes.length; i++) {
             console.log(i + '---' + mensajes[i]);
@@ -227,7 +187,6 @@ export class UtilsMessage {
     }
 
     async alertGuardarFechas(mensajes: string[]) {
-        //con boton de okay 
         let i = 0;
         for (i; i < mensajes.length; i++) {
             console.log(i + '---' + mensajes[i]);
@@ -242,7 +201,6 @@ export class UtilsMessage {
             alert.dismiss();
         }, 3000);
     }
-    
 
     async alertDaysVoid() {
         const alert = await this.alertCtrl.create({
@@ -269,7 +227,6 @@ export class UtilsMessage {
     }
 
     async alertReturnMessage(mensajes: string[]) {
-        //con boton de okay 
         let i = 0;
         for (i; i < mensajes.length; i++) {
             console.log(i + '---' + mensajes[i]);
@@ -284,87 +241,5 @@ export class UtilsMessage {
             alert.dismiss();
         }, 3000);
     }
-
-    
-
-    async alertCommitUpdate(sendVacations: any) {
-
-        const alert = await this.alertCtrl.create({
-            header: 'Modificación',
-            subHeader: 'Vacaciones',
-            message: '¿Esta seguro de realizar esta opreación?',
-            buttons: [{
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {                    
-                    }
-                },
-                {
-                    text: 'Confirmar',
-                    handler: () => {
-                        this.loadingCtrl
-                           .create({ keyboardClose: true, message: 'Modificando fechas...' })
-                           .then(loadingEl => {
-                              loadingEl.present();
-                              this.vacationsService.commitUpdate(sendVacations).subscribe((res: Response) => {                                 
-                                 console.log(JSON.stringify(res));             
-                                 const menssage = res['data'].mensajes;        
-                                 this.alertReturnMessage(menssage);
-                                 loadingEl.dismiss();
-                              },
-                              (err) => {
-                                 this.alertErrorUpdate(err);
-                                 loadingEl.dismiss();
-                              });
-                           });                        
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-    }
-
-    async alertCommitCancel(sendVacations: any) {
-
-        const alert = await this.alertCtrl.create({
-            header: 'Cancelación',
-            subHeader: 'Vacaciones',
-            message: '¿Esta seguro de realizar esta opreación?',
-            buttons: [{
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {                        
-                    }
-                },
-                {
-                    text: 'Confirmar',
-                    handler: () => {
-                        this.loadingCtrl
-                           .create({ keyboardClose: true, message: 'Cancelando fechas...' })
-                           .then(loadingEl => {
-                              loadingEl.present();
-                              this.vacationsService.commitCancel(sendVacations).subscribe((res: Response) => {                                 
-                                 console.log(JSON.stringify(res));             
-                                 const menssage = res['data'].mensajes;        
-                                 this.alertReturnMessage(menssage);
-                                 loadingEl.dismiss();
-                              },
-                              (err) => {
-                                 this.alertErrorUpdate(err);
-                                 loadingEl.dismiss();
-                              });
-                           });
-                        //window.location.reload();
-                    }
-                }
-            ]
-        });
-
-        await alert.present();
-    }
-
 
 }

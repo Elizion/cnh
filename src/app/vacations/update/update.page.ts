@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { UtilsMessage } from '../../utils/utils.message';
+import { UtilsNavigate } from '../../utils/utils.navigate';
 import { VacationsService } from '../../services/vacations.service';
 import { GlobalService } from '../../services/global.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
-import { Constants as CONST } from '../../config/config.const';
 import * as moment from 'moment';
+
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
@@ -20,12 +19,11 @@ export class UpdatePage implements OnInit {
   checked = [];
 
   constructor(
-    private alertCtrl: AlertController,
     private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate,
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
-    private globalService: GlobalService,
-    private formBuilder: FormBuilder
+    private globalService: GlobalService
   ) {}
 
   ngOnInit() {
@@ -37,6 +35,7 @@ export class UpdatePage implements OnInit {
   }
 
   updateList(): void {
+
     const id = this.globalService.personId();
     const date = this.globalService.date();
     this.loadingCtrl
@@ -56,12 +55,14 @@ export class UpdatePage implements OnInit {
         console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertVacations();
-        this.utilsMessage.routerNavigateVacationsUpdate();
+        this.utilsNavigate.routerNavigateVacationsUpdate();
       });
     });
+
   }
 
   submitForm() {
+    debugger;
     console.log(this.listDaysDefault);
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
@@ -84,17 +85,14 @@ export class UpdatePage implements OnInit {
     const obj = formBuilder.value;
     const array = Object.entries(obj);
     let date = '';
-    console.log(idVacaciones);
     const position = this.indexOf(idVacaciones);
     date = this.indexOfDate(idVacaciones, array);
-    console.log(position + ' : ' + date);
     this.listDaysDefault[position].fechaFormat = date;
   }
 
   addCheckbox(event: any, idVacaciones: string) {
     //CHECKBOX False(SI EDITAR) CON ESTATUS 'A'
     //CHECKBOX render (false) CON ESTATUS 'PM'
-    //Mostrar estatus en cada registro
     if ( event.target.checked ) {
       this.checked.push(idVacaciones);
     } else {

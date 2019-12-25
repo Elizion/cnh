@@ -20,7 +20,7 @@
               <ion-label>                              
                 <ion-datetime 
                   displayFormat="DD/MM/YYYY"
-                  placeholder="{{item.fechaFormat}}"
+                  placeholder="{{item.fechaFormat}} - {{item.estatusDescripcion}}"
                   name={{item.idVacaciones}}
                   ngModel required
                   id={{item.idVacaciones}}
@@ -44,25 +44,5 @@
     </form>
 
   </ion-grid>    
-
-  <ion-grid>   
-    <ion-row>      
-      <ion-col (click)="back()">
-        <ion-button color="primary" expand="block">          
-          <ion-icon name="arrow-back"></ion-icon>    
-        </ion-button>        
-      </ion-col>
-      <ion-col (click)="refresh()">
-        <ion-button color="primary" expand="block">          
-          <ion-icon name="refresh"></ion-icon>    
-        </ion-button>        
-      </ion-col>                      
-      <ion-col (click)="downloadUpdate()">
-        <ion-button color="primary" expand="block">          
-          <ion-icon name="download"></ion-icon>    
-        </ion-button>        
-      </ion-col> 
-    </ion-row>
-  </ion-grid>   
 
 </ion-content>

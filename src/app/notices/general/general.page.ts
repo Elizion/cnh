@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
+import { UtilsMessage } from '../../utils/utils.message';
+import { UtilsNavigate } from '../../utils/utils.navigate';
 @Component({
   selector: 'app-general',
   templateUrl: './general.page.html',
@@ -12,7 +14,9 @@ export class GeneralPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate
   ) {}
 
   isLoading = false;
@@ -49,8 +53,8 @@ export class GeneralPage implements OnInit {
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.globalService.alertGeneral();
-        this.globalService.routerNavigateNotices();
+        this.utilsMessage.alertGeneral();
+        this.utilsNavigate.routerNavigateNotices();
       });
     });
   }

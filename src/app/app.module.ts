@@ -4,13 +4,15 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { File } from '@ionic-native/file/ngx';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { GlobalService } from './services/global.service';
 import { UtilsMessage } from './utils/utils.message';
+import { UtilsNavigate } from './utils/utils.navigate';
+import { UtilsHidden } from './utils/utils.hidden';
 import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FileOpener,
     GlobalService,
     UtilsMessage,
+    UtilsNavigate,
+    UtilsHidden,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
