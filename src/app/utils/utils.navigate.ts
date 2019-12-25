@@ -1,11 +1,8 @@
 import { Router } from '@angular/router';
-
 export class UtilsNavigate {
-
  constructor(
   private router: Router
  ) {}
-
  routerNavigateAuth() {
   return this.router.navigateByUrl('/auth');
  }
@@ -27,5 +24,4 @@ export class UtilsNavigate {
  routerNavigateVacationsCancel() {
   return this.router.navigateByUrl('/vacations/cancel');
  }
-
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { UtilsMessage } from '../../utils/utils.message';
-import { UtilsNavigate } from '../../utils/utils.navigate';
 import { VacationsService } from '../../services/vacations.service';
 import { GlobalService } from '../../services/global.service';
+import { UtilsMessage } from '../../utils/utils.message';
+import { UtilsNavigate } from '../../utils/utils.navigate';
+import { UtilsHidden } from '../../utils/utils.hidden';
 import * as moment from 'moment';
 
 @Component({
@@ -15,15 +16,16 @@ import * as moment from 'moment';
 export class UpdatePage implements OnInit {
 
   listDaysDefault: any = [];
-  visible: any = false;
   checked = [];
+  visible: boolean;
 
   constructor(
-    private utilsMessage: UtilsMessage,
-    private utilsNavigate: UtilsNavigate,
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate,
+    private utilsHidden: UtilsHidden
   ) {}
 
   ngOnInit() {
@@ -46,16 +48,15 @@ export class UpdatePage implements OnInit {
         const key = 'data';
         this.listDaysDefault = res[key].listaDias;
         if (this.listDaysDefault.length === 0 ) {
-          this.utilsMessage.alertListVoidVacations();
+          this.utilsMessage.messageListVoid();
         }
-        console.log(this.listDaysDefault);
-        this.visible = true;
+        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
         console.log(err);
         loadingEl.dismiss();
-        this.utilsMessage.alertVacations();
+        this.utilsMessage.messageApiError(err, 'UpdatePage', 'updateInit()');
         this.utilsNavigate.routerNavigateVacationsUpdate();
       });
     });
@@ -63,8 +64,6 @@ export class UpdatePage implements OnInit {
   }
 
   submitForm() {
-    debugger;
-    console.log(this.listDaysDefault);
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
       let i = 0;
@@ -94,7 +93,7 @@ export class UpdatePage implements OnInit {
   addCheckbox(event: any, idVacaciones: string) {
     //CHECKBOX False(SI EDITAR) CON ESTATUS 'A'
     //CHECKBOX render (false) CON ESTATUS 'PM'
-    if ( event.target.checked ) {
+    if (event.target.checked) {
       this.checked.push(idVacaciones);
     } else {
       const index = this.removeCheckedFromArray(idVacaciones);

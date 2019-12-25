@@ -5,6 +5,7 @@ import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
 import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
+import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
 
 @Component({
@@ -19,7 +20,8 @@ export class PersonalPage implements OnInit {
     private noticesService: NoticesService,
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
-    private utilsNavigate: UtilsNavigate
+    private utilsNavigate: UtilsNavigate,
+    private utilsHidden: UtilsHidden
   ) {}
 
   isLoading = false;
@@ -30,25 +32,24 @@ export class PersonalPage implements OnInit {
   visible: any = false;
 
   ngOnInit() {
-    this.personal();
+    this.personalInit();
   }
 
-  personal(): void {
+  personalInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
-        this.listPersonal = res['data'];
-        console.log(JSON.stringify(this.listPersonal));
-        this.visible = true;
+        const key = 'data';
+        this.listPersonal = res[key];
+        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
-        loadingEl.dismiss();
-        this.utilsMessage.alertPersonal();
+        this.utilsMessage.messageApiError(err, 'PersonalPage', 'personalInit()');
         this.utilsNavigate.routerNavigateNotices();
+        loadingEl.dismiss();
       });
     });
   }
@@ -63,11 +64,12 @@ export class PersonalPage implements OnInit {
     console.log(nameFile);
     console.log(extension);
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Procesando archivo...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
     .then(loadingEl => {
       loadingEl.present();
       this.noticesService.download(id).subscribe( (res: Response ) => {
-        this.base64 = res['data'];
+        const key = 'data';
+        this.base64 = res[key];
         switch (extension) {
           case 'pdf':
             this.globalService.b64toBlobPdf(this.base64, nameFile, CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
@@ -85,16 +87,15 @@ export class PersonalPage implements OnInit {
             this.globalService.b64toBlobJpg(this.base64, nameFile, CONST.APPLICATION_JPG, CONST.SIZE_BUFFER);
             break;
           default:
-            this.utilsMessage.alertExtensionNotAvaible();
+            this.utilsMessage.messageNotAvaible();
         }
         slidingEl.close();
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
+        this.utilsMessage.messageApiError(err, 'PersonalPage', 'download()');
         slidingEl.close();
         loadingEl.dismiss();
-        this.utilsMessage.alertImpressPersonal();
         this.utilsNavigate.routerNavigateNotices();
       });
     });
