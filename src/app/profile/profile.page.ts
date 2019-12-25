@@ -43,13 +43,13 @@ export class ProfilePage implements OnInit {
         this.nombre             = res[key].nombre;
         this.numeroEmpleado     = res[key].numeroEmpleado;
         this.unidad             = res[key].unidad;
-        this.puesto             = res['data'].puesto;
-        this.cargo              = res['data'].cargo;
-        this.nivel              = res['data'].nivel;
-        this.nivel              = res['data'].nivel;
-        this.rfc                = res['data'].rfc;
-        this.fechaIngresoFormat = res['data'].fechaIngresoFormat;
-        this.fotoBase64         = res['data'].fotoBase64;
+        this.puesto             = res[key].puesto;
+        this.cargo              = res[key].cargo;
+        this.nivel              = res[key].nivel;
+        this.nivel              = res[key].nivel;
+        this.rfc                = res[key].rfc;
+        this.fechaIngresoFormat = res[key].fechaIngresoFormat;
+        this.fotoBase64         = res[key].fotoBase64;
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },

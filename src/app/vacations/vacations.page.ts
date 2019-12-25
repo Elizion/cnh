@@ -44,14 +44,15 @@ export class VacationsPage implements OnInit {
   visible: boolean;
 
   ngOnInit() {
-    this.postVacations();
+    this.vacationsInit();
   }
 
   buttonsRefresh(res: any): void {
-    this.btnCancelar              = res['data'].botonCancelar;
-    this.btnModificar             = res['data'].botonModificar;
-    this.btnImprimir              = res['data'].botonImprimir;
-    this.checkPeriodoEscalonado   = res['data'].checkPeriodoEscalonado;
+    const key = 'data';
+    this.btnCancelar              = res[key].botonCancelar;
+    this.btnModificar             = res[key].botonModificar;
+    this.btnImprimir              = res[key].botonImprimir;
+    this.checkPeriodoEscalonado   = res[key].checkPeriodoEscalonado;
   }
 
   vacationsInit(): void {
@@ -60,12 +61,13 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
-        this.diasDisponibles      = res['data'].diasDisponibles;
-        this.diasPendientes       = res['data'].diasPendientes;
-        this.fechaInicial         = res['data'].fechaInicialFormat;
-        this.fechaIngresoFormat   = res['data'].periodoEmpleado.fechaIngresoFormat;
-        this.listDaysDefault      = res['data'].listaDias;
-        this.fechaInicialFormat   = res['data'].fechaInicialFormat;
+        const key = 'data';
+        this.diasDisponibles      = res[key].diasDisponibles;
+        this.diasPendientes       = res[key].diasPendientes;
+        this.fechaInicial         = res[key].fechaInicialFormat;
+        this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
+        this.listDaysDefault      = res[key].listaDias;
+        this.fechaInicialFormat   = res[key].fechaInicialFormat;
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.alertListVoidVacations();
@@ -83,15 +85,18 @@ export class VacationsPage implements OnInit {
     });
   }
 
-  cancel(): void {
-    this.utilsNavigate.routerNavigateVacationsCancel();
-  }
-  impressUpdate(): void {
-    alert('Trabajando este modulo...');
-  }
   update(date: string): void {
     this.utilsNavigate.routerNavigateVacationsUpdate();
   }
+
+  cancel(): void {
+    this.utilsNavigate.routerNavigateVacationsCancel();
+  }
+
+  impressUpdate(): void {
+    alert('Trabajando este modulo...');
+  }
+
   changeToggle() {
     return this.periodoEscalonado;
   }
@@ -114,21 +119,13 @@ export class VacationsPage implements OnInit {
         endDate,
         this.listDaysDefault
       ).subscribe((res: Response ) => {
-
         const key = 'data';
         this.listDaysGenerate = res[key].listaDias;
         this.listDaysDefault  = this.listDaysGenerate;
-
         if (res[key].mensajes !== 'undefined') {
-
           const mensajes: string[] = res[key].mensajes;
-
           if (mensajes != null && mensajes.length > 0) {
-
-
             this.utilsMessage.alertMensajeFechas(mensajes);
-
-
           }
         }
         this.isLoading        = false;
@@ -142,23 +139,21 @@ export class VacationsPage implements OnInit {
       });
     });
   }
+
   refresh(): void {
-    this.postVacations();
+    this.vacationsInit();
   }
-  count(): void {
-    alert(this.listDaysDefault.length);
-  }
+
   removeItem(id: number, slidingEl: IonItemSliding): void {
     let i = 0;
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].idVacaciones === id) {
-        console.log(id);
         this.listDaysDefault.splice(i, 1);
-        console.log(JSON.stringify(this.listDaysDefault));
       }
     }
     slidingEl.close();
   }
+
   impress(): void {
     let i = 0;
     const newArray = [];
@@ -179,29 +174,29 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
-        console.log(JSON.stringify(res['data'].archivoBase64));
-        const nameFile = res['data'].nombreArchivo;
-        this.b64Data = res['data'].archivoBase64;
+        const key = 'data';
+        const nameFile = res[key].nombreArchivo;
+        this.b64Data = res[key].archivoBase64;
         this.download(this.b64Data, nameFile);
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertImpressVacations();
         this.utilsNavigate.routerNavigateVacations();
       });
     });
   }
+
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
+
   save(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: 'Guardando fechas...' })
     .then(loadingEl => {
       loadingEl.present();
-      console.log(this.listDaysDefault);
       this.vacationsService.save(
         this.idPerson,
         this.fechaInicial,
@@ -209,24 +204,23 @@ export class VacationsPage implements OnInit {
         this.diasPendientes,
         this.listDaysDefault
       ).subscribe((res: Response ) => {
-        this.diasPendientes = res['data'].diasPendientes;
-        console.log(res['data'].mensajes);
-        if (res['data'].mensajes !== 'undefined') {
-          const mensajes: string[] = res['data'].mensajes;
+        const key = 'data';
+        this.diasPendientes = res[key].diasPendientes;
+        if (res[key].mensajes !== 'undefined') {
+          const mensajes: string[] = res[key].mensajes;
           if ( mensajes != null && mensajes.length > 0) {
-            this.utilsMessage.alertGuardarFechas(res['data'].mensajes);
+            this.utilsMessage.alertGuardarFechas(res[key].mensajes);
           } else {
-            this.listDaysDefault = res['data'].listaDias;
+            this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
           }
         } else {
-          this.listDaysDefault = res['data'].listaDias;
+          this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
         }
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
         loadingEl.dismiss();
         this.utilsMessage.alertSaveVacations();
         this.utilsNavigate.routerNavigateVacations();
@@ -234,4 +228,5 @@ export class VacationsPage implements OnInit {
       loadingEl.dismiss();
     });
   }
+
 }
