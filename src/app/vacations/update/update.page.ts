@@ -119,11 +119,14 @@ export class UpdatePage implements OnInit {
   addCheckbox(event: any, idVacaciones: string) {
     //CHECKBOX False(SI EDITAR) CON ESTATUS 'A'
     //CHECKBOX render (false) CON ESTATUS 'PM'
+    const element = document.getElementById(idVacaciones);
     if (event.target.checked) {
       this.checked.push(idVacaciones);
+      this.enabledControl(element);
     } else {
       const index = this.removeCheckedFromArray(idVacaciones);
       this.checked.splice(index, 1);
+      this.disabledControl(element);
     }
     console.log(JSON.stringify(this.checked));
   }
@@ -136,6 +139,16 @@ export class UpdatePage implements OnInit {
 
   emptyCheckedArray() {
     this.checked = [];
+  }
+
+  enabledControl(element) {
+    element.classList.remove('disabled');
+    element.classList.add('enabled');
+  }
+
+  disabledControl(element) {
+    element.classList.remove('enabled');
+    element.classList.add('disabled');
   }
 
 }
