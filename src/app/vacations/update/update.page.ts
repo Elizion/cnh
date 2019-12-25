@@ -16,7 +16,7 @@ import * as moment from 'moment';
 export class UpdatePage implements OnInit {
 
   listDaysDefault: any = [];
-  checked = [];
+  checked: any = [];
   visible: boolean;
 
   constructor(
@@ -29,15 +29,14 @@ export class UpdatePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.updateList();
+    this.updateInit();
   }
 
   refresh() {
     window.location.reload();
   }
 
-  updateList(): void {
-
+  updateInit(): void {
     const id = this.globalService.personId();
     const date = this.globalService.date();
     this.loadingCtrl
@@ -76,7 +75,7 @@ export class UpdatePage implements OnInit {
         }
       }
 
-      alert(modifiedList);
+      alert(JSON.stringify(this.checked));
 
     } else {
 
@@ -117,9 +116,9 @@ export class UpdatePage implements OnInit {
   }
 
   addCheckbox(event: any, idVacaciones: string) {
-    //CHECKBOX False(SI EDITAR) CON ESTATUS 'A'
-    //CHECKBOX render (false) CON ESTATUS 'PM'
+
     const element = document.getElementById(idVacaciones);
+
     if (event.target.checked) {
       this.checked.push(idVacaciones);
       this.enabledControl(element);
@@ -132,21 +131,17 @@ export class UpdatePage implements OnInit {
   }
 
   removeCheckedFromArray(checkbox: string) {
-    return this.checked.findIndex((category) => {
+    return this.checked.findIndex((category: any) => {
       return category === checkbox;
     });
   }
 
-  emptyCheckedArray() {
-    this.checked = [];
-  }
-
-  enabledControl(element) {
+  enabledControl(element: any) {
     element.classList.remove('disabled');
     element.classList.add('enabled');
   }
 
-  disabledControl(element) {
+  disabledControl(element: any) {
     element.classList.remove('enabled');
     element.classList.add('disabled');
   }

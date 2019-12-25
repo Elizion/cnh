@@ -56,7 +56,7 @@ export class AuthPage {
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     this.authService.login(tokenBase.data, user, password).subscribe((res: Response) => {
       const keyData = 'data';
-      const keyMetadata = '';
+      const keyMetadata = 'metadata';
       const status = res[keyMetadata].response;
       this.token = res[keyData];
       if (status === 'EXITO') {

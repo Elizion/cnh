@@ -15,16 +15,17 @@
 
         <ion-col size-md="6" offset-md="3">                              
           <ion-list>                                                      
-            <ion-item *ngFor="let item of listDaysDefault">                          
+            <ion-item *ngFor="let item of listDaysDefault" [disabled]="item.estatusFormat == 'PM'">                          
               <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)"></ion-checkbox>
               <ion-label>                              
                 <ion-datetime 
-                  displayFormat="DD/MM/YYYY"
-                  placeholder="{{item.fechaFormat}} {{item.estatusDescripcion}}"
+                  (ionChange)="dataFromList($event, item.idVacaciones, myform)"
+                  placeholder="{{item.fechaFormat}} - {{item.estatusFormat}}"
+                  displayFormat="DD/MM/YYYY"                  
                   name={{item.idVacaciones}}
                   ngModel required
-                  id={{item.idVacaciones}}
-                  (ionChange)="dataFromList($event, item.idVacaciones, myform)"
+                  id={{item.idVacaciones}}                  
+                  class="disabled"
                 >
                 </ion-datetime>                
               </ion-label>            
