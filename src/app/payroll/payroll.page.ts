@@ -5,6 +5,7 @@ import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
 import { UtilsMessage } from '../utils/utils.message';
 import { UtilsNavigate } from '../utils/utils.navigate';
+import { UtilsHidden } from '../utils/utils.hidden';
 import { NgForm } from '@angular/forms';
 import * as moment from 'moment';
 import { Constants as CONST } from '../config/config.const';
@@ -20,7 +21,8 @@ export class PayrollPage implements OnInit {
     private payrollService: PayrollService,
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
-    private utilsNavigate: UtilsNavigate
+    private utilsNavigate: UtilsNavigate,
+    private utilsHidden: UtilsHidden
   ) { }
 
   isLoading = false;
@@ -28,29 +30,26 @@ export class PayrollPage implements OnInit {
   payrollArray: any[];
   b64Data: string;
   idPerson = this.globalService.personId();
-  visible: any = false;
+  visible: boolean;
 
   ngOnInit() {
-    this.payroll();
+    this.payrollInit();
   }
 
-  payroll(): void {
-    this.isLoading = true;
+  payrollInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: Response ) => {
-        this.payrollArray = res['data'];
-        console.log(this.payrollArray);
-        this.visible = true;
-        this.isLoading = false;
+        const key = 'data';
+        this.payrollArray = res[key];
+        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
         loadingEl.dismiss();
-        this.utilsMessage.alertPayroll();
+        this.utilsMessage.messageApiError(err, 'PayrollPage', 'payrollInit()');
         this.utilsNavigate.routerNavigatePayroll();
       });
     });
@@ -62,10 +61,8 @@ export class PayrollPage implements OnInit {
     }
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
-    console.log(startDate + ' ' + endDate);
-    this.isLoading = true;
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Agregando fechas...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.payrollService.payroll(
@@ -73,40 +70,33 @@ export class PayrollPage implements OnInit {
         startDate,
         endDate
       ).subscribe( (res: Response ) => {
-        console.log(JSON.stringify(res['data']));
-        this.payrollArray = res['data'];
-        this.isLoading        = false;
+        const key = 'data';
+        this.payrollArray = res[key];
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
-        loadingEl.dismiss();
-        this.utilsMessage.alertFormPayroll();
+        this.utilsMessage.messageApiError(err, 'PayrollPage', 'onSubmit()');
         this.utilsNavigate.routerNavigatePayroll();
+        loadingEl.dismiss();
       });
     });
   }
 
   impress(id: string, slidingEl: IonItemSliding): void {
-    console.log(id);
-    this.isLoading = true;
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Descargando solicitud...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
     .then(loadingEl => {
       loadingEl.present();
       this.payrollService.download(this.idPerson, id).subscribe( (res: Response ) => {
-        this.b64Data = res['data'].archivoBase64;
-        const nameFile = res['data'].nombreArchivo;
-        console.log(this.b64Data, nameFile);
+        const key = 'data';
+        this.b64Data = res[key].archivoBase64;
+        const nameFile = res[key].nombreArchivo;
         this.download(this.b64Data, nameFile);
-        console.log(this.payrollArray);
-        this.isLoading = false;
         loadingEl.dismiss();
       },
       (err) => {
-        console.log(err);
         loadingEl.dismiss();
-        this.utilsMessage.alertImpressPayroll();
+        this.utilsMessage.messageApiError(err, 'PayrollPage', 'impress()');
         this.utilsNavigate.routerNavigatePayroll();
       });
     });
