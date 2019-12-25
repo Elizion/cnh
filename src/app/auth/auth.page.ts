@@ -18,11 +18,15 @@ export class AuthPage {
     private authService: AuthService
   ) {}
 
+  showPassword = true;
   isLogin = true;
   user: string;
   password: string;
-  status: string;
   token: string;
+
+  onPasswordToggle(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
@@ -31,7 +35,7 @@ export class AuthPage {
     this.user = form.value.user;
     this.password = form.value.password;
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Validando...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageValidating() })
     .then(loadingEl => {
       loadingEl.present();
       this.pivote(this.user, this.password, loadingEl);
@@ -43,7 +47,6 @@ export class AuthPage {
       this.login(res, user, password, loadingEl);
     },
     (err) => {
-      console.log(err);
       loadingEl.dismiss();
       this.utilsMessage.messageApiError(err, 'AuthPage', 'pivote()');
       this.utilsNavigate.routerNavigateAuth();
@@ -52,9 +55,11 @@ export class AuthPage {
 
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     this.authService.login(tokenBase.data, user, password).subscribe((res: Response) => {
-      this.status = res['metadata'].response;
-      this.token = res['data'];
-      if (this.status === 'EXITO') {
+      const keyData = 'data';
+      const keyMetadata = '';
+      const status = res[keyMetadata].response;
+      this.token = res[keyData];
+      if (status === 'EXITO') {
         window.localStorage.setItem('token', JSON.stringify(this.token));
         this.utilsNavigate.routerNavigateProfile();
       } else {
@@ -71,4 +76,3 @@ export class AuthPage {
   }
 
 }
-

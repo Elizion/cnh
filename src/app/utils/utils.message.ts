@@ -55,4 +55,8 @@ export class UtilsMessage {
     messageListVoid() {
         return 'Lista vacia...';
     }
+    messageValidating() {
+        return 'Validando...';
+    }
+
 }
