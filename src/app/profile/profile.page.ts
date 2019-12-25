@@ -33,7 +33,7 @@ export class ProfilePage implements OnInit {
   }
   profileInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.profileService.profile().subscribe((res: Response) => {

@@ -1,14 +1,16 @@
 import { AlertController } from '@ionic/angular';
-
 export class UtilsMessage {
-
+    timeOk: any = 3000;
+    timeError: any = 4000;
     constructor(
         private alertCtrl: AlertController
     ) {}
-
-    timeOk: any = 3000;
-    timeError: any = 4000;
-
+    messageCharging() {
+        return 'Cargando...';
+    }
+    messageDownloading() {
+        return 'Descargando...';
+    }
     async messageApiOk(messageOk: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
             header: className,
@@ -20,7 +22,6 @@ export class UtilsMessage {
             alert.dismiss();
         }, this.timeOk);
     }
-
     async messageApiError(messageError: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
             header: className,

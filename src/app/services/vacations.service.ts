@@ -46,19 +46,19 @@ export class VacationsService {
   update(id: string, date: string) {
     return this.httpClient.get(this.urlVacations + 'modificar?personId=' + id + '&fechaUltimoPeriodo=' + date);
   }
-  commitUpdate(data: any) {          
-    return this.httpClient.post(this.urlVacations + 'guardarModificacion/', data);    
+  commitUpdate(data: any) {
+    return this.httpClient.post(this.urlVacations + 'guardarModificacion/', data);
   }
-  downloadUpdate(data: any) {          
-    return this.httpClient.post(this.urlVacations + 'formato/solicitudModificacionBase64/', data);    
+  downloadUpdate(data: any) {
+    return this.httpClient.post(this.urlVacations + 'formato/solicitudModificacionBase64/', data);
   }
   cancel(id: string, date: string) {
     return this.httpClient.get(this.urlVacations + 'cancelar?personId=' + id + '&fechaUltimoPeriodo=' + date);
   }
-  commitCancel(data: any) {          
-    return this.httpClient.post(this.urlVacations + 'guardarCancelacion/', data);    
+  commitCancel(data: any) {
+    return this.httpClient.post(this.urlVacations + 'guardarCancelacion/', data);
   }
-  downloadCancel(data: any) {          
-    return this.httpClient.post(this.urlVacations + 'formato/solicitudCancelacionBase64/', data);    
+  downloadCancel(data: any) {
+    return this.httpClient.post(this.urlVacations + 'formato/solicitudCancelacionBase64/', data);
   }
 }

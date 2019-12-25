@@ -57,7 +57,7 @@ export class VacationsPage implements OnInit {
 
   vacationsInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
@@ -109,7 +109,7 @@ export class VacationsPage implements OnInit {
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
     this.isLoading = true;
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Carcando datos...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postAddVacations(
@@ -170,7 +170,7 @@ export class VacationsPage implements OnInit {
       period = 'S';
     }
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Descargando solicitud...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
@@ -194,7 +194,7 @@ export class VacationsPage implements OnInit {
 
   save(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Guardando fechas...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.save(
