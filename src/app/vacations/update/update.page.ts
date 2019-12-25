@@ -39,11 +39,12 @@ export class UpdatePage implements OnInit {
     const id = this.globalService.personId();
     const date = this.globalService.date();
     this.loadingCtrl
-    .create({ keyboardClose: true, message: 'Cargando datos...' })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
-        this.listDaysDefault = res['data'].listaDias;
+        const key = 'data';
+        this.listDaysDefault = res[key].listaDias;
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.alertListVoidVacations();
         }
