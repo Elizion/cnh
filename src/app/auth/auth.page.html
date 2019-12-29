@@ -14,37 +14,28 @@
         </ion-col>
     </ion-row>
   </ion-grid>  
-
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <ion-grid>
-      
+    <ion-grid>      
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
           <ion-list>
-
             <ion-item>
               <ion-label position="floating">Usuario</ion-label>
               <ion-input type="text" ngModel name="user" required #userCtrl="ngModel"></ion-input>
             </ion-item>
-
             <ion-item>                          
               <ion-label position="floating">Contraseña</ion-label>              
-              <ion-input [type]="showPassword ? 'password' : 'text'" ngModel name="password" required minlength="3" #passwordCtrl="ngModel"></ion-input>                            
-              
-              <ion-icon [name]="showPassword ? 'eye' : 'eye-off'" (click)="onPasswordToggle()" slot="end" style="margin-top: 20px;"></ion-icon>
-              
+              <ion-input [type]="showPassword ? 'password' : 'text'" ngModel name="password" required minlength="3" #passwordCtrl="ngModel"></ion-input>                                          
+              <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" (click)="onPasswordToggle()" slot="end" style="margin-top: 20px;"></ion-icon>              
             </ion-item>
-
             <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
               <ion-label>
                 Debe ser mayor a 3 caracteres
               </ion-label>
             </ion-item>
-
           </ion-list>
         </ion-col>
       </ion-row>
-
       <ion-row>
         <ion-col>
           <ion-button
@@ -57,8 +48,6 @@
           </ion-button>
         </ion-col>
       </ion-row>
-
     </ion-grid>
   </form>
-
 </ion-content>

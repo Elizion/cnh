@@ -28,6 +28,17 @@ export class UtilsMessage {
             alert.dismiss();
         }, this.timeError);
     }
+    async messageGeneric(messageError: string, className: string, methodName: string) {
+        const alert = await this.alertCtrl.create({
+            header: className,
+            subHeader: methodName,
+            message: messageError
+        });
+        await alert.present();
+        setTimeout(() => {
+            alert.dismiss();
+        }, this.timeError);
+    }
     async messageParamethersArray(mensajes: string[], className: string, methodName: string) {
         let i = 0;
         for (i; i < mensajes.length; i++) {
@@ -49,14 +60,19 @@ export class UtilsMessage {
     messageDownloading() {
         return 'Descargando...';
     }
-    messageNotAvaible() {
-        return 'No disponible...';
-    }
-    messageListVoid() {
-        return 'Lista vacia...';
-    }
     messageValidating() {
         return 'Validando...';
     }
-
+    messageUpdating() {
+        return 'Actualizando...';
+    }
+    messageCanceling() {
+        return 'Cancelando...';
+    }
+    messageNotAvaible() {
+        return 'No disponible.';
+    }
+    messageListVoid() {
+        return 'Lista vacia.';
+    }
 }

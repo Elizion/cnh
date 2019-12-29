@@ -4,6 +4,7 @@ export abstract class Constants {
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
   static readonly MODULE: string[] = ['token/', 'empleado/', 'vacaciones/', 'avisos/', 'recibo/'];
+  static readonly FORMAT_DATE: string[] = ['DD/MM/YYYY'];
   static readonly ZERO: number = 0;
   static readonly ONE: number = 1;
   static readonly TWO: number = 2;

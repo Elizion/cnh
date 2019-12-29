@@ -1,7 +1,10 @@
-.disabled {
+.disabled {      
       pointer-events: none;      
+      border: none;
+      color: #999999;
 }
-.enabled {
-      pointer-events: all;       
+.enabled {      
+      pointer-events: all;      
+      border: dashed;
       color: #000000;
 }

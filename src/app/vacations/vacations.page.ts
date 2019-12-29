@@ -164,11 +164,7 @@ export class VacationsPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.save(
-        this.idPerson,
-        this.fechaInicial,
-        this.fechaIngresoFormat,
-        this.diasPendientes,
-        this.listDaysDefault
+        this.idPerson, this.fechaInicial, this.fechaIngresoFormat, this.diasPendientes, this.listDaysDefault
       ).subscribe((res: Response ) => {
         const key = 'data';
         this.diasPendientes = res[key].diasPendientes;
@@ -176,6 +172,7 @@ export class VacationsPage implements OnInit {
           const mensajes: string[] = res[key].mensajes;
           if ( mensajes != null && mensajes.length > 0) {
             this.utilsMessage.messageParamethersArray(res[key].mensajes, 'VacationsPage', 'save()');
+            loadingEl.dismiss();
           } else {
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
@@ -184,15 +181,14 @@ export class VacationsPage implements OnInit {
           this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
         }
-        loadingEl.dismiss();
       },
       (err) => {
         loadingEl.dismiss();
         this.utilsMessage.messageApiError(err, 'VacationsPage', 'impress()');
         this.utilsNavigate.routerNavigateVacations();
       });
-      loadingEl.dismiss();
     });
+    //Boton aceptar con mensaje ok
   }
 
   removeItem(id: number, slidingEl: IonItemSliding): void {

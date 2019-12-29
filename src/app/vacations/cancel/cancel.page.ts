@@ -4,9 +4,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './cancel.page.html',
   styleUrls: ['./cancel.page.scss'],
 })
-export class CancelPage implements OnInit {
+export class CancelPage {
 
-  ngOnInit() {
-  }
 
 }
