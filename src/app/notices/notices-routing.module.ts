@@ -15,7 +15,7 @@ const routes: Routes = [
             loadChildren: './personal/personal.module#PersonalPageModule'
           },
           {
-            path: ':noticeId/:description/:base64',
+            path: ':noticeId',
             loadChildren: './personal/personal-detail/personal-detail.module#PersonalDetailPageModule'
           }
         ]
