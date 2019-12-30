@@ -44,6 +44,7 @@ export class VacationsPage implements OnInit {
   visible: boolean;
 
   ngOnInit() {
+    //this.utilsMessage.messageParamethersArray(['1', '2', '3'], 'Vacaciones', 'Registro de vacaciones');
     this.vacationsInit();
   }
 
@@ -78,7 +79,7 @@ export class VacationsPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'VacationsPage', 'vacationsInit()');
+        this.utilsMessage.messageApiError(err, 'Consulta inicial', 'Error');
         this.utilsNavigate.routerNavigateVacations();
       });
     });
@@ -107,14 +108,14 @@ export class VacationsPage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if (mensajes != null && mensajes.length > 0) {
-            this.utilsMessage.messageParamethersArray(mensajes, 'VacationsPage', 'onSubmit()');
+            this.utilsMessage.messageParamethersArray(mensajes, 'Vacaciones', 'Agregar días');
           }
         }
         loadingEl.dismiss();
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'VacationsPage', 'onSubmit()');
+        this.utilsMessage.messageApiError(err, 'Vacaciones', 'Agregar días');
         this.utilsNavigate.routerNavigateVacations();
       });
     });
@@ -171,15 +172,15 @@ export class VacationsPage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if ( mensajes != null && mensajes.length > 0) {
-
-            this.utilsMessage.messageParamethersArray(res[key].mensajes, 'VacationsPage', 'save()');
-
+            this.utilsMessage.messageParamethersArray(res[key].mensajes, 'Vacaciones', 'Registro de vacaciones');
             loadingEl.dismiss();
           } else {
+            loadingEl.dismiss();
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
           }
         } else {
+          loadingEl.dismiss();
           this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
         }
@@ -193,14 +194,13 @@ export class VacationsPage implements OnInit {
     //Boton aceptar con mensaje ok
   }
 
-  removeItem(id: number, slidingEl: IonItemSliding): void {
+  removeItem(id: number): void {
     let i = 0;
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].idVacaciones === id) {
         this.listDaysDefault.splice(i, 1);
       }
     }
-    slidingEl.close();
   }
 
   update(): void {

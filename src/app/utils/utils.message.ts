@@ -52,14 +52,19 @@ export class UtilsMessage {
         */
     }
     async messageParamethersArray(mensajes: string[], className: string, methodName: string) {
+
         let i = 0;
+        let foo = '';
+
         for (i; i < mensajes.length; i++) {
-            console.log(i + '---' + mensajes[i]);
+            foo += '<li>' + mensajes[i] + '</li>';
         }
+
         const alert = await this.alertCtrl.create({
             header: className,
             subHeader: methodName,
-            message: mensajes.toString(),
+            //message: mensajes.toString(),
+            message: '<ul>' + foo + '</ul>',
             buttons: ['Aceptar']
         });
         await alert.present();
