@@ -41,6 +41,7 @@ export class PersonalPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
+        console.log(JSON.stringify(res));
         const key = 'data';
         this.listPersonal = res[key];
         this.visible = this.utilsHidden.visibleContent();
