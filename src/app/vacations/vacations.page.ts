@@ -171,7 +171,9 @@ export class VacationsPage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if ( mensajes != null && mensajes.length > 0) {
+
             this.utilsMessage.messageParamethersArray(res[key].mensajes, 'VacationsPage', 'save()');
+
             loadingEl.dismiss();
           } else {
             this.listDaysDefault = res[key].listaDias;

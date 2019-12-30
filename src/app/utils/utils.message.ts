@@ -1,43 +1,55 @@
 import { AlertController } from '@ionic/angular';
 export class UtilsMessage {
+
     timeOk: any = 3000;
     timeError: any = 4000;
     timeArray: any = 6000;
+
     constructor(
         private alertCtrl: AlertController
     ) {}
+
     async messageApiOk(messageOk: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
             header: className,
             subHeader: methodName,
-            message: messageOk
+            message: messageOk,
+            buttons: ['Aceptar']
         });
         await alert.present();
+        /*
         setTimeout(() => {
             alert.dismiss();
         }, this.timeOk);
+        */
     }
     async messageApiError(messageError: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
             header: className,
             subHeader: methodName,
-            message: messageError
+            message: messageError,
+            buttons: ['Aceptar']
         });
         await alert.present();
+        /*
         setTimeout(() => {
             alert.dismiss();
         }, this.timeError);
+        */
     }
     async messageGeneric(messageError: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
             header: className,
             subHeader: methodName,
-            message: messageError
+            message: messageError,
+            buttons: ['Aceptar']
         });
         await alert.present();
+        /*
         setTimeout(() => {
             alert.dismiss();
         }, this.timeError);
+        */
     }
     async messageParamethersArray(mensajes: string[], className: string, methodName: string) {
         let i = 0;
@@ -47,12 +59,13 @@ export class UtilsMessage {
         const alert = await this.alertCtrl.create({
             header: className,
             subHeader: methodName,
-            message: mensajes.toString()
+            message: mensajes.toString(),
+            buttons: ['Aceptar']
         });
         await alert.present();
-        setTimeout(() => {
+        /*setTimeout(() => {
             alert.dismiss();
-        }, this.timeArray);
+        }, this.timeArray);*/
     }
     messageCharging() {
         return 'Cargando...';
