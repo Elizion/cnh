@@ -60,7 +60,7 @@ export class PersonalPage implements OnInit {
     return ext == null ? '' : ext[1];
   }
 
-  download(id: string, nameFile: string, slidingEl: IonItemSliding): void {
+  download(id: string, nameFile: string): void {
     const extension = this.getFileExtension(nameFile);
     console.log(nameFile);
     console.log(extension);
@@ -90,12 +90,10 @@ export class PersonalPage implements OnInit {
           default:
             this.utilsMessage.messageNotAvaible();
         }
-        slidingEl.close();
         loadingEl.dismiss();
       },
       (err) => {
         this.utilsMessage.messageApiError(err, 'PersonalPage', 'download()');
-        slidingEl.close();
         loadingEl.dismiss();
         this.utilsNavigate.routerNavigateNotices();
       });
