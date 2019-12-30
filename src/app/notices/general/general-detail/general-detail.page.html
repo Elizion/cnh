@@ -11,15 +11,13 @@
 
   <ion-grid>
     <ion-row>      
-      <ion-col>        
-        <ion-card>          
-          <ion-card-header>
-            <ion-card-subtitle text-center>{{ description }}</ion-card-subtitle>            
-          </ion-card-header>                    
-          <ion-card-content>                                
-            <ion-img src="data:image/jpeg;base64, {{base64}}" alt="Noticia" style="height: 10rem;"></ion-img>                            
-          </ion-card-content>
-        </ion-card>
+      <ion-col>  
+        <h5 text-center>{{ description }}</h5>      
+        <ion-img 
+          src="data:image/jpeg;base64, {{base64}}" 
+          alt="Noticia" 
+          style="height: auto;"
+        ></ion-img>
       </ion-col>            
     </ion-row>
   </ion-grid>

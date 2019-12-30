@@ -60,4 +60,9 @@ export class GeneralPage implements OnInit {
     this.archivoBase64 = archivoBase64;
   }
 
+
+  showImage(base64: string) {
+    console.log(base64);
+  }
+
 }

@@ -28,7 +28,7 @@ const routes: Routes = [
             loadChildren: './general/general.module#GeneralPageModule'
           },
           {
-            path: ':noticeId/:description/:base64',
+            path: ':description/:base64',
             loadChildren:
               './general/general-detail/general-detail.module#GeneralDetailPageModule'
           }

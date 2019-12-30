@@ -14,14 +14,20 @@
           <ion-card-header>
             <ion-card-subtitle text-center>{{ descripcionAvisoGeneral }}</ion-card-subtitle>            
           </ion-card-header>          
-          <ion-img src="data:image/jpeg;base64, {{archivoBase64}}" alt="Noticia" style="height: 10rem;"></ion-img>
+          <ion-img 
+            src="data:image/jpeg;base64, {{archivoBase64}}" 
+            alt="Noticia" 
+            style="height: 10rem;" 
+            (click)="showImage(archivoBase64)"
+            [routerLink]="['/', 'notices', 'tabs', 'general', descripcionAvisoGeneral, archivoBase64]" detail
+          >
+          </ion-img>
           <ion-card-content>                                
             <ion-list>
               <ion-item 
                 button 
                 *ngFor="let notice of listGeneral" 
-                (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)"
-                [routerLink]="['/', 'notices', 'tabs', 'general', notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64]" detail
+                (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)"                
               >                
                 <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>
               </ion-item>
@@ -32,3 +38,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<!--
+  
+-->

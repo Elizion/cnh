@@ -8,7 +8,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GeneralDetailPage implements OnInit {
 
-  id: any;
   description: any;
   base64: any;
 
@@ -16,15 +15,12 @@ export class GeneralDetailPage implements OnInit {
 
   ngOnInit() {
 
-    const id = this.route.snapshot.paramMap.get('noticeId');
     const description = this.route.snapshot.paramMap.get('description');
     const base64 = this.route.snapshot.paramMap.get('base64');
 
-    this.id = id;
     this.description = description;
     this.base64 = base64;
 
-    console.log(this.id);
     console.log(this.description);
     console.log(this.base64);
 
