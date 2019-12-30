@@ -13,6 +13,10 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: './personal/personal.module#PersonalPageModule'
+          },
+          {
+            path: ':noticeId/:description/:base64',
+            loadChildren: './personal/personal-detail/personal-detail.module#PersonalDetailPageModule'
           }
         ]
       },
@@ -22,6 +26,11 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: './general/general.module#GeneralPageModule'
+          },
+          {
+            path: ':noticeId/:description/:base64',
+            loadChildren:
+              './general/general-detail/general-detail.module#GeneralDetailPageModule'
           }
         ]
       },
