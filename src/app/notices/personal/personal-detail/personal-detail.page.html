@@ -1,11 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Personal detalle</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/notices/tabs/general"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle Noticia</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
-    <ion-button color="primary">Descargar archivo</ion-button>
-                
-</ion-content>
+  <ion-grid>
+    <ion-row>      
+      <ion-col>        
+        <ion-card>          
+          <ion-card-header>
+            <ion-card-subtitle text-center> {{nombreArchivo}} </ion-card-subtitle>            
+          </ion-card-header>                    
+          <ion-card-content>        
+            <p> {{mensaje}} </p> 
+            <ion-button color="primary">Descargar archivo</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>            
+    </ion-row>
+  </ion-grid>
+
+</ion-content>    

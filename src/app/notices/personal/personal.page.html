@@ -14,7 +14,7 @@
           <ion-item 
             button
             *ngFor="let notice of listPersonal"
-            [routerLink]="['/', 'notices', 'tabs', 'personal', notice.idArchivo]" detail
+            [routerLink]="['/', 'notices', 'tabs', 'personal', notice.idArchivo, notice.nombreArchivo, notice.mensaje]" detail
           >
             <ion-label>
               <h5>{{ notice.nombreArchivo }}</h5>

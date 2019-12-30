@@ -15,7 +15,7 @@ const routes: Routes = [
             loadChildren: './personal/personal.module#PersonalPageModule'
           },
           {
-            path: ':noticeId',
+            path: ':noticeId/:nombreArchivo/:mensaje',
             loadChildren: './personal/personal-detail/personal-detail.module#PersonalDetailPageModule'
           }
         ]

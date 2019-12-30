@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
-import { GlobalService } from '../../services/global.service';
 import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
@@ -14,7 +13,6 @@ export class GeneralPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
-    private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
