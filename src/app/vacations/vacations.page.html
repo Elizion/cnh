@@ -109,8 +109,8 @@
         </ion-button>        
       </ion-col>   
 
-      <ion-col (click)="refresh()">
-        <ion-button color="primary" expand="block" [disabled]="!this.visibleButton">  
+      <ion-col>
+        <ion-button color="primary" expand="block"  (click)="refresh()" [disabled]="!this.visibleButton">  
           <ion-icon name="refresh" slot="icon-only"></ion-icon>          
         </ion-button>        
       </ion-col>      

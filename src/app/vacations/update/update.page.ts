@@ -6,6 +6,7 @@ import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
+import { Platform } from '@ionic/angular';
 import * as moment from 'moment';
 @Component({
   selector: 'app-update',
@@ -31,8 +32,11 @@ export class UpdatePage implements OnInit {
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
-    private utilsHidden: UtilsHidden
+    private utilsHidden: UtilsHidden,
+    private platform: Platform,
   ) {}
+
+
 
   ngOnInit() {
     this.updateInit();
@@ -269,5 +273,6 @@ export class UpdatePage implements OnInit {
       }
     }
   }
+
 
 }

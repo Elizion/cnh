@@ -87,6 +87,9 @@ export class UtilsMessage {
     messageCharging() {
         return 'Cargando...';
     }
+    messageSaving() {
+        return 'Guardando...';
+    }
     messageDownloading() {
         return 'Descargando...';
     }

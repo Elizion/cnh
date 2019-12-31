@@ -21,7 +21,8 @@ export class CancelPage implements OnInit {
   b64Data: any;
   diasDisponibles: any;
   txtMotivo: string;
-  visibleButton: any = true;
+  visibleButton: any = false;
+
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -32,7 +33,7 @@ export class CancelPage implements OnInit {
   ) {}
   ngOnInit() {
     this.cancelInit();
-  }  
+  }
   cancelInit(): void {
     const id = this.globalService.personId();
     const date = this.globalService.date();
@@ -98,14 +99,20 @@ export class CancelPage implements OnInit {
   }
   sendCancel(data: any) {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
+    .create({ keyboardClose: true, message: this.utilsMessage.messageSaving() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.commitCancel(data).subscribe((res: Response) => {
-        const key = 'data';
+        const key = 'data';        
+
         if (res[key].listaDias !== 'undefined') {
+
+          this.concatenate(res, key);
           const nuevaListaModificados = res[key].listaDias;
+
           if (nuevaListaModificados != null && nuevaListaModificados.length > 0) {
+
+            
             this.listDaysDefault = nuevaListaModificados;
             this.buttonsRefresh(res);
             loadingEl.dismiss();
@@ -126,35 +133,15 @@ export class CancelPage implements OnInit {
       });
     });
   }
-  dataFromList(event: any, idVacaciones: any, formBuilder: any) {
-    const obj = formBuilder.value;
-    const array = Object.entries(obj);
-    let date = '';
-    const position = this.indexOf(idVacaciones);
-    date = this.indexOfDate(idVacaciones, array);
-    this.listDaysDefault[position].fechaFormat = date;
-  }
-  indexOf(id: number) {
-    for (let i = 0; i < this.listDaysDefault.length; i++) {
-      if ( id === this.listDaysDefault[i].idVacaciones ) {
-        return i;
-      }
-    }
-    return -1;
-  }
-  indexOfDate(id: string, array: any) {
-    let date = '';
+  concatenate(res: any, key: string): void {
     let i = 0;
-    for (i; i < array.length; i++) {
-      if ( id.toString() === array[i][0] ) {
-        date =  moment(array[i][1]).format(CONST.FORMAT_DATE [0]);
-        return date;
-      }
+    let concatenate = '';
+    for (i; i < this.listDaysDefault.length; i++) {
+      concatenate = res[key].listaDias[i].fechaFormat + ' ' + res[key].listaDias[i].estatusDescripcion;
+      res[key].listaDias[i].fecha = concatenate;
     }
-    return null;
   }
   addCheckbox(event: any, idVacaciones: string) {
-    this.visibleButton = true;
     const datetime = document.getElementById(idVacaciones);
     if (event.target.checked) {
       this.checked.push(idVacaciones);
@@ -164,6 +151,7 @@ export class CancelPage implements OnInit {
       this.checked.splice(index, 1);
       this.disabledDatetime(datetime);
     }
+    this.visibleButton = true;
     console.log(this.checked);
   }
   removeCheckedFromArray(checkbox: string) {
@@ -184,6 +172,7 @@ export class CancelPage implements OnInit {
   }
   refresh() {
     this.cancelInit();
+    this.visibleButton = false;
   }
   impress() {
     const modifiedList = [];

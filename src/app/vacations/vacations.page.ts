@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { IonItemSliding } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
 import { Constants as CONST } from '../config/config.const';
@@ -225,6 +224,7 @@ export class VacationsPage implements OnInit {
 
   refresh(): void {
     this.vacationsInit();
+    this.visibleButton = false;
   }
 
   trueSave() {
