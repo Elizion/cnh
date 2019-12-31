@@ -209,7 +209,7 @@ export class UpdatePage implements OnInit {
   }
 
   refresh() {
-    return window.location.reload();
+    this.updateInit();
   }
 
   download(b64Data: string, nameFile: string): void {

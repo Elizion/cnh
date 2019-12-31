@@ -31,10 +31,7 @@ export class CancelPage implements OnInit {
   ) {}
   ngOnInit() {
     this.cancelInit();
-  }
-  refresh() {
-    window.location.reload();
-  }
+  }  
   cancelInit(): void {
     const id = this.globalService.personId();
     const date = this.globalService.date();
@@ -183,10 +180,8 @@ export class CancelPage implements OnInit {
   back(): void {
     this.utilsNavigate.routerNavigateVacations();
   }
-  download(b64Data: string, nameFile: string): void {
-    console.log(nameFile);
-    console.log(b64Data);
-    this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+  refresh() {
+    this.cancelInit();
   }
   impress() {
     const modifiedList = [];
@@ -196,17 +191,13 @@ export class CancelPage implements OnInit {
         modifiedList.push(this.listDaysDefault[i]);
       }
     }
-
     if (modifiedList.length > 0) {
-
       const data = {
         personId: this.globalService.personId(),
         motivo: this.txtMotivo,
         diasDisponibles: this.diasDisponibles,
         listaVacaciones: modifiedList
       };
-
-      console.log(data);
       this.loadingCtrl
       .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
       .then(loadingEl => {
@@ -228,5 +219,7 @@ export class CancelPage implements OnInit {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Cancelación');
     }
   }
-
+  download(b64Data: string, nameFile: string): void {
+    this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
+  }
 }

@@ -29,8 +29,7 @@
                 *ngFor="let notice of listGeneral" 
                 (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)"                
               >                
-                <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>
-                <ion-icon name="arrow-forward" end></ion-icon>
+                <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>                
               </ion-item>
             </ion-list>                    
           </ion-card-content>
@@ -39,7 +38,3 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-
-<!--
-  
--->
