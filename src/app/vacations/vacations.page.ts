@@ -42,8 +42,9 @@ export class VacationsPage implements OnInit {
   b64Data: any;
   idPerson = this.globalService.personId();
   visible: boolean;
+  visibleButton: any = false;
 
-  ngOnInit() {    
+  ngOnInit() {
     this.vacationsInit();
   }
 
@@ -85,6 +86,7 @@ export class VacationsPage implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.visibleButton = true;
     if (!form.valid) {
       return;
     }
@@ -110,6 +112,7 @@ export class VacationsPage implements OnInit {
             this.utilsMessage.messageParamethersArray(mensajes, 'Vacaciones', 'Agregar días');
           }
         }
+        
         loadingEl.dismiss();
       },
       (err) => {
@@ -166,32 +169,26 @@ export class VacationsPage implements OnInit {
       this.vacationsService.save(
         this.idPerson, this.fechaInicial, this.fechaIngresoFormat, this.diasPendientes, this.listDaysDefault
       ).subscribe((res: Response ) => {
-        
         const key = 'data';
         this.diasPendientes = res[key].diasPendientes;
-
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
-
           if ( mensajes != null && mensajes.length > 0) {
-
             this.utilsMessage.messageParamethersArray(res[key].mensajes, 'Vacaciones', 'Registro de vacaciones');
-
             loadingEl.dismiss();
-
           } else {
-
             loadingEl.dismiss();
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
             this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
+            this.trueButton = false;
           }
-
         } else {
           loadingEl.dismiss();
           this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
           this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
+          this.trueButton = false;
         }
       },
       (err) => {
@@ -200,7 +197,6 @@ export class VacationsPage implements OnInit {
         this.utilsNavigate.routerNavigateVacations();
       });
     });
-
   }
 
   removeItem(id: number): void {
@@ -230,6 +226,10 @@ export class VacationsPage implements OnInit {
 
   refresh(): void {
     this.vacationsInit();
+  }
+
+  trueSave() {
+      console.log('The text in the input');
   }
 
 }
