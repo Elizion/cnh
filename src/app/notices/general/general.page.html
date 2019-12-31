@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>      
     </ion-buttons>
-    <ion-title>Avisos</ion-title>
+    <ion-title>Avisos generales</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding *ngIf="visible">  
@@ -28,6 +28,7 @@
                 button 
                 *ngFor="let notice of listGeneral" 
                 (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)"                
+                class="nav-link"
               >                
                 <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>                
               </ion-item>
