@@ -17,8 +17,8 @@
 
           <ion-list>                                                      
 
-            <ion-item *ngFor="let item of listDaysDefault" [disabled]="item.estatusFormat == 'PM'"> 
-              <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)"></ion-checkbox>              
+            <ion-item *ngFor="let item of listDaysDefault" [disabled]="item.estatusFormat == 'PC'"> 
+              <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)" style="margin-right: 2em;"></ion-checkbox>              
               <ion-label>
                 <ion-datetime
                   placeholder="{{item.fecha}}"                              
@@ -33,6 +33,17 @@
                 </ion-datetime>
               </ion-label>                                     
             </ion-item>    
+                      
+            <ion-grid>
+              <ion-row>        
+                <ion-col>
+                <ion-item>
+                  <ion-label position="floating">Motivo</ion-label>
+                  <ion-textarea placeholder="Motivo por el que no se puede disfrutar vacaciones ..." [(ngModel)]="txtMotivo" [ngModelOptions]="{standalone: true}"></ion-textarea>
+                </ion-item>
+                </ion-col>
+              </ion-row>   
+            </ion-grid>  
 
           </ion-list>           
 
@@ -41,10 +52,23 @@
 
       <ion-row>                     
         <ion-col>
-          <ion-button color="primary" expand="block" (click)="cancelForm()">          
+          <ion-button color="primary" expand="block" (click)="saveCancel()">          
             <ion-icon name="folder"></ion-icon>    
           </ion-button>
-        </ion-col>                                                         
+        </ion-col>                                 
+        <ion-col>   
+          
+          <ion-button color="primary" expand="block" (click)="refresh()">  
+            <ion-icon name="refresh" slot="icon-only"></ion-icon>          
+          </ion-button>        
+        </ion-col>      
+
+        <ion-col *ngIf="this.btnImprimir">   
+          <ion-button color="primary" expand="block" (click)="impress()">  
+            <ion-icon name="print" slot="icon-only"></ion-icon>          
+          </ion-button>        
+        </ion-col>
+
       </ion-row>
 
     </form>
@@ -53,7 +77,7 @@
 
    <ion-grid>
     <ion-row>                                                            
-      <ion-col *ngIf="this.btnImprimir">
+      <ion-col>
         <ion-button color="primary" expand="block" (click)="impress()">  
           <ion-icon name="print" slot="icon-only"></ion-icon>          
         </ion-button>        
@@ -61,16 +85,7 @@
     </ion-row>   
   </ion-grid>
 
-  <ion-grid>
-    <ion-row>        
-      <ion-col *ngIf="this.btnImprimir">
-       <ion-item>
-         <ion-label position="floating">Motivo</ion-label>
-         <ion-textarea placeholder="Motivo por el que no se puede disfrutar vacaciones ..."></ion-textarea>
-       </ion-item>
-      </ion-col>
-    </ion-row>   
-  </ion-grid>  
+
 
 
 </ion-content>

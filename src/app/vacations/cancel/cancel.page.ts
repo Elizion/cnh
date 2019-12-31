@@ -20,6 +20,7 @@ export class CancelPage implements OnInit {
   btnImprimir: any;
   b64Data: any;
   diasDisponibles: any;
+  txtMotivo: string;
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -73,8 +74,7 @@ export class CancelPage implements OnInit {
     this.btnModificar = res[key].botonModificar;
     this.btnImprimir = res[key].botonImprimir;
   }
-
-  cancelForm() {
+  saveCancel() {
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
       let i = 0;
@@ -98,7 +98,6 @@ export class CancelPage implements OnInit {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', 'Cancelación');
     }
   }
-
   sendCancel(data: any) {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
@@ -129,7 +128,6 @@ export class CancelPage implements OnInit {
       });
     });
   }
-
   dataFromList(event: any, idVacaciones: any, formBuilder: any) {
     const obj = formBuilder.value;
     const array = Object.entries(obj);
@@ -167,6 +165,7 @@ export class CancelPage implements OnInit {
       this.checked.splice(index, 1);
       this.disabledDatetime(datetime);
     }
+    console.log(this.checked);
   }
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category: any) => {
@@ -193,16 +192,20 @@ export class CancelPage implements OnInit {
     const modifiedList = [];
     let i = 0;
     for (i; i < this.listDaysDefault.length; i++) {
-      if (this.listDaysDefault[i].estatusFormat === 'PM' ) {
+      if (this.listDaysDefault[i].estatusFormat === 'PC') {
         modifiedList.push(this.listDaysDefault[i]);
       }
     }
+
     if (modifiedList.length > 0) {
+
       const data = {
         personId: this.globalService.personId(),
+        motivo: this.txtMotivo,
         diasDisponibles: this.diasDisponibles,
         listaVacaciones: modifiedList
       };
+
       console.log(data);
       this.loadingCtrl
       .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
@@ -220,6 +223,7 @@ export class CancelPage implements OnInit {
           loadingEl.dismiss();
         });
       });
+
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Cancelación');
     }

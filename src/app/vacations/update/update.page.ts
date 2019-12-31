@@ -74,7 +74,7 @@ export class UpdatePage implements OnInit {
     this.btnImprimir = res[key].botonImprimir;
   }
 
-  updateForm() {
+  saveUpdate() {
 
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
