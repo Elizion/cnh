@@ -82,7 +82,7 @@ export class PayrollPage implements OnInit {
     });
   }
 
-  impress(id: string, slidingEl: IonItemSliding): void {
+  impress(id: string): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
     .then(loadingEl => {

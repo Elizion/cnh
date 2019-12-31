@@ -116,6 +116,7 @@ export class UpdatePage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if (mensajes != null && mensajes.length > 0) {
+            JSON.parse(JSON.stringify(mensajes));
             this.utilsMessage.messageParamethersArray(mensajes, 'UpdatePage', 'submitForm()');
             loadingEl.dismiss();
           }
@@ -200,27 +201,31 @@ export class UpdatePage implements OnInit {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
   impress() {
+
     const modifiedList = [];
     let i = 0;
+
     for (i; i < this.listDaysDefault.length; i++) {
       if (this.listDaysDefault[i].estatusFormat === 'PM' ) {
         modifiedList.push(this.listDaysDefault[i]);
       }
     }
+
     if (modifiedList.length > 0) {
       const data = {
         personId: this.globalService.personId(),
         diasDisponibles: this.diasDisponibles,
         listaVacaciones: modifiedList
       };
-      console.log(data);
+      alert(data);
       this.loadingCtrl
       .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
       .then(loadingEl => {
         loadingEl.present();
-        this.vacationsService.downloadUpdate(data).subscribe( (res: Response ) => {
+        this.vacationsService.downloadUpdate(data).subscribe( (res: {} ) => {
+          JSON.stringify(res);
           const key = 'data';
-          const nameFile = 'pruebaDinamica';
+          const nameFile = res[key].nombreArchivo;
           this.b64Data = res[key].archivoBase64;
           this.download(this.b64Data, nameFile);
           loadingEl.dismiss();
@@ -230,7 +235,6 @@ export class UpdatePage implements OnInit {
           loadingEl.dismiss();
         });
       });
-
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
     }
