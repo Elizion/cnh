@@ -62,7 +62,7 @@ export class CancelPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'UpdatePage', 'updateInit()');
+        this.utilsMessage.messageApiError(err, 'Vacaciones', 'Cancelación');
         this.utilsNavigate.routerNavigateVacationsUpdate();
       });
     });
@@ -73,7 +73,8 @@ export class CancelPage implements OnInit {
     this.btnModificar = res[key].botonModificar;
     this.btnImprimir = res[key].botonImprimir;
   }
-  updateForm() {
+
+  cancelForm() {
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
       let i = 0;
@@ -94,9 +95,10 @@ export class CancelPage implements OnInit {
       };
       this.sendCancel(data);
     } else {
-      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
+      this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', 'Cancelación');
     }
   }
+
   sendCancel(data: any) {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
@@ -110,22 +112,24 @@ export class CancelPage implements OnInit {
             this.listDaysDefault = nuevaListaModificados;
             this.buttonsRefresh(res);
             loadingEl.dismiss();
+            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
           }
         }
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if (mensajes != null && mensajes.length > 0) {
-            this.utilsMessage.messageParamethersArray(mensajes, 'UpdatePage', 'submitForm()');
+            this.utilsMessage.messageParamethersArray(mensajes, 'Vacaciones', 'Cancelación');
             loadingEl.dismiss();
           }
         }
       },
       (err) => {
-          this.utilsMessage.messageApiError(err, 'UpdatePage', 'submitForm()');
+          this.utilsMessage.messageApiError(err, 'Vacaciones', 'Cancelación');
           loadingEl.dismiss();
       });
     });
   }
+
   dataFromList(event: any, idVacaciones: any, formBuilder: any) {
     const obj = formBuilder.value;
     const array = Object.entries(obj);
@@ -154,43 +158,30 @@ export class CancelPage implements OnInit {
     return null;
   }
   addCheckbox(event: any, idVacaciones: string) {
-
     const datetime = document.getElementById(idVacaciones);
-    const label = document.getElementById('label-' + idVacaciones);
-
     if (event.target.checked) {
-
       this.checked.push(idVacaciones);
       this.enabledDatetime(datetime);
-
     } else {
-
       const index = this.removeCheckedFromArray(idVacaciones);
       this.checked.splice(index, 1);
       this.disabledDatetime(datetime);
-
     }
-
-    console.log(JSON.stringify(this.checked));
-
   }
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category: any) => {
       return category === checkbox;
     });
   }
-
-  enabledDatetime(datetime: any) {
+  enabledDatetime(datetime: any): void {
     datetime.classList.remove('disabled');
     datetime.classList.add('enabled');
   }
-
-  disabledDatetime(datetime: any) {
+  disabledDatetime(datetime: any): void {
     datetime.classList.remove('enabled');
     datetime.classList.add('disabled');
   }
-
-  back() {
+  back(): void {
     this.utilsNavigate.routerNavigateVacations();
   }
   download(b64Data: string, nameFile: string): void {
@@ -207,16 +198,11 @@ export class CancelPage implements OnInit {
       }
     }
     if (modifiedList.length > 0) {
-
-
       const data = {
         personId: this.globalService.personId(),
         diasDisponibles: this.diasDisponibles,
         listaVacaciones: modifiedList
       };
-
-
-      
       console.log(data);
       this.loadingCtrl
       .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
@@ -224,7 +210,7 @@ export class CancelPage implements OnInit {
         loadingEl.present();
         this.vacationsService.downloadCancel(data).subscribe( (res: {} ) => {
           const key = 'data';
-          const nameFile = 'cancelacion';
+          const nameFile = res[key].nombreArchivo;
           this.b64Data = res[key].archivoBase64;
           this.download(this.b64Data, nameFile);
           loadingEl.dismiss();
@@ -234,9 +220,8 @@ export class CancelPage implements OnInit {
           loadingEl.dismiss();
         });
       });
-
     } else {
-      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
+      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Cancelación');
     }
   }
 
