@@ -18,7 +18,7 @@
           <ion-list>                                                      
 
             <ion-item *ngFor="let item of listDaysDefault" [disabled]="item.estatusFormat == 'PM'"> 
-              <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)"></ion-checkbox>              
+              <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)" style="margin-right: 2em;"></ion-checkbox>                 
               <ion-label>
                 <ion-datetime
                   placeholder="{{item.fecha}}"                              
@@ -28,7 +28,7 @@
                   max="2022-01-01"
                   class="disabled"
                   id={{item.idVacaciones}}
-                  (ionChange)="dataFromList($event, item.idVacaciones, myform)"
+                  (ionChange)="dataFromList(item.idVacaciones, myform)"
                 >
                 </ion-datetime>
               </ion-label>                                     

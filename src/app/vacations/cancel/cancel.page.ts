@@ -207,11 +207,16 @@ export class CancelPage implements OnInit {
       }
     }
     if (modifiedList.length > 0) {
+
+
       const data = {
         personId: this.globalService.personId(),
         diasDisponibles: this.diasDisponibles,
         listaVacaciones: modifiedList
       };
+
+
+      
       console.log(data);
       this.loadingCtrl
       .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })

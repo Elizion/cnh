@@ -93,4 +93,7 @@ export class UtilsMessage {
     messageListVoid() {
         return 'Lista vacia.';
     }
+    messageSelectList() {
+        return 'Seleccione al menos un fecha.';
+    }
 }

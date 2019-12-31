@@ -49,12 +49,10 @@ export class UpdatePage implements OnInit {
         this.listDaysDefault = res[key].listaDias;
 
 
-        console.log(res[key].listaDias);
         this.cloneArray(res[key].listaDias);
-        console.log(this.listDaysDefault);
-
         this.concatenate(res, key);
         this.diasDisponibles = res[key].diasDisponibles;
+
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
@@ -77,7 +75,9 @@ export class UpdatePage implements OnInit {
   }
 
   updateForm() {
+
     const modifiedList = [];
+
     if (this.checked != null && this.checked.length > 0) {
       let i = 0;
       for (i; i < this.checked.length; i++) {
@@ -97,8 +97,9 @@ export class UpdatePage implements OnInit {
       };
       this.sendUpdate(data);
     } else {
-      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
+      this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', 'Vacio');
     }
+
   }
 
   sendUpdate(data: any) {
@@ -119,13 +120,13 @@ export class UpdatePage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if (mensajes != null && mensajes.length > 0) {
-            this.utilsMessage.messageParamethersArray(mensajes, 'UpdatePage', 'submitForm()');
+            this.utilsMessage.messageParamethersArray(mensajes, 'Vacaciones', 'Modificación de fechas');
             loadingEl.dismiss();
           }
         }
       },
       (err) => {
-          this.utilsMessage.messageApiError(err, 'UpdatePage', 'submitForm()');
+          this.utilsMessage.messageApiError(err, 'Vacaciones', 'Modificación de fechas');
           loadingEl.dismiss();
       });
     });
@@ -232,12 +233,12 @@ export class UpdatePage implements OnInit {
           loadingEl.dismiss();
         },
         (err) => {
-          alert(JSON.stringify(err));
+          this.utilsMessage.messageApiError(err, 'Vacaciones', 'Descarga');
           loadingEl.dismiss();
         });
       });
     } else {
-      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
+      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Descargar');
     }
   }
 
