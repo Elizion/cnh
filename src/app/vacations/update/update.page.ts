@@ -161,7 +161,7 @@ export class UpdatePage implements OnInit {
 
     if (event.target.checked) {
 
-      this.checked.push(idVacaciones);      
+      this.checked.push(idVacaciones);
       this.enabledDatetime(datetime);
 
     } else {

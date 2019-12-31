@@ -43,8 +43,7 @@ export class VacationsPage implements OnInit {
   idPerson = this.globalService.personId();
   visible: boolean;
 
-  ngOnInit() {
-    //this.utilsMessage.messageParamethersArray(['1', '2', '3'], 'Vacaciones', 'Registro de vacaciones');
+  ngOnInit() {    
     this.vacationsInit();
   }
 
