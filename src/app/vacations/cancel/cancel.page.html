@@ -56,36 +56,17 @@
             <ion-icon name="folder"></ion-icon>    
           </ion-button>
         </ion-col>                                 
-        <ion-col>   
-          
+        <ion-col>             
           <ion-button color="primary" expand="block" (click)="refresh()">  
             <ion-icon name="refresh" slot="icon-only"></ion-icon>          
           </ion-button>        
         </ion-col>      
-
         <ion-col *ngIf="this.btnImprimir">   
           <ion-button color="primary" expand="block" (click)="impress()">  
             <ion-icon name="print" slot="icon-only"></ion-icon>          
           </ion-button>        
         </ion-col>
-
       </ion-row>
-
     </form>
-
-  </ion-grid>  
-
-   <ion-grid>
-    <ion-row>                                                            
-      <ion-col>
-        <ion-button color="primary" expand="block" (click)="impress()">  
-          <ion-icon name="print" slot="icon-only"></ion-icon>          
-        </ion-button>        
-      </ion-col>
-    </ion-row>   
   </ion-grid>
-
-
-
-
 </ion-content>
