@@ -166,22 +166,32 @@ export class VacationsPage implements OnInit {
       this.vacationsService.save(
         this.idPerson, this.fechaInicial, this.fechaIngresoFormat, this.diasPendientes, this.listDaysDefault
       ).subscribe((res: Response ) => {
+        
         const key = 'data';
         this.diasPendientes = res[key].diasPendientes;
+
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
+
           if ( mensajes != null && mensajes.length > 0) {
+
             this.utilsMessage.messageParamethersArray(res[key].mensajes, 'Vacaciones', 'Registro de vacaciones');
+
             loadingEl.dismiss();
+
           } else {
+
             loadingEl.dismiss();
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
+            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
           }
+
         } else {
           loadingEl.dismiss();
           this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
+          this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
         }
       },
       (err) => {
@@ -190,7 +200,7 @@ export class VacationsPage implements OnInit {
         this.utilsNavigate.routerNavigateVacations();
       });
     });
-    //Boton aceptar con mensaje ok
+
   }
 
   removeItem(id: number): void {

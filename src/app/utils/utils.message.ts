@@ -9,6 +9,18 @@ export class UtilsMessage {
         private alertCtrl: AlertController
     ) {}
 
+    async messageOkTemp(messageOk: string, className: string, methodName: string) {
+        const alert = await this.alertCtrl.create({
+            header: className,
+            subHeader: methodName,
+            message: messageOk
+        });
+        await alert.present();
+        setTimeout(() => {
+            alert.dismiss();
+        }, this.timeOk);
+    }
+
     async messageApiOk(messageOk: string, className: string, methodName: string) {
         const alert = await this.alertCtrl.create({
             header: className,
@@ -54,17 +66,17 @@ export class UtilsMessage {
     async messageParamethersArray(mensajes: string[], className: string, methodName: string) {
 
         let i = 0;
-        let foo = '';
+        let row = '';
 
         for (i; i < mensajes.length; i++) {
-            foo += '<li>' + mensajes[i] + '</li>';
+            row += '<li>' + mensajes[i] + '</li>';
         }
 
         const alert = await this.alertCtrl.create({
             header: className,
             subHeader: methodName,
             //message: mensajes.toString(),
-            message: '<ul>' + foo + '</ul>',
+            message: '<ul>' + row + '</ul>',
             buttons: ['Aceptar']
         });
         await alert.present();
@@ -95,5 +107,8 @@ export class UtilsMessage {
     }
     messageSelectList() {
         return 'Seleccione al menos un fecha.';
+    }
+    messageOk() {
+        return 'Se ha guardado la información de manera correcta.';
     }
 }

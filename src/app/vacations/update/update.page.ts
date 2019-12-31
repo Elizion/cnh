@@ -97,12 +97,13 @@ export class UpdatePage implements OnInit {
       };
       this.sendUpdate(data);
     } else {
-      this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', 'Vacio');
+      this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', null);
     }
 
   }
 
   sendUpdate(data: any) {
+
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
     .then(loadingEl => {
@@ -130,6 +131,7 @@ export class UpdatePage implements OnInit {
           loadingEl.dismiss();
       });
     });
+
   }
 
   concatenate(res: any, key: string): void {
