@@ -181,14 +181,12 @@ export class VacationsPage implements OnInit {
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
             this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
-            this.trueButton = false;
           }
         } else {
           loadingEl.dismiss();
           this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
           this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
-          this.trueButton = false;
         }
       },
       (err) => {
@@ -200,6 +198,7 @@ export class VacationsPage implements OnInit {
   }
 
   removeItem(id: number): void {
+    this.visibleButton = true;
     let i = 0;
     for ( i; i < this.listDaysDefault.length; i++ ) {
       if (this.listDaysDefault[i].idVacaciones === id) {

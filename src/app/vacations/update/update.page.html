@@ -21,6 +21,8 @@
               <ion-checkbox color="dark" (ionChange)="addCheckbox($event,item.idVacaciones)" style="margin-right: 2em;"></ion-checkbox>                 
               <ion-label>
                 <ion-datetime
+                  cancelText="Cancelar" 
+                  doneText="Aceptar"
                   placeholder="{{item.fecha}}"                              
                   displayFormat="DD/MM/YYYY"                  
                   name={{item.idVacaciones}}
@@ -39,14 +41,6 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>                     
-        <ion-col>
-          <ion-button color="primary" expand="block" (click)="saveUpdate()">          
-            <ion-icon name="folder"></ion-icon>    
-          </ion-button>
-        </ion-col>                                                         
-      </ion-row>
-
     </form>
 
   </ion-grid>    
@@ -59,10 +53,15 @@
         </ion-button>        
       </ion-col>      
       <ion-col>   
-        <ion-button color="primary" expand="block" (click)="refresh()">  
+        <ion-button color="primary" expand="block" (click)="refresh()" [disabled]="!this.visibleButton">  
           <ion-icon name="refresh" slot="icon-only"></ion-icon>          
         </ion-button>        
-      </ion-col>
+      </ion-col>      
+      <ion-col>
+        <ion-button color="primary" expand="block" (click)="saveUpdate()" [disabled]="!this.visibleButton">
+          <ion-icon name="folder"></ion-icon>    
+        </ion-button>
+      </ion-col>                                                         
     </ion-row>
     
   </ion-grid>

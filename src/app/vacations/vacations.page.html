@@ -15,6 +15,8 @@
           <ion-item>
             <ion-label position="floating">Inicio</ion-label>
             <ion-datetime 
+              cancelText="Cancelar" 
+              doneText="Aceptar"
               max="2022-01-01"
               displayFormat="DD/MM/YYYY"                 
               ngModel
@@ -27,6 +29,8 @@
           <ion-item>
             <ion-label position="floating">Termino</ion-label>
             <ion-datetime 
+              cancelText="Cancelar" 
+              doneText="Aceptar"
               max="2022-01-01"
               displayFormat="DD/MM/YYYY"           
               ngModel
@@ -106,7 +110,7 @@
       </ion-col>   
 
       <ion-col (click)="refresh()">
-        <ion-button color="primary" expand="block">  
+        <ion-button color="primary" expand="block" [disabled]="!this.visibleButton">  
           <ion-icon name="refresh" slot="icon-only"></ion-icon>          
         </ion-button>        
       </ion-col>      

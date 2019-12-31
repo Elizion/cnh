@@ -23,6 +23,7 @@ export class UpdatePage implements OnInit {
   b64Data: any;
   diasDisponibles: any;
   modifiedList = [];
+  visibleButton: any = false;
 
   constructor(
     private vacationsService: VacationsService,
@@ -147,11 +148,16 @@ export class UpdatePage implements OnInit {
 
   dataFromList(idVacaciones: any, formBuilder: any) {
     const obj = formBuilder.value;
-    const array = Object.entries(obj);
-    let date = '';
-    const position = this.indexOf(idVacaciones);
-    date = this.indexOfDate(idVacaciones, array);
-    this.listDaysDefault[position].fechaFormat = date;
+    if (obj !== 'undefined' && obj != null) {
+      const array = Object.entries(obj);
+      let date = '';
+      const position = this.indexOf(idVacaciones);
+      date = this.indexOfDate(idVacaciones, array);
+      if (date != null && date.length > 0) {
+        this.listDaysDefault[position].fechaFormat = date;
+        this.visibleButton = true;
+      }
+    }
   }
 
   indexOf(id: number) {
@@ -175,7 +181,7 @@ export class UpdatePage implements OnInit {
     return null;
   }
 
-  addCheckbox(event: any, idVacaciones: string) {
+  addCheckbox(event: any, idVacaciones: string) {    
     const datetime = document.getElementById(idVacaciones);
     if (event.target.checked) {
       this.checked.push(idVacaciones);

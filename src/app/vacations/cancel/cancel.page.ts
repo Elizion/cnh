@@ -21,6 +21,7 @@ export class CancelPage implements OnInit {
   b64Data: any;
   diasDisponibles: any;
   txtMotivo: string;
+  visibleButton: any = true;
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -153,6 +154,7 @@ export class CancelPage implements OnInit {
     return null;
   }
   addCheckbox(event: any, idVacaciones: string) {
+    this.visibleButton = true;
     const datetime = document.getElementById(idVacaciones);
     if (event.target.checked) {
       this.checked.push(idVacaciones);
