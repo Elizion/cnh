@@ -1,7 +1,7 @@
 import { AlertController } from '@ionic/angular';
 export class UtilsMessage {
 
-    timeOk: any = 3000;
+    timeOk: any = 5000;
     timeError: any = 4000;
     timeArray: any = 6000;
 

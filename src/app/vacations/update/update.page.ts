@@ -77,7 +77,6 @@ export class UpdatePage implements OnInit {
   updateForm() {
 
     const modifiedList = [];
-
     if (this.checked != null && this.checked.length > 0) {
       let i = 0;
       for (i; i < this.checked.length; i++) {
@@ -112,11 +111,14 @@ export class UpdatePage implements OnInit {
         const key = 'data';
         if (res[key].listaDias !== 'undefined') {
           const nuevaListaModificados = res[key].listaDias;
+
           if (nuevaListaModificados != null && nuevaListaModificados.length > 0) {
             this.listDaysDefault = nuevaListaModificados;
             this.buttonsRefresh(res);
             loadingEl.dismiss();
+            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
           }
+
         }
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
