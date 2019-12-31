@@ -7,13 +7,14 @@ import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
 import * as moment from 'moment';
-
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
 })
+
 export class UpdatePage implements OnInit {
+
   listDaysDefault: any = [];
   checked: any = [];
   visible: boolean;
@@ -21,6 +22,8 @@ export class UpdatePage implements OnInit {
   btnImprimir: any;
   b64Data: any;
   diasDisponibles: any;
+  modifiedList = [];
+
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -29,12 +32,11 @@ export class UpdatePage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
   ) {}
+
   ngOnInit() {
     this.updateInit();
   }
-  refresh() {
-    window.location.reload();
-  }
+
   updateInit(): void {
     const id = this.globalService.personId();
     const date = this.globalService.date();
@@ -44,15 +46,14 @@ export class UpdatePage implements OnInit {
       loadingEl.present();
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
         const key = 'data';
-        let concatenate = '';
         this.listDaysDefault = res[key].listaDias;
+
+
         console.log(res[key].listaDias);
-        let i = 0;
-        for (i; i < this.listDaysDefault.length; i++) {
-          concatenate = res[key].listaDias[i].fechaFormat + ' ' + res[key].listaDias[i].estatusDescripcion;
-          res[key].listaDias[i].fecha = concatenate;
-        }
-        console.log(res[key].listaDias);
+        this.cloneArray(res[key].listaDias);
+        console.log(this.listDaysDefault);
+
+        this.concatenate(res, key);
         this.diasDisponibles = res[key].diasDisponibles;
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
@@ -67,13 +68,14 @@ export class UpdatePage implements OnInit {
         this.utilsNavigate.routerNavigateVacationsUpdate();
       });
     });
-
   }
+
   buttonsRefresh(res: any): void {
     const key = 'data';
     this.btnModificar = res[key].botonModificar;
     this.btnImprimir = res[key].botonImprimir;
   }
+
   updateForm() {
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
@@ -98,6 +100,7 @@ export class UpdatePage implements OnInit {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
     }
   }
+
   sendUpdate(data: any) {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
@@ -116,7 +119,6 @@ export class UpdatePage implements OnInit {
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
           if (mensajes != null && mensajes.length > 0) {
-            JSON.parse(JSON.stringify(mensajes));
             this.utilsMessage.messageParamethersArray(mensajes, 'UpdatePage', 'submitForm()');
             loadingEl.dismiss();
           }
@@ -128,7 +130,17 @@ export class UpdatePage implements OnInit {
       });
     });
   }
-  dataFromList(event: any, idVacaciones: any, formBuilder: any) {
+
+  concatenate(res: any, key: string): void {
+    let i = 0;
+    let concatenate = '';
+    for (i; i < this.listDaysDefault.length; i++) {
+      concatenate = res[key].listaDias[i].fechaFormat + ' ' + res[key].listaDias[i].estatusDescripcion;
+      res[key].listaDias[i].fecha = concatenate;
+    }
+  }
+
+  dataFromList(idVacaciones: any, formBuilder: any) {
     const obj = formBuilder.value;
     const array = Object.entries(obj);
     let date = '';
@@ -136,6 +148,7 @@ export class UpdatePage implements OnInit {
     date = this.indexOfDate(idVacaciones, array);
     this.listDaysDefault[position].fechaFormat = date;
   }
+
   indexOf(id: number) {
     for (let i = 0; i < this.listDaysDefault.length; i++) {
       if ( id === this.listDaysDefault[i].idVacaciones ) {
@@ -144,6 +157,7 @@ export class UpdatePage implements OnInit {
     }
     return -1;
   }
+
   indexOfDate(id: string, array: any) {
     let date = '';
     let i = 0;
@@ -155,27 +169,20 @@ export class UpdatePage implements OnInit {
     }
     return null;
   }
+
   addCheckbox(event: any, idVacaciones: string) {
-
     const datetime = document.getElementById(idVacaciones);
-    const label = document.getElementById('label-' + idVacaciones);
-
     if (event.target.checked) {
-
       this.checked.push(idVacaciones);
       this.enabledDatetime(datetime);
-
     } else {
-
       const index = this.removeCheckedFromArray(idVacaciones);
       this.checked.splice(index, 1);
       this.disabledDatetime(datetime);
-
     }
-
     console.log(JSON.stringify(this.checked));
-
   }
+
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category: any) => {
       return category === checkbox;
@@ -193,37 +200,31 @@ export class UpdatePage implements OnInit {
   }
 
   back() {
-    this.utilsNavigate.routerNavigateVacations();
+    return this.utilsNavigate.routerNavigateVacations();
   }
+
+  refresh() {
+    return window.location.reload();
+  }
+
   download(b64Data: string, nameFile: string): void {
     console.log(nameFile);
     console.log(b64Data);
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-  impress() {
 
-    const modifiedList = [];
-    let i = 0;
-
-    for (i; i < this.listDaysDefault.length; i++) {
-      if (this.listDaysDefault[i].estatusFormat === 'PM' ) {
-        modifiedList.push(this.listDaysDefault[i]);
-      }
-    }
-
-    if (modifiedList.length > 0) {
+  impress(): void {
+    if (this.modifiedList.length > 0) {
       const data = {
         personId: this.globalService.personId(),
         diasDisponibles: this.diasDisponibles,
-        listaVacaciones: modifiedList
+        listaVacaciones: this.modifiedList
       };
-      alert(data);
       this.loadingCtrl
       .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
       .then(loadingEl => {
         loadingEl.present();
         this.vacationsService.downloadUpdate(data).subscribe( (res: {} ) => {
-          JSON.stringify(res);
           const key = 'data';
           const nameFile = res[key].nombreArchivo;
           this.b64Data = res[key].archivoBase64;
@@ -237,6 +238,24 @@ export class UpdatePage implements OnInit {
       });
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'UpdatePage', 'updateForm()');
+    }
+  }
+
+  cloneArray(listVacations: any): void {
+    let i = 0;
+    if (listVacations != null && listVacations.length > 0) {
+      for (i; i < listVacations.length; i++) {
+        if (listVacations[i].estatusFormat === 'PM' ) {
+          const obj = {
+            idVacaciones : listVacations[i].idVacaciones,
+            personId: listVacations[i].personId,
+            fechaFormat: listVacations[i].fechaFormat,
+            estatusFormat: listVacations[i].estatusFormat
+          };
+          console.log(listVacations[i]);
+          this.modifiedList.push(obj);
+        }
+      }
     }
   }
 
