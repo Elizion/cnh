@@ -3,40 +3,29 @@ import { throwError } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
-
 export class GlobalService {
-
    constructor(
       private platform: Platform,
       private file: File,
-      private fileOpener: FileOpener,
-      private alertCtrl: AlertController,
-      private router: Router
+      private fileOpener: FileOpener
    ) {}
-
    isLoading = false;
    isLogin   = true;
-
    token() {
       const token   = window.localStorage.getItem('token');
       const parseToken = JSON.parse(token);
       return parseToken;
    }
-
    personId() {
       const id   = window.localStorage.getItem('personId');
       const parseId = JSON.parse(id);
       return parseId;
    }
-
    date() {
       const date = window.localStorage.getItem('date');
       const obj = JSON.parse(date);
       return obj;
    }
-
    handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          console.error('Error: ' + error.error.message);
@@ -46,7 +35,6 @@ export class GlobalService {
       }
       return throwError('Something bad happened; please try again later.');
    }
-
    headers(token: string, contentType: string) {
       const httpOptions = {
          headers: new HttpHeaders({
@@ -56,7 +44,6 @@ export class GlobalService {
       };
       return httpOptions;
    }
-
    b64toBlobPdf(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
@@ -83,7 +70,6 @@ export class GlobalService {
          throw err;
       });
    }
-
    b64toBlobDocx(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
@@ -111,7 +97,6 @@ export class GlobalService {
          throw err;
       });
    }
-
    b64toBlobTxt(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
@@ -139,7 +124,6 @@ export class GlobalService {
          throw err;
       });
    }
-
    b64toBlobXlsx(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
@@ -167,7 +151,6 @@ export class GlobalService {
          throw err;
       });
    }
-
    b64toBlobJpg(b64Data: string, nameFile: string, contentType: string, sliceSize: number): void {
       const byteCharacters = atob(b64Data);
       const byteArrays = [];
@@ -195,13 +178,11 @@ export class GlobalService {
          throw err;
       });
    }
-
    getFileExtension(nameFile: string) {
       const ext = /^.+\.([^.]+)$/.exec(nameFile);
       return ext == null ? '' : ext[1];
    }
    /*
-   README: Open from url file content:
    open() {
       const request: DownloadRequest = {
       uri: 'https://devdactic.com/html/5-simple-hacks-LBT.pdf',
@@ -220,5 +201,4 @@ export class GlobalService {
       .catch((error: any) => console.error(error));
    }
    */
-
 }
