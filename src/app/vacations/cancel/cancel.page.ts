@@ -6,7 +6,6 @@ import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
-import * as moment from 'moment';
 @Component({
   selector: 'app-cancel',
   templateUrl: './cancel.page.html',
@@ -22,7 +21,6 @@ export class CancelPage implements OnInit {
   diasDisponibles: any;
   txtMotivo: string;
   visibleButton: any = false;
-
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -45,13 +43,11 @@ export class CancelPage implements OnInit {
         const key = 'data';
         let concatenate = '';
         this.listDaysDefault = res[key].listaDias;
-        console.log(res[key].listaDias);
         let i = 0;
         for (i; i < this.listDaysDefault.length; i++) {
           concatenate = res[key].listaDias[i].fechaFormat + ' ' + res[key].listaDias[i].estatusDescripcion;
           res[key].listaDias[i].fecha = concatenate;
         }
-        console.log(res[key].listaDias);
         this.diasDisponibles = res[key].diasDisponibles;
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
@@ -66,12 +62,6 @@ export class CancelPage implements OnInit {
         this.utilsNavigate.routerNavigateVacationsUpdate();
       });
     });
-
-  }
-  buttonsRefresh(res: any): void {
-    const key = 'data';
-    this.btnModificar = res[key].botonModificar;
-    this.btnImprimir = res[key].botonImprimir;
   }
   saveCancel() {
     const modifiedList = [];
@@ -97,22 +87,22 @@ export class CancelPage implements OnInit {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', 'Cancelación');
     }
   }
+  buttonsRefresh(res: any): void {
+    const key = 'data';
+    this.btnModificar = res[key].botonModificar;
+    this.btnImprimir = res[key].botonImprimir;
+  }
   sendCancel(data: any) {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageSaving() })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.commitCancel(data).subscribe((res: Response) => {
-        const key = 'data';        
-
+        const key = 'data';
         if (res[key].listaDias !== 'undefined') {
-
           this.concatenate(res, key);
           const nuevaListaModificados = res[key].listaDias;
-
           if (nuevaListaModificados != null && nuevaListaModificados.length > 0) {
-
-            
             this.listDaysDefault = nuevaListaModificados;
             this.buttonsRefresh(res);
             loadingEl.dismiss();
@@ -152,7 +142,6 @@ export class CancelPage implements OnInit {
       this.disabledDatetime(datetime);
     }
     this.visibleButton = true;
-    console.log(this.checked);
   }
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category: any) => {

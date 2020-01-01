@@ -6,18 +6,15 @@ import { UtilsMessage } from '../../../utils/utils.message';
 import { UtilsNavigate } from '../../../utils/utils.navigate';
 import { Constants as CONST } from '../../../config/config.const';
 import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-personal-detail',
   templateUrl: './personal-detail.page.html',
   styleUrls: ['./personal-detail.page.scss'],
 })
 export class PersonalDetailPage implements OnInit {
-
   id: any;
   nombreArchivo: any;
   mensaje: any;
-
   constructor(
     private route: ActivatedRoute,
     private loadingCtrl: LoadingController,
@@ -26,7 +23,6 @@ export class PersonalDetailPage implements OnInit {
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
   ) {}
-
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('noticeId');
     const nombreArchivo = this.route.snapshot.paramMap.get('nombreArchivo');
@@ -35,16 +31,10 @@ export class PersonalDetailPage implements OnInit {
     this.nombreArchivo = nombreArchivo;
     this.mensaje = mensaje;
   }
-
-  getFileExtension(nameFile: string) {
-    const ext = /^.+\.([^.]+)$/.exec(nameFile);
-    return ext == null ? '' : ext[1];
-  }
-
   download(id: string, nameFile: string): void {
     id = this.id;
     nameFile = this.nombreArchivo;
-    const extension = this.getFileExtension(nameFile);
+    const extension = this.globalService.getFileExtension(nameFile);
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
     .then(loadingEl => {
@@ -74,11 +64,10 @@ export class PersonalDetailPage implements OnInit {
         loadingEl.dismiss();
       },
       (err) => {
-        this.utilsMessage.messageApiError(err, 'PersonalPage', 'download()');
+        this.utilsMessage.messageApiError(err, 'Avisos individuales', 'Descarga');
         loadingEl.dismiss();
         this.utilsNavigate.routerNavigateNotices();
       });
     });
   }
-
 }

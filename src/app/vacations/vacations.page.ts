@@ -14,7 +14,6 @@ import * as moment from 'moment';
   styleUrls: ['./vacations.page.scss'],
 })
 export class VacationsPage implements OnInit {
-
   constructor(
     private loadingCtrl: LoadingController,
     private utilsMessage: UtilsMessage,
@@ -23,7 +22,6 @@ export class VacationsPage implements OnInit {
     private globalService: GlobalService,
     private vacationsService: VacationsService
   ) { }
-
   isLoading = false;
   isLogin = true;
   btnCancelar: any;
@@ -42,11 +40,9 @@ export class VacationsPage implements OnInit {
   idPerson = this.globalService.personId();
   visible: boolean;
   visibleButton: any = false;
-
   ngOnInit() {
     this.vacationsInit();
   }
-
   buttonsRefresh(res: any): void {
     const key = 'data';
     this.btnCancelar              = res[key].botonCancelar;
@@ -54,7 +50,6 @@ export class VacationsPage implements OnInit {
     this.btnImprimir              = res[key].botonImprimir;
     this.checkPeriodoEscalonado   = res[key].checkPeriodoEscalonado;
   }
-
   vacationsInit(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
@@ -78,12 +73,11 @@ export class VacationsPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'Consulta inicial', 'Error');
+        this.utilsMessage.messageApiError(err, 'Lista de vacaciones', 'Error');
         this.utilsNavigate.routerNavigateVacations();
       });
     });
   }
-
   onSubmit(form: NgForm) {
     this.visibleButton = true;
     if (!form.valid) {
@@ -111,7 +105,6 @@ export class VacationsPage implements OnInit {
             this.utilsMessage.messageParamethersArray(mensajes, 'Vacaciones', 'Agregar días');
           }
         }
-        
         loadingEl.dismiss();
       },
       (err) => {
@@ -121,7 +114,6 @@ export class VacationsPage implements OnInit {
       });
     });
   }
-
   impress(): void {
     let i = 0;
     const newArray = [];
@@ -150,16 +142,14 @@ export class VacationsPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'VacationsPage', 'impress()');
+        this.utilsMessage.messageApiError(err, 'Vacaciones', 'Descarga');
         this.utilsNavigate.routerNavigateVacations();
       });
     });
   }
-
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
   save(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
@@ -179,13 +169,13 @@ export class VacationsPage implements OnInit {
             loadingEl.dismiss();
             this.listDaysDefault = res[key].listaDias;
             this.buttonsRefresh(res);
-            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
+            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), null, null);
           }
         } else {
           loadingEl.dismiss();
           this.listDaysDefault = res[key].listaDias;
           this.buttonsRefresh(res);
-          this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
+          this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), null, null);
         }
       },
       (err) => {
@@ -195,7 +185,6 @@ export class VacationsPage implements OnInit {
       });
     });
   }
-
   removeItem(id: number): void {
     this.visibleButton = true;
     let i = 0;
@@ -205,30 +194,17 @@ export class VacationsPage implements OnInit {
       }
     }
   }
-
   update(): void {
     this.utilsNavigate.routerNavigateVacationsUpdate();
   }
-
   cancel(): void {
     this.utilsNavigate.routerNavigateVacationsCancel();
   }
-
-  impressUpdate(): void {
-    alert('Trabajando este modulo...');
-  }
-
   changeToggle() {
     return this.periodoEscalonado;
   }
-
   refresh(): void {
     this.vacationsInit();
     this.visibleButton = false;
   }
-
-  trueSave() {
-      console.log('The text in the input');
-  }
-
 }

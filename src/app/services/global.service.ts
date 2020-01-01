@@ -196,6 +196,10 @@ export class GlobalService {
       });
    }
 
+   getFileExtension(nameFile: string) {
+      const ext = /^.+\.([^.]+)$/.exec(nameFile);
+      return ext == null ? '' : ext[1];
+   }
    /*
    README: Open from url file content:
    open() {

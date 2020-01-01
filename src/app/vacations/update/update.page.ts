@@ -13,9 +13,7 @@ import * as moment from 'moment';
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
 })
-
 export class UpdatePage implements OnInit {
-
   listDaysDefault: any = [];
   checked: any = [];
   visible: boolean;
@@ -25,7 +23,6 @@ export class UpdatePage implements OnInit {
   diasDisponibles: any;
   modifiedList = [];
   visibleButton: any = false;
-
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -35,13 +32,9 @@ export class UpdatePage implements OnInit {
     private utilsHidden: UtilsHidden,
     private platform: Platform,
   ) {}
-
-
-
   ngOnInit() {
     this.updateInit();
   }
-
   updateInit(): void {
     const id = this.globalService.personId();
     const date = this.globalService.date();
@@ -52,12 +45,9 @@ export class UpdatePage implements OnInit {
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
         const key = 'data';
         this.listDaysDefault = res[key].listaDias;
-
-
         this.cloneArray(res[key].listaDias);
         this.concatenate(res, key);
         this.diasDisponibles = res[key].diasDisponibles;
-
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
@@ -72,15 +62,12 @@ export class UpdatePage implements OnInit {
       });
     });
   }
-
   buttonsRefresh(res: any): void {
     const key = 'data';
     this.btnModificar = res[key].botonModificar;
     this.btnImprimir = res[key].botonImprimir;
   }
-
   saveUpdate() {
-
     const modifiedList = [];
     if (this.checked != null && this.checked.length > 0) {
       let i = 0;
@@ -103,11 +90,8 @@ export class UpdatePage implements OnInit {
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', null);
     }
-
   }
-
   sendUpdate(data: any) {
-
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
     .then(loadingEl => {
@@ -116,14 +100,12 @@ export class UpdatePage implements OnInit {
         const key = 'data';
         if (res[key].listaDias !== 'undefined') {
           const nuevaListaModificados = res[key].listaDias;
-
           if (nuevaListaModificados != null && nuevaListaModificados.length > 0) {
             this.listDaysDefault = nuevaListaModificados;
             this.buttonsRefresh(res);
             loadingEl.dismiss();
-            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), '', '');
+            this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), null, null);
           }
-
         }
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;
@@ -138,9 +120,7 @@ export class UpdatePage implements OnInit {
           loadingEl.dismiss();
       });
     });
-
   }
-
   concatenate(res: any, key: string): void {
     let i = 0;
     let concatenate = '';
@@ -149,7 +129,6 @@ export class UpdatePage implements OnInit {
       res[key].listaDias[i].fecha = concatenate;
     }
   }
-
   dataFromList(idVacaciones: any, formBuilder: any) {
     const obj = formBuilder.value;
     if (obj !== 'undefined' && obj != null) {
@@ -163,7 +142,6 @@ export class UpdatePage implements OnInit {
       }
     }
   }
-
   indexOf(id: number) {
     for (let i = 0; i < this.listDaysDefault.length; i++) {
       if ( id === this.listDaysDefault[i].idVacaciones ) {
@@ -172,7 +150,6 @@ export class UpdatePage implements OnInit {
     }
     return -1;
   }
-
   indexOfDate(id: string, array: any) {
     let date = '';
     let i = 0;
@@ -184,8 +161,7 @@ export class UpdatePage implements OnInit {
     }
     return null;
   }
-
-  addCheckbox(event: any, idVacaciones: string) {    
+  addCheckbox(event: any, idVacaciones: string) {
     const datetime = document.getElementById(idVacaciones);
     if (event.target.checked) {
       this.checked.push(idVacaciones);
@@ -195,39 +171,31 @@ export class UpdatePage implements OnInit {
       this.checked.splice(index, 1);
       this.disabledDatetime(datetime);
     }
-    console.log(JSON.stringify(this.checked));
   }
-
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category: any) => {
       return category === checkbox;
     });
   }
-
   enabledDatetime(datetime: any) {
     datetime.classList.remove('disabled');
     datetime.classList.add('enabled');
   }
-
   disabledDatetime(datetime: any) {
     datetime.classList.remove('enabled');
     datetime.classList.add('disabled');
   }
-
   back() {
     return this.utilsNavigate.routerNavigateVacations();
   }
-
-  refresh() {
+  refresh(): void {
     this.updateInit();
   }
-
   download(b64Data: string, nameFile: string): void {
     console.log(nameFile);
     console.log(b64Data);
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
   impress(): void {
     if (this.modifiedList.length > 0) {
       const data = {
@@ -252,10 +220,9 @@ export class UpdatePage implements OnInit {
         });
       });
     } else {
-      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Descargar');
+      this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Descarga');
     }
   }
-
   cloneArray(listVacations: any): void {
     let i = 0;
     if (listVacations != null && listVacations.length > 0) {
@@ -273,6 +240,4 @@ export class UpdatePage implements OnInit {
       }
     }
   }
-
-
 }

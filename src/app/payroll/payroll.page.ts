@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { IonItemSliding } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
 import { UtilsMessage } from '../utils/utils.message';
@@ -15,7 +14,6 @@ import { Constants as CONST } from '../config/config.const';
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
-
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
@@ -24,18 +22,15 @@ export class PayrollPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
   ) { }
-
   isLoading = false;
   isLogin = true;
   payrollArray: any[];
   b64Data: string;
   idPerson = this.globalService.personId();
   visible: boolean;
-
   ngOnInit() {
     this.payrollInit();
   }
-
   payrollInit(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
@@ -49,12 +44,11 @@ export class PayrollPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'PayrollPage', 'payrollInit()');
+        this.utilsMessage.messageApiError(err, 'Recibo de nómina', 'Error');
         this.utilsNavigate.routerNavigatePayroll();
       });
     });
   }
-
   onSubmit(form: NgForm) {
     if (!form.valid) {
       return;
@@ -75,13 +69,12 @@ export class PayrollPage implements OnInit {
         loadingEl.dismiss();
       },
       (err) => {
-        this.utilsMessage.messageApiError(err, 'PayrollPage', 'onSubmit()');
+        this.utilsMessage.messageApiError(err, 'Recibo de nómina', 'Consulta');
         this.utilsNavigate.routerNavigatePayroll();
         loadingEl.dismiss();
       });
     });
   }
-
   impress(id: string): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
@@ -96,14 +89,12 @@ export class PayrollPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'PayrollPage', 'impress()');
+        this.utilsMessage.messageApiError(err, 'Recibo de nónima', 'Descarga');
         this.utilsNavigate.routerNavigatePayroll();
       });
     });
   }
-
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
 }

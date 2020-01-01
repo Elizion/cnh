@@ -33,14 +33,13 @@ export class PersonalPage implements OnInit {
     .then(loadingEl => {
       loadingEl.present();
       this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
-        console.log(JSON.stringify(res));
         const key = 'data';
         this.listPersonal = res[key];
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
-        this.utilsMessage.messageApiError(err, 'PersonalPage', 'personalInit()');
+        this.utilsMessage.messageApiError(err, 'Avisos individuales', 'Error');
         this.utilsNavigate.routerNavigateNotices();
         loadingEl.dismiss();
       });

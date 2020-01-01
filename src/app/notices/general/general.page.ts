@@ -17,24 +17,20 @@ export class GeneralPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
   ) {}
-
   isLogin = true;
   listGeneral: any[];
   descripcionAvisoGeneral: any;
   archivoBase64: any;
   visible: boolean;
-
   ngOnInit() {
     this.generalInit();
   }
-
   load(): void {
     if (this.listGeneral != null && this.listGeneral.length > 0 ) {
       this.descripcionAvisoGeneral = this.listGeneral[0].descripcionAvisoGeneral;
       this.archivoBase64 = this.listGeneral[0].archivoBase64;
     }
   }
-
   generalInit(): void {
     this.loadingCtrl
     .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
@@ -54,15 +50,8 @@ export class GeneralPage implements OnInit {
       });
     });
   }
-
   show(id: number, descripcionAvisoGeneral: string, archivoBase64: string): void {
     this.descripcionAvisoGeneral = descripcionAvisoGeneral;
     this.archivoBase64 = archivoBase64;
   }
-
-
-  showImage(base64: string) {
-    console.log(base64);
-  }
-
 }
