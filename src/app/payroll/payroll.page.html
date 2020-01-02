@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>      
     </ion-buttons>
-    <ion-title>Recibos</ion-title>
+    <ion-title>Recibo de nómina</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding *ngIf="visible">
@@ -61,9 +61,11 @@
                 (click)="impress(payroll.consolidationSetId)"                
               >
                 <ion-label>
-                  <h5> {{ payroll.fechaPago }} </h5>
-                  <p> {{ payroll.nombreFolio }}</p>
+                  <p> {{ payroll.fechaPago }} </p>
+                  <h5> {{ payroll.nombreFolio }}</h5>
                 </ion-label>                
+                <slot name="end"></slot>
+                <ion-icon class="item-detail-icon ios hydrated" role="img" aria-label="arrow forward"></ion-icon>
               </ion-item>   
           </ion-list>                
       </ion-col>
