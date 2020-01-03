@@ -41,13 +41,7 @@ export class CancelPage implements OnInit {
       loadingEl.present();
       this.vacationsService.cancel(id, date).subscribe( (res: Response ) => {
         const key = 'data';
-        let concatenate = '';
         this.listDaysDefault = res[key].listaDias;
-        let i = 0;
-        for (i; i < this.listDaysDefault.length; i++) {
-          concatenate = res[key].listaDias[i].fechaFormat + ' ' + res[key].listaDias[i].estatusDescripcion;
-          res[key].listaDias[i].fecha = concatenate;
-        }
         this.diasDisponibles = res[key].diasDisponibles;
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {

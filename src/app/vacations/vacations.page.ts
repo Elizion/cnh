@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
@@ -20,7 +20,8 @@ export class VacationsPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden,
     private globalService: GlobalService,
-    private vacationsService: VacationsService
+    private vacationsService: VacationsService,
+    private elementRef: ElementRef
   ) { }
   isLoading = false;
   isLogin = true;
@@ -40,6 +41,7 @@ export class VacationsPage implements OnInit {
   idPerson = this.globalService.personId();
   visible: boolean;
   visibleButton: any = false;
+  visibleSelect: any = true;
   ngOnInit() {
     this.vacationsInit();
   }
@@ -207,4 +209,11 @@ export class VacationsPage implements OnInit {
     this.vacationsInit();
     this.visibleButton = false;
   }
+
+  onClick(): void {
+    const select = document.getElementById('notifications');
+    select.click();
+  }
+
+
 }

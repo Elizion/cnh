@@ -8,18 +8,24 @@
 </ion-header>
 
 <ion-content padding *ngIf="visible">  
-  <!--
-  <p>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-      Mas información
-    </a>
-  </p>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-    </div>
-  </div>
-  -->
+
+
+  <ion-fab (click)="onClick($event)" horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button>
+      <ion-icon name="arrow-dropleft"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-label>Notifications</ion-label>
+    <ion-select value="notifications" interface="action-sheet" id="notifications" class="no-visible" cancelText="Cerrar">
+      <ion-select-option value="1">Lorem inpsum bla bla...</ion-select-option>
+      <ion-select-option value="2">Lorem inpsum bla bla...</ion-select-option>
+      <ion-select-option value="3">Lorem inpsum bla bla...</ion-select-option>
+      <ion-select-option value="4">Lorem inpsum bla bla...</ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>        
       <ion-row>                        

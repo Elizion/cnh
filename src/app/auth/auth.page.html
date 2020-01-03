@@ -26,7 +26,7 @@
             <ion-item>                          
               <ion-label position="floating">Contraseña</ion-label>              
               <ion-input [type]="showPassword ? 'password' : 'text'" ngModel name="password" required minlength="3" #passwordCtrl="ngModel"></ion-input>                                          
-              <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" (click)="onPasswordToggle()" slot="end" style="margin-top: 20px;"></ion-icon>              
+              <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" (click)="onPasswordToggle()" slot="end" style="margin-top: 20px; height: 40px; width: 40px;"></ion-icon>              
             </ion-item>
             <ion-item *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
               <ion-label>
