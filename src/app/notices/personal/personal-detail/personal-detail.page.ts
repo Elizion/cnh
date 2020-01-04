@@ -36,7 +36,11 @@ export class PersonalDetailPage implements OnInit {
     nameFile = this.nombreArchivo;
     const extension = this.globalService.getFileExtension(nameFile);
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.noticesService.download(id).subscribe( (res: Response ) => {

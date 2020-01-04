@@ -50,7 +50,11 @@ export class VacationsPage {
   }
   vacationsInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
@@ -84,7 +88,11 @@ export class VacationsPage {
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postAddVacations(
@@ -128,7 +136,11 @@ export class VacationsPage {
       period = 'S';
     }
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.file(this.idPerson, this.diasDisponibles, period, this.diasPendientes, newArray).subscribe((res: {} ) => {
@@ -150,7 +162,11 @@ export class VacationsPage {
   }
   save(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.save(

@@ -40,7 +40,11 @@ export class PayrollPage implements OnInit {
   }
   payrollInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: Response ) => {

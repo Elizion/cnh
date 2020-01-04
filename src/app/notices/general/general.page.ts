@@ -4,6 +4,7 @@ import { NoticesService } from '../../services/notices.service';
 import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
+import { Constants as CONST } from '../../config/config.const';
 @Component({
   selector: 'app-general',
   templateUrl: './general.page.html',
@@ -33,7 +34,11 @@ export class GeneralPage implements OnInit {
   }
   generalInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.noticesService.general().subscribe( (res: Response) => {

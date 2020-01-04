@@ -55,7 +55,11 @@ export class CancelPage {
     const id = this.globalService.personId();
     const date = this.globalService.date();
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.cancel(id, date).subscribe( (res: Response ) => {
@@ -110,7 +114,11 @@ export class CancelPage {
   }
   sendCancel(data: any) {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageSaving() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.commitCancel(data).subscribe((res: Response) => {
@@ -195,7 +203,11 @@ export class CancelPage {
         listaVacaciones: modifiedList
       };
       this.loadingCtrl
-      .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
+      .create({
+        keyboardClose: true,
+        spinner: null,
+        message: CONST.LOADER_GIF
+      })
       .then(loadingEl => {
         loadingEl.present();
         this.vacationsService.downloadCancel(data).subscribe( (res: {} ) => {
@@ -223,4 +235,3 @@ export class CancelPage {
     select.click();
   }
 }
-

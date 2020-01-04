@@ -6,14 +6,13 @@ import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
-import { Platform } from '@ionic/angular';
 import * as moment from 'moment';
 @Component({
   selector: 'app-update',
   templateUrl: './update.page.html',
   styleUrls: ['./update.page.scss'],
 })
-export class UpdatePage implements OnInit {
+export class UpdatePage {
   listDaysDefault: any = [];
   checked: any = [];
   visible: boolean;
@@ -33,11 +32,8 @@ export class UpdatePage implements OnInit {
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
-    private utilsHidden: UtilsHidden,
-    private platform: Platform,
+    private utilsHidden: UtilsHidden
   ) {}
-  ngOnInit() {
-  }
   ionViewWillEnter() {
     this.updateInit();
   }
@@ -45,7 +41,11 @@ export class UpdatePage implements OnInit {
     const id = this.globalService.personId();
     const date = this.globalService.date();
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
@@ -103,7 +103,11 @@ export class UpdatePage implements OnInit {
   }
   sendUpdate(data: any) {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageUpdating() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.commitUpdate(data).subscribe((res: Response) => {
@@ -214,7 +218,11 @@ export class UpdatePage implements OnInit {
         listaVacaciones: this.modifiedList
       };
       this.loadingCtrl
-      .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
+      .create({
+        keyboardClose: true,
+        spinner: null,
+        message: CONST.LOADER_GIF
+      })
       .then(loadingEl => {
         loadingEl.present();
         this.vacationsService.downloadUpdate(data).subscribe( (res: {} ) => {
