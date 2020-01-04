@@ -4,7 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { UtilsMessage } from '../utils/utils.message';
 import { UtilsNavigate } from '../utils/utils.navigate';
 import { UtilsHidden } from '../utils/utils.hidden';
-import { Platform } from '@ionic/angular';
+import { Constants as CONST } from '../config/config.const';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -12,14 +12,12 @@ import { Platform } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
   constructor(
-    private platform: Platform,
     private profileService: ProfileService,
     private loadingCtrl: LoadingController,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
-  ) {
-  }
+  ) {}
   personId: any;
   nombre: any;
   numeroEmpleado: any;
@@ -36,7 +34,11 @@ export class ProfilePage implements OnInit {
   }
   profileInit(): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.profileService.profile().subscribe((res: Response) => {
@@ -58,7 +60,7 @@ export class ProfilePage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'ProfilePage', 'profileInit()');
+        this.utilsMessage.messageApiError(err, 'Profile', 'Información personal del usuario');
         this.utilsNavigate.routerNavigateAuth();
       });
     });
