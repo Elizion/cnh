@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
@@ -13,7 +13,7 @@ import * as moment from 'moment';
   templateUrl: './vacations.page.html',
   styleUrls: ['./vacations.page.scss'],
 })
-export class VacationsPage implements OnInit {
+export class VacationsPage {
   constructor(
     private loadingCtrl: LoadingController,
     private utilsMessage: UtilsMessage,
@@ -38,8 +38,6 @@ export class VacationsPage implements OnInit {
   b64Data: any;
   visible: boolean;
   visibleButton: any = false;
-  ngOnInit() {
-  }
   ionViewWillEnter() {
     this.vacationsInit();
   }
@@ -207,7 +205,6 @@ export class VacationsPage implements OnInit {
     this.vacationsInit();
     this.visibleButton = false;
   }
-
   onClick(): void {
     const select = document.getElementById('notifications');
     select.click();

@@ -21,6 +21,10 @@ export class UpdatePage implements OnInit {
   btnImprimir: any;
   b64Data: any;
   diasDisponibles: any;
+  diasPendientes: any;
+  fechaInicial: any;
+  fechaIngresoFormat: string;
+  fechaInicialFormat: any;
   modifiedList = [];
   visibleButton: any = false;
   constructor(
@@ -46,6 +50,10 @@ export class UpdatePage implements OnInit {
       loadingEl.present();
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
         const key = 'data';
+        this.diasDisponibles      = res[key].diasDisponibles;
+        this.diasPendientes       = res[key].diasPendientes;
+        this.fechaInicial         = res[key].fechaInicialFormat;
+        this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault = res[key].listaDias;
         this.cloneArray(res[key].listaDias);
         this.concatenate(res, key);
@@ -241,5 +249,9 @@ export class UpdatePage implements OnInit {
         }
       }
     }
+  }
+  onClick(): void {
+    const select = document.getElementById('notifications');
+    select.click();
   }
 }

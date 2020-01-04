@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { VacationsService } from '../../services/vacations.service';
 import { GlobalService } from '../../services/global.service';
@@ -6,13 +6,12 @@ import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
-import { Platform } from '@ionic/angular';
 @Component({
   selector: 'app-cancel',
   templateUrl: './cancel.page.html',
   styleUrls: ['./cancel.page.scss'],
 })
-export class CancelPage implements OnInit {
+export class CancelPage {
   listDaysDefault: any = [];
   checked: any = [];
   visible: boolean;
@@ -20,6 +19,10 @@ export class CancelPage implements OnInit {
   btnImprimir: any;
   b64Data: any;
   diasDisponibles: any;
+  diasPendientes: any;
+  fechaInicial: any;
+  fechaIngresoFormat: string;
+  fechaInicialFormat: any;
   txtMotivo: string;
   visibleButton: any = false;
   nav: any;
@@ -30,7 +33,6 @@ export class CancelPage implements OnInit {
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden,
-    private platform: Platform
   ) {
       /*
       this.platform.backButton.subscribe(() => {
@@ -46,8 +48,6 @@ export class CancelPage implements OnInit {
       });
       */
   }
-  ngOnInit() {
-  }
   ionViewWillEnter() {
     this.cancelInit();
   }
@@ -60,8 +60,11 @@ export class CancelPage implements OnInit {
       loadingEl.present();
       this.vacationsService.cancel(id, date).subscribe( (res: Response ) => {
         const key = 'data';
+        this.diasDisponibles      = res[key].diasDisponibles;
+        this.diasPendientes       = res[key].diasPendientes;
+        this.fechaInicial         = res[key].fechaInicialFormat;
+        this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault = res[key].listaDias;
-        this.diasDisponibles = res[key].diasDisponibles;
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
@@ -215,9 +218,9 @@ export class CancelPage implements OnInit {
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
-
-
-
+  onClick(): void {
+    const select = document.getElementById('notifications');
+    select.click();
+  }
 }
 
