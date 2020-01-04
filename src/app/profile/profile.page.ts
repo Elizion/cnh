@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { UtilsMessage } from '../utils/utils.message';
 import { UtilsNavigate } from '../utils/utils.navigate';
 import { UtilsHidden } from '../utils/utils.hidden';
+import { Platform } from '@ionic/angular';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -11,12 +12,14 @@ import { UtilsHidden } from '../utils/utils.hidden';
 })
 export class ProfilePage implements OnInit {
   constructor(
+    private platform: Platform,
     private profileService: ProfileService,
     private loadingCtrl: LoadingController,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
-  ) {}
+  ) {
+  }
   personId: any;
   nombre: any;
   numeroEmpleado: any;

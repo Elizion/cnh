@@ -6,6 +6,7 @@ import { UtilsMessage } from '../../utils/utils.message';
 import { UtilsNavigate } from '../../utils/utils.navigate';
 import { UtilsHidden } from '../../utils/utils.hidden';
 import { Constants as CONST } from '../../config/config.const';
+import { Platform } from '@ionic/angular';
 @Component({
   selector: 'app-cancel',
   templateUrl: './cancel.page.html',
@@ -21,14 +22,32 @@ export class CancelPage implements OnInit {
   diasDisponibles: any;
   txtMotivo: string;
   visibleButton: any = false;
+  nav: any;
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
-    private utilsHidden: UtilsHidden
-  ) {}
+    private utilsHidden: UtilsHidden,
+    private platform: Platform
+  ) {
+
+      this.platform.backButton.subscribe(() => {
+        // code that is executed when the user pressed the back button
+        // alert('OK 1');
+        this.cancelInit();
+      });
+      /*
+      this.platform.backButton.subscribeWithPriority(0, () => {
+        alert('OK 2');
+      });
+      document.addEventListener('backbutton', () => {
+        alert('OK 3');
+      });
+      */
+  }
+
   ngOnInit() {
     this.cancelInit();
   }
@@ -196,4 +215,9 @@ export class CancelPage implements OnInit {
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
+
+
+
+
 }
+
