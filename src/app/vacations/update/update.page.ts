@@ -33,6 +33,8 @@ export class UpdatePage implements OnInit {
     private platform: Platform,
   ) {}
   ngOnInit() {
+  }
+  ionViewWillEnter() {
     this.updateInit();
   }
   updateInit(): void {

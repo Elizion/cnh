@@ -39,6 +39,8 @@ export class VacationsPage implements OnInit {
   visible: boolean;
   visibleButton: any = false;
   ngOnInit() {
+  }
+  ionViewWillEnter() {
     this.vacationsInit();
   }
   buttonsRefresh(res: any): void {

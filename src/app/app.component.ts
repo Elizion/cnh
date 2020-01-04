@@ -14,7 +14,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {
     this.initializeApp();
   }

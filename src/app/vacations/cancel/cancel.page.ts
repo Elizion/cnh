@@ -32,13 +32,12 @@ export class CancelPage implements OnInit {
     private utilsHidden: UtilsHidden,
     private platform: Platform
   ) {
-
+      /*
       this.platform.backButton.subscribe(() => {
         // code that is executed when the user pressed the back button
         // alert('OK 1');
         this.cancelInit();
       });
-      /*
       this.platform.backButton.subscribeWithPriority(0, () => {
         alert('OK 2');
       });
@@ -47,8 +46,9 @@ export class CancelPage implements OnInit {
       });
       */
   }
-
   ngOnInit() {
+  }
+  ionViewWillEnter() {
     this.cancelInit();
   }
   cancelInit(): void {

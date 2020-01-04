@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
 import { UtilsMessage } from '../utils/utils.message';
 import { UtilsNavigate } from '../utils/utils.navigate';
 import { UtilsHidden } from '../utils/utils.hidden';
 import { NgForm } from '@angular/forms';
-import * as moment from 'moment';
 import { Constants as CONST } from '../config/config.const';
+import * as moment from 'moment';
 @Component({
   selector: 'app-payroll',
   templateUrl: './payroll.page.html',
@@ -20,8 +21,14 @@ export class PayrollPage implements OnInit {
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
-    private utilsHidden: UtilsHidden
-  ) { }
+    private utilsHidden: UtilsHidden,
+    private platform: Platform
+  ) {
+    /*
+    this.platform.backButton.subscribe(() => {
+    });
+    */
+  }
   isLoading = false;
   isLogin = true;
   payrollArray: any[];
