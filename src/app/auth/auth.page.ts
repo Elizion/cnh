@@ -52,7 +52,6 @@ export class AuthPage {
       this.utilsNavigate.routerNavigateAuth();
     });
   }
-
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     this.authService.login(tokenBase.data, user, password).subscribe((res: Response) => {
       const keyData = 'data';
@@ -74,5 +73,4 @@ export class AuthPage {
       this.utilsNavigate.routerNavigateAuth();
     });
   }
-
 }

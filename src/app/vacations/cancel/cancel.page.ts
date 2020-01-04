@@ -21,9 +21,10 @@ export class CancelPage {
   diasDisponibles: any;
   diasPendientes: any;
   fechaInicial: any;
-  fechaIngresoFormat: string;
+  fechaFinalFormat: any;
+  fechaIngresoFormat: any;
   fechaInicialFormat: any;
-  txtMotivo: string;
+  txtMotivo: any;
   visibleButton: any = false;
   nav: any;
   constructor(
@@ -67,6 +68,7 @@ export class CancelPage {
         this.diasDisponibles      = res[key].diasDisponibles;
         this.diasPendientes       = res[key].diasPendientes;
         this.fechaInicial         = res[key].fechaInicialFormat;
+        this.fechaFinalFormat     = res[key].fechaFinalFormat;
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault = res[key].listaDias;
         this.buttonsRefresh(res);

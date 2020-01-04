@@ -22,7 +22,8 @@ export class UpdatePage {
   diasDisponibles: any;
   diasPendientes: any;
   fechaInicial: any;
-  fechaIngresoFormat: string;
+  fechaFinalFormat: any;
+  fechaIngresoFormat: any;
   fechaInicialFormat: any;
   modifiedList = [];
   visibleButton: any = false;
@@ -53,6 +54,7 @@ export class UpdatePage {
         this.diasDisponibles      = res[key].diasDisponibles;
         this.diasPendientes       = res[key].diasPendientes;
         this.fechaInicial         = res[key].fechaInicialFormat;
+        this.fechaFinalFormat     = res[key].fechaFinalFormat;
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault = res[key].listaDias;
         this.cloneArray(res[key].listaDias);

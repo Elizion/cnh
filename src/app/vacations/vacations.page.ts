@@ -32,7 +32,8 @@ export class VacationsPage {
   diasDisponibles: any;
   diasPendientes: any;
   fechaInicial: any;
-  fechaIngresoFormat: string;
+  fechaFinalFormat: any;
+  fechaIngresoFormat: any;
   fechaInicialFormat: any;
   periodoEscalonado: any = false;
   b64Data: any;
@@ -59,12 +60,19 @@ export class VacationsPage {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
         const key = 'data';
+
+        /*
+      "fechaInicialFormat":"01/01/2019",
+      "fechaFinalFormat":"31/12/2020",
+        */
         this.diasDisponibles      = res[key].diasDisponibles;
         this.diasPendientes       = res[key].diasPendientes;
         this.fechaInicial         = res[key].fechaInicialFormat;
+        this.fechaFinalFormat     = res[key].fechaFinalFormat;
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res[key].listaDias;
         this.fechaInicialFormat   = res[key].fechaInicialFormat;
+
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();

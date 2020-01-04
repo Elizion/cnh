@@ -18,10 +18,11 @@
   <ion-item class="no-visible">
     <ion-label>Notifications</ion-label>
     <ion-select value="notifications" interface="action-sheet" id="notifications" cancelText="Cerrar">
-      <ion-select-option value="1"><span>Dias disponibles: </span> {{this.diasDisponibles}}</ion-select-option>
-      <ion-select-option value="2"><span>Dias pendientes: </span> {{this.diasPendientes}}</ion-select-option>
-      <ion-select-option value="3"><span>Fecha inicial: </span> {{this.fechaInicial}} </ion-select-option>
-      <ion-select-option value="4"><span>Ingreso:  </span> {{this.fechaIngresoFormat}}</ion-select-option>
+      <ion-select-option value="1"><span>Días disponibles: </span> {{this.diasDisponibles}}</ion-select-option>
+      <ion-select-option value="2"><span>Días pendientes: </span> {{this.diasPendientes}}</ion-select-option>
+      <ion-select-option value="3"><span>Fecha inicial vigencia: </span> {{this.fechaInicial}} </ion-select-option>
+      <ion-select-option value="3"><span>Fecha final vigencia: </span> {{this.fechaFinalFormat}} </ion-select-option>      
+      <ion-select-option value="4"><span>Fecha de ingreso:  </span> {{this.fechaIngresoFormat}}</ion-select-option>
     </ion-select>
   </ion-item>
 
