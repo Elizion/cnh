@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { GlobalService } from '../services/global.service';
 import { VacationsService } from '../services/vacations.service';
@@ -20,11 +20,9 @@ export class VacationsPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden,
     private globalService: GlobalService,
-    private vacationsService: VacationsService,
-    private elementRef: ElementRef
-  ) { }
-  isLoading = false;
-  isLogin = true;
+    private vacationsService: VacationsService
+  ) {}
+  idPerson = this.globalService.personId();
   btnCancelar: any;
   btnModificar: any;
   btnImprimir: any;
@@ -38,19 +36,17 @@ export class VacationsPage implements OnInit {
   fechaInicialFormat: any;
   periodoEscalonado: any = false;
   b64Data: any;
-  idPerson = this.globalService.personId();
   visible: boolean;
   visibleButton: any = false;
-  visibleSelect: any = true;
   ngOnInit() {
     this.vacationsInit();
   }
   buttonsRefresh(res: any): void {
     const key = 'data';
-    this.btnCancelar              = res[key].botonCancelar;
-    this.btnModificar             = res[key].botonModificar;
-    this.btnImprimir              = res[key].botonImprimir;
-    this.checkPeriodoEscalonado   = res[key].checkPeriodoEscalonado;
+    this.btnCancelar            = res[key].botonCancelar;
+    this.btnModificar           = res[key].botonModificar;
+    this.btnImprimir            = res[key].botonImprimir;
+    this.checkPeriodoEscalonado = res[key].checkPeriodoEscalonado;
   }
   vacationsInit(): void {
     this.loadingCtrl
@@ -214,6 +210,4 @@ export class VacationsPage implements OnInit {
     const select = document.getElementById('notifications');
     select.click();
   }
-
-
 }

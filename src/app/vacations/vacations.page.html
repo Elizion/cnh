@@ -9,20 +9,19 @@
 
 <ion-content padding *ngIf="visible">  
 
-
   <ion-fab (click)="onClick($event)" horizontal="end" vertical="top" slot="fixed" edge>
     <ion-fab-button>
       <ion-icon name="arrow-dropleft"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-item>
+  <ion-item class="no-visible">
     <ion-label>Notifications</ion-label>
-    <ion-select value="notifications" interface="action-sheet" id="notifications" class="no-visible" cancelText="Cerrar">
-      <ion-select-option value="1">Lorem inpsum bla bla...</ion-select-option>
-      <ion-select-option value="2">Lorem inpsum bla bla...</ion-select-option>
-      <ion-select-option value="3">Lorem inpsum bla bla...</ion-select-option>
-      <ion-select-option value="4">Lorem inpsum bla bla...</ion-select-option>
+    <ion-select value="notifications" interface="action-sheet" id="notifications" cancelText="Cerrar">
+      <ion-select-option value="1"><span>Dias disponibles: </span> {{this.diasDisponibles}}</ion-select-option>
+      <ion-select-option value="2"><span>Dias pendientes: </span> {{this.diasPendientes}}</ion-select-option>
+      <ion-select-option value="3"><span>Fecha inicial: </span> {{this.fechaInicial}} </ion-select-option>
+      <ion-select-option value="4"><span>Ingreso:  </span> {{this.fechaIngresoFormat}}</ion-select-option>
     </ion-select>
   </ion-item>
 
@@ -74,14 +73,12 @@
   <ion-grid *ngIf="this.checkPeriodoEscalonado">
     <ion-row>
       <ion-col>
-        <ion-list>
-          <ion-radio-group>
-            <ion-item>
-              <ion-label>Periodo escalonado</ion-label>
-              <ion-toggle slot="start" name="apple" color="primary" [(ngModel)]="periodoEscalonado" (ionChange)="changeToggle()"></ion-toggle>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
+        <ion-radio-group>
+          <ion-item>
+            <ion-label>Periodo escalonado</ion-label>
+            <ion-toggle slot="start" name="apple" color="primary" [(ngModel)]="periodoEscalonado" (ionChange)="changeToggle()"></ion-toggle>
+          </ion-item>
+        </ion-radio-group>        
       </ion-col>
     </ion-row>
   </ion-grid>
