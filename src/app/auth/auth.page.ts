@@ -52,6 +52,7 @@ export class AuthPage {
       this.utilsNavigate.routerNavigateAuth();
     });
   }
+
   login(tokenBase: any, user: any, password: any, loadingEl: any): void {
     this.authService.login(tokenBase.data, user, password).subscribe((res: Response) => {
       const keyData = 'data';
@@ -69,8 +70,9 @@ export class AuthPage {
     },
     (err) => {
       loadingEl.dismiss();
-      this.utilsMessage.messageApiError(err, 'AuthPage', 'login()');
+      this.utilsMessage.messageApiError('Usuario y/o contraseña incorrectos', 'Inicio de sesión', 'Login');
       this.utilsNavigate.routerNavigateAuth();
     });
   }
+
 }

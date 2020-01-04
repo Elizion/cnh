@@ -1,5 +1,4 @@
 export abstract class Constants {
-  static readonly ANDROID: string = 'android';
   static readonly PROTOCOL: string = 'https://';
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
@@ -21,5 +20,7 @@ export abstract class Constants {
   static readonly APPLICATION_JPEG: string = 'image/jpeg';
   static readonly APPLICATION_PNG: string = 'image/png';
   static readonly APPLICATION_TXT: string = 'text/plain';
-  static readonly LOADER_GIF: string = '<img src="../../assets/CS0KVsi.gif">';
+  static readonly LOADER_GIF: string = '<img src="../../assets/864f3.gif">';
+  static readonly LOADER_GIF_UNO: string = '<img src="../../assets/CS0KVsi.gif">';
+  static readonly LOADER_GIF_DOS: string = '<img src="../../assets/Jf0g.gif">';
 }
