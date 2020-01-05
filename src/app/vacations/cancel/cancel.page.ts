@@ -34,21 +34,7 @@ export class CancelPage {
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden,
-  ) {
-      /*
-      this.platform.backButton.subscribe(() => {
-        // code that is executed when the user pressed the back button
-        // alert('OK 1');
-        this.cancelInit();
-      });
-      this.platform.backButton.subscribeWithPriority(0, () => {
-        alert('OK 2');
-      });
-      document.addEventListener('backbutton', () => {
-        alert('OK 3');
-      });
-      */
-  }
+  ) {}
   ionViewWillEnter() {
     this.cancelInit();
   }
@@ -59,7 +45,8 @@ export class CancelPage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -119,7 +106,8 @@ export class CancelPage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();

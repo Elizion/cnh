@@ -45,7 +45,8 @@ export class UpdatePage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -108,7 +109,8 @@ export class UpdatePage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -223,7 +225,8 @@ export class UpdatePage {
       .create({
         keyboardClose: true,
         spinner: null,
-        message: CONST.LOADER_GIF
+        message: CONST.LOADER_GIF,
+        cssClass: 'custom-loader-class'
       })
       .then(loadingEl => {
         loadingEl.present();

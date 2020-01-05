@@ -54,17 +54,13 @@ export class VacationsPage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
         const key = 'data';
-
-        /*
-      "fechaInicialFormat":"01/01/2019",
-      "fechaFinalFormat":"31/12/2020",
-        */
         this.diasDisponibles      = res[key].diasDisponibles;
         this.diasPendientes       = res[key].diasPendientes;
         this.fechaInicial         = res[key].fechaInicialFormat;
@@ -72,7 +68,6 @@ export class VacationsPage {
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res[key].listaDias;
         this.fechaInicialFormat   = res[key].fechaInicialFormat;
-
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
@@ -99,7 +94,8 @@ export class VacationsPage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -147,7 +143,8 @@ export class VacationsPage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -173,7 +170,8 @@ export class VacationsPage {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -202,7 +200,7 @@ export class VacationsPage {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'VacationsPage', 'impress()');
+        this.utilsMessage.messageApiError(err, 'Vacaciones', 'Descarga');
         this.utilsNavigate.routerNavigateVacations();
       });
     });

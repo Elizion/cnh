@@ -23,12 +23,7 @@ export class PayrollPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden,
     private platform: Platform
-  ) {
-    /*
-    this.platform.backButton.subscribe(() => {
-    });
-    */
-  }
+  ) {}
   isLoading = false;
   isLogin = true;
   payrollArray: any[];
@@ -43,7 +38,8 @@ export class PayrollPage implements OnInit {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
@@ -67,7 +63,12 @@ export class PayrollPage implements OnInit {
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageCharging() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.payrollService.payroll(
@@ -88,7 +89,12 @@ export class PayrollPage implements OnInit {
   }
   impress(id: string): void {
     this.loadingCtrl
-    .create({ keyboardClose: true, message: this.utilsMessage.messageDownloading() })
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
+    })
     .then(loadingEl => {
       loadingEl.present();
       this.payrollService.download(this.idPerson, id).subscribe( (res: Response ) => {

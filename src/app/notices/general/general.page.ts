@@ -37,7 +37,8 @@ export class GeneralPage implements OnInit {
     .create({
       keyboardClose: true,
       spinner: null,
-      message: CONST.LOADER_GIF
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
       loadingEl.present();
