@@ -71,7 +71,7 @@ export class AuthPage {
     (err) => {
       console.log(err);
       loadingEl.dismiss();
-      this.utilsMessage.messageApiError('Usuario y/o contraseña incorrectos', 'Inicio de sesión', 'Login');
+      this.utilsMessage.messageApiError('Usuario no existe', 'Inicio de sesión', 'Login');
       this.utilsNavigate.routerNavigateAuth();
     });
   }
