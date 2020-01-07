@@ -39,6 +39,8 @@ export class VacationsPage {
   b64Data: any;
   visible: boolean;
   visibleButton: any = false;
+  periodoVacacional: boolean;
+
   ionViewWillEnter() {
     this.vacationsInit();
   }
@@ -60,6 +62,7 @@ export class VacationsPage {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
+
         const key = 'data';
         this.diasDisponibles      = res[key].diasDisponibles;
         this.diasPendientes       = res[key].diasPendientes;
@@ -68,6 +71,9 @@ export class VacationsPage {
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.listDaysDefault      = res[key].listaDias;
         this.fechaInicialFormat   = res[key].fechaInicialFormat;
+        this.periodoVacacional    = res[key].periodoVacacional;
+        this.holidayPeriod(res[key].periodoVacacional);
+
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
@@ -83,6 +89,21 @@ export class VacationsPage {
       });
     });
   }
+
+  holidayPeriod(data: any) {
+
+    if (data === 'SIN_PERIODO_VACACIONAL') {
+      console.log('false');
+      return this.periodoVacacional = false;
+
+    } else {
+      console.log('true');
+      return this.periodoVacacional = true;
+
+    }
+
+  }
+
   onSubmit(form: NgForm) {
     this.visibleButton = true;
     if (!form.valid) {
@@ -204,6 +225,8 @@ export class VacationsPage {
         this.utilsNavigate.routerNavigateVacations();
       });
     });
+    /***************************************************/
+    this.visibleButton = false;
   }
   removeItem(id: number): void {
     this.visibleButton = true;

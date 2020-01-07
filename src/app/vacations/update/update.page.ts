@@ -103,6 +103,8 @@ export class UpdatePage {
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', null);
     }
+    /***************************************************/
+    this.visibleButton = false;
   }
   sendUpdate(data: any) {
     this.loadingCtrl
