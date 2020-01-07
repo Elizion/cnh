@@ -7,6 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content *ngIf="card">  
+  <ion-card> 
+    <ion-card-header>
+      <ion-card-subtitle style="text-align: center;">Sin periodo vacacional</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>    
+      <p> Estimado {{nombreCompleto}}, usted podrá disponer de su periodo vacacional a partir del día:  {{fechaInicial}}</p>
+    </ion-card-content>
+  </ion-card> 
+</ion-content>  
+
 <ion-content padding *ngIf="visible">  
 
   <ion-fab (click)="onClick($event)" horizontal="end" vertical="top" slot="fixed" edge>
@@ -18,11 +29,12 @@
   <ion-item class="no-visible">
     <ion-label>Notifications</ion-label>
     <ion-select value="notifications" interface="action-sheet" id="notifications" cancelText="Cerrar">
+      
+      <ion-select-option value="1"><span>Días correspondientes: </span> {{this.diasCorresponden}}</ion-select-option>
       <ion-select-option value="1"><span>Días disponibles: </span> {{this.diasDisponibles}}</ion-select-option>
-      <ion-select-option value="2"><span>Días pendientes: </span> {{this.diasPendientes}}</ion-select-option>
-      <ion-select-option value="3"><span>Fecha inicial vigencia: </span> {{this.fechaInicial}} </ion-select-option>
-      <ion-select-option value="3"><span>Fecha final vigencia: </span> {{this.fechaFinalFormat}} </ion-select-option>      
-      <ion-select-option value="4"><span>Fecha de ingreso:  </span> {{this.fechaIngresoFormat}}</ion-select-option>
+      <ion-select-option value="3"><span>Fecha inicio de periodo vacacional: </span> {{this.fechaInicial}} </ion-select-option>            
+      <ion-select-option value="4"><span>Fecha fin del periodo vacacional: </span> {{this.fechaFinalFormat}} </ion-select-option>          
+      <ion-select-option value="6" *ngIf="statusDependecy"><span>Dependencia origen: </span> {{mensajeDependecy}} </ion-select-option>
     </ion-select>
   </ion-item>
 

@@ -2,3 +2,14 @@
  visibility: hidden !important;
  display: none !important;
 }
+
+.disabled {      
+      pointer-events: none;      
+      border: none;
+      color: #999999;
+}
+.enabled {      
+      pointer-events: all;      
+      border: dashed;
+      color: #000000;
+}

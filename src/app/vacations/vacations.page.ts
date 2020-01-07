@@ -30,6 +30,7 @@ export class VacationsPage {
   listDaysDefault: any[];
   listDaysGenerate: any[];
   diasDisponibles: any;
+  diasCorresponden: any;
   diasPendientes: any;
   fechaInicial: any;
   fechaFinalFormat: any;
@@ -39,7 +40,12 @@ export class VacationsPage {
   b64Data: any;
   visible: boolean;
   visibleButton: any = false;
-  periodoVacacional: boolean;
+  periodoVacacional: any;
+  periodo: any;
+  nombreCompleto: string;
+  card: any = false;
+  mensajeDependecy: any;
+  statusDependecy: any;
 
   ionViewWillEnter() {
     this.vacationsInit();
@@ -62,9 +68,9 @@ export class VacationsPage {
     .then(loadingEl => {
       loadingEl.present();
       this.vacationsService.postVacations(this.idPerson).subscribe( (res: Response ) => {
-
         const key = 'data';
         this.diasDisponibles      = res[key].diasDisponibles;
+        this.diasCorresponden     = res[key].diasCorresponden;
         this.diasPendientes       = res[key].diasPendientes;
         this.fechaInicial         = res[key].fechaInicialFormat;
         this.fechaFinalFormat     = res[key].fechaFinalFormat;
@@ -72,14 +78,29 @@ export class VacationsPage {
         this.listDaysDefault      = res[key].listaDias;
         this.fechaInicialFormat   = res[key].fechaInicialFormat;
         this.periodoVacacional    = res[key].periodoVacacional;
-        this.holidayPeriod(res[key].periodoVacacional);
-
+        this.nombreCompleto       = res[key].periodoEmpleado.nombreCompleto;
         localStorage.setItem('date', JSON.stringify(this.fechaInicialFormat));
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
         }
+
+        this.statusDependecy = this.dependent(res[key].periodoVacacional);
+        if (this.statusDependecy === true) {
+          this.mensajeDependecy = res[key].periodoEmpleado.dependencia.dependencia;
+        } else {
+          this.mensajeDependecy = null;
+        }
+
+        const value = this.holidayPeriod(res[key].periodoVacacional);
+
+        if (value === false) {
+          this.card = this.utilsHidden.visibleContent();
+          this.visible = this.utilsHidden.unVisibleContent();
+        } else {
+          this.card = this.utilsHidden.unVisibleContent();
+          this.visible = this.utilsHidden.visibleContent();
+        }
         this.buttonsRefresh(res);
-        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
@@ -90,16 +111,25 @@ export class VacationsPage {
     });
   }
 
-  holidayPeriod(data: any) {
 
-    if (data === 'SIN_PERIODO_VACACIONAL') {
-      console.log('false');
-      return this.periodoVacacional = false;
+
+  holidayPeriod(status: any) {
+    if (status === 'SIN_PERIODO_VACACIONAL') {
+      return this.periodo = false;
+    } else {
+      return this.periodoVacacional = true;
+    }
+  }
+
+  dependent(status: any) {
+
+    if (status === 'PENDIENTE_OTRA_DEPENDENCIA') {
+      
+      return this.periodo = true;
 
     } else {
-      console.log('true');
-      return this.periodoVacacional = true;
-
+      
+      return this.periodo = false;
     }
 
   }

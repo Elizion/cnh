@@ -27,6 +27,10 @@ export class UpdatePage {
   fechaInicialFormat: any;
   modifiedList = [];
   visibleButton: any = false;
+  diasCorresponden: any;
+  mensajeDependecy: any;
+  statusDependecy: any;
+  periodo: boolean;
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -53,6 +57,7 @@ export class UpdatePage {
       this.vacationsService.update(id, date).subscribe( (res: Response ) => {
         const key = 'data';
         this.diasDisponibles      = res[key].diasDisponibles;
+        this.diasCorresponden     = res[key].diasCorresponden;
         this.diasPendientes       = res[key].diasPendientes;
         this.fechaInicial         = res[key].fechaInicialFormat;
         this.fechaFinalFormat     = res[key].fechaFinalFormat;
@@ -65,6 +70,14 @@ export class UpdatePage {
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
         }
+        
+        this.statusDependecy = this.dependent(res[key].periodoVacacional);
+        if (this.statusDependecy === true) {
+          this.mensajeDependecy = res[key].periodoEmpleado.dependencia.dependencia;
+        } else {
+          this.mensajeDependecy = null;
+        }
+
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
@@ -74,6 +87,19 @@ export class UpdatePage {
         this.utilsNavigate.routerNavigateVacationsUpdate();
       });
     });
+  }
+  
+  dependent(status: any) {
+
+    if (status === 'PENDIENTE_OTRA_DEPENDENCIA') {
+      
+      return this.periodo = true;
+
+    } else {
+      
+      return this.periodo = false;
+    }
+
   }
   buttonsRefresh(res: any): void {
     const key = 'data';
