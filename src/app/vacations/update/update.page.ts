@@ -31,6 +31,8 @@ export class UpdatePage {
   mensajeDependecy: any;
   statusDependecy: any;
   periodo: boolean;
+  estatusDescripcion: any;
+  
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -62,15 +64,14 @@ export class UpdatePage {
         this.fechaInicial         = res[key].fechaInicialFormat;
         this.fechaFinalFormat     = res[key].fechaFinalFormat;
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
+        this.estatusDescripcion   = res[key].estatusDescripcion;
         this.listDaysDefault = res[key].listaDias;
         this.cloneArray(res[key].listaDias);
-        this.concatenate(res, key);
-        this.diasDisponibles = res[key].diasDisponibles;
+        //this.concatenate(res, key);
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
         }
-        
         this.statusDependecy = this.dependent(res[key].periodoVacacional);
         if (this.statusDependecy === true) {
           this.mensajeDependecy = res[key].periodoEmpleado.dependencia.dependencia;
@@ -88,15 +89,10 @@ export class UpdatePage {
       });
     });
   }
-  
   dependent(status: any) {
-
     if (status === 'PENDIENTE_OTRA_DEPENDENCIA') {
-      
       return this.periodo = true;
-
     } else {
-      
       return this.periodo = false;
     }
 
@@ -125,7 +121,9 @@ export class UpdatePage {
           fechaUltimoPeriodo: getFechaUltimoPeriodo,
           diasVacaciones: modifiedList
       };
+
       this.sendUpdate(data);
+
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', null);
     }
@@ -145,13 +143,18 @@ export class UpdatePage {
       this.vacationsService.commitUpdate(data).subscribe((res: Response) => {
         const key = 'data';
         if (res[key].listaDias !== 'undefined') {
+
           const nuevaListaModificados = res[key].listaDias;
+
           if (nuevaListaModificados != null && nuevaListaModificados.length > 0) {
             this.listDaysDefault = nuevaListaModificados;
             this.buttonsRefresh(res);
             loadingEl.dismiss();
             this.utilsMessage.messageOkTemp(this.utilsMessage.messageOk(), null, null);
+
           }
+
+
         }
         if (res[key].mensajes !== 'undefined') {
           const mensajes: string[] = res[key].mensajes;

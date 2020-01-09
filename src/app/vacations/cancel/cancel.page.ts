@@ -166,6 +166,7 @@ export class CancelPage {
     }
   }
   addCheckbox(event: any, idVacaciones: string) {
+    this.visibleButton = true;
     const datetime = document.getElementById(idVacaciones);
     if (event.target.checked) {
       this.checked.push(idVacaciones);
@@ -175,7 +176,6 @@ export class CancelPage {
       this.checked.splice(index, 1);
       this.disabledDatetime(datetime);
     }
-    this.visibleButton = true;
   }
   removeCheckedFromArray(checkbox: string) {
     return this.checked.findIndex((category: any) => {
