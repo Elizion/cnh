@@ -15,6 +15,15 @@ import * as moment from 'moment';
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
+  isLoading = false;
+  isLogin = true;
+  payrollArray: any[];
+  b64Data: string;
+  idPerson = this.globalService.personId();
+  visible: boolean;
+  start = null;
+  end = null;
+  visibleButtonAdd: any = false;
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
@@ -24,12 +33,6 @@ export class PayrollPage implements OnInit {
     private utilsHidden: UtilsHidden,
     private platform: Platform
   ) {}
-  isLoading = false;
-  isLogin = true;
-  payrollArray: any[];
-  b64Data: string;
-  idPerson = this.globalService.personId();
-  visible: boolean;
   ngOnInit() {
     this.payrollInit();
   }
@@ -114,4 +117,18 @@ export class PayrollPage implements OnInit {
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
+  onStart(event: Event): void {
+    this.start = event.target;
+  }
+  onEnd(event: Event): void {
+    this.end = event.target;
+    if (moment(this.end.value) >= moment(this.start.value)) {
+      this.visibleButtonAdd = true;
+      console.log('true');
+    } else {
+      this.visibleButtonAdd = false;
+      console.log('false');
+    }
+  }
+
 }

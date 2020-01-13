@@ -60,4 +60,9 @@ export class GeneralPage implements OnInit {
     this.descripcionAvisoGeneral = descripcionAvisoGeneral;
     this.archivoBase64 = archivoBase64;
   }
+
+  zoom(event: any){
+    event.target.classList.toggle('zoom');
+  }
+  
 }

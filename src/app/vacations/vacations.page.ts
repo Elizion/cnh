@@ -46,7 +46,9 @@ export class VacationsPage {
   card: any = false;
   mensajeDependecy: any;
   statusDependecy: any;
-
+  start = null;
+  end = null;
+  visibleButtonAdd: any = false;
   ionViewWillEnter() {
     this.vacationsInit();
   }
@@ -111,8 +113,6 @@ export class VacationsPage {
     });
   }
 
-
-
   holidayPeriod(status: any) {
     if (status === 'SIN_PERIODO_VACACIONAL') {
       return this.periodo = false;
@@ -122,16 +122,11 @@ export class VacationsPage {
   }
 
   dependent(status: any) {
-
     if (status === 'PENDIENTE_OTRA_DEPENDENCIA') {
-      
       return this.periodo = true;
-
     } else {
-      
       return this.periodo = false;
     }
-
   }
 
   onSubmit(form: NgForm) {
@@ -141,6 +136,7 @@ export class VacationsPage {
     }
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
+
     this.loadingCtrl
     .create({
       keyboardClose: true,
@@ -255,8 +251,6 @@ export class VacationsPage {
         this.utilsNavigate.routerNavigateVacations();
       });
     });
-    /***************************************************/
-    this.visibleButton = false;
   }
   removeItem(id: number): void {
     this.visibleButton = true;
@@ -284,4 +278,18 @@ export class VacationsPage {
     const select = document.getElementById('notifications');
     select.click();
   }
+  onStart(event: Event): void {
+    this.start = event.target;
+  }
+  onEnd(event: Event): void {
+    this.end = event.target;
+    if (moment(this.end.value) >= moment(this.start.value)) {
+      this.visibleButtonAdd = true;
+      console.log('true');
+    } else {
+      this.visibleButtonAdd = false;
+      console.log('false');
+    }
+  }
+
 }

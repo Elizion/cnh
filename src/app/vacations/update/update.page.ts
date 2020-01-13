@@ -65,7 +65,7 @@ export class UpdatePage {
         this.fechaFinalFormat     = res[key].fechaFinalFormat;
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
         this.estatusDescripcion   = res[key].estatusDescripcion;
-        this.listDaysDefault = res[key].listaDias;
+        this.listDaysDefault      = res[key].listaDias;
         this.cloneArray(res[key].listaDias);
         //this.concatenate(res, key);
         this.buttonsRefresh(res);
@@ -246,6 +246,7 @@ export class UpdatePage {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
   impress(): void {
+    this.cloneArray(this.listDaysDefault);
     if (this.modifiedList.length > 0) {
       const data = {
         personId: this.globalService.personId(),
@@ -277,6 +278,7 @@ export class UpdatePage {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageListVoid(), 'Vacaciones', 'Descarga');
     }
   }
+
   cloneArray(listVacations: any): void {
     let i = 0;
     if (listVacations != null && listVacations.length > 0) {
@@ -294,8 +296,10 @@ export class UpdatePage {
       }
     }
   }
+
   onClick(): void {
     const select = document.getElementById('notifications');
     select.click();
   }
+
 }

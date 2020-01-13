@@ -51,6 +51,7 @@
               displayFormat="DD/MM/YYYY"                 
               ngModel
               name="started"
+              (ionChange)="onStart($event)"
               required>
             </ion-datetime>
           </ion-item>
@@ -65,22 +66,24 @@
               displayFormat="DD/MM/YYYY"           
               ngModel
               name="finished"
+              (ionChange)="onEnd($event)"
               required>
-            </ion-datetime>
+            </ion-datetime>            
           </ion-item>
         </ion-col>
         <ion-col style="margin-top: 1.3rem;">
           <ion-button
             type="submit"
             color="primary"            
-            expand="block"                      
-            [disabled]="!f.valid"
+            expand="block"                  
+            [disabled]="!this.visibleButtonAdd"
           >
             <ion-icon name="add-circle"></ion-icon>
           </ion-button>
         </ion-col>              
       </ion-row>        
     </ion-grid>
+
   </form>      
 
   <ion-grid *ngIf="this.checkPeriodoEscalonado">
