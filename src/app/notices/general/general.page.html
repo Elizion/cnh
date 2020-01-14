@@ -10,14 +10,15 @@
   <ion-grid>
     <ion-row>      
       <ion-col *ngIf="descripcionAvisoGeneral" style="z-index: 9999;">                 
-          <h4 text-center>{{ descripcionAvisoGeneral }}</h4>                      
-          <ion-img 
-            src="data:image/jpeg;base64, {{archivoBase64}}" 
-            alt="Noticia" 
-            style="height: 10rem;"            
-            (click)="zoom($event)"
-          >
-          </ion-img>                        
+          <h4 text-center>{{ descripcionAvisoGeneral }}</h4>        
+          <pinch-zoom>
+            <ion-img 
+              src="data:image/jpeg;base64, {{archivoBase64}}" 
+              alt="Noticia" 
+              style="height: 11rem;"            
+            >
+            </ion-img>  
+          </pinch-zoom>                                    
       </ion-col>            
     </ion-row>
     <ion-row>      

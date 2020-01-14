@@ -26,11 +26,6 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: './general/general.module#GeneralPageModule'
-          },
-          {
-            path: ':description/:base64',
-            loadChildren:
-              './general/general-detail/general-detail.module#GeneralDetailPageModule'
           }
         ]
       },
