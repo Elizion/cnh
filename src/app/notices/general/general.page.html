@@ -11,7 +11,7 @@
 
   <ion-grid *ngIf="descripcionAvisoGeneral" text-center>
     <h4>{{ descripcionAvisoGeneral }}</h4> 
-    <ion-row>                 
+    <ion-row text-center>                 
       <pinch-zoom>
         <ion-img 
           src="data:image/jpeg;base64, {{archivoBase64}}" 
@@ -25,12 +25,18 @@
     <ion-row>      
       <ion-col *ngIf="descripcionAvisoGeneral">                 
           <ion-list>
-            <ion-item 
-              button 
+            <ion-item
+              button
               *ngFor="let notice of listGeneral" 
               (click)="show(notice.idArchivo, notice.descripcionAvisoGeneral, notice.archivoBase64)"
+              [routerLink]="[]" detail
             >                
-              <ion-label>{{ notice.descripcionAvisoGeneral }}</ion-label>                
+              <ion-label>
+                {{ notice.descripcionAvisoGeneral }}
+                <h5></h5>
+                <p></p>  
+              </ion-label>                              
+
             </ion-item>
           </ion-list>                          
       </ion-col>            
