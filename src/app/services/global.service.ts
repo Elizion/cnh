@@ -39,7 +39,7 @@ export class GlobalService {
       const httpOptions = {
          headers: new HttpHeaders({
             'Content-Type':  contentType,
-            Authorization: token
+            Authorization: 'Bearer ' + token
          })
       };
       return httpOptions;

@@ -7,12 +7,12 @@ import { Constants as CONST } from '../config/config.const';
   providedIn: 'root'
 })
 export class ProfileService {
+  token: string;
   private urlEmployee: string = CONST.PROTOCOL + CONST.HOST + CONST.BASE + CONST.MODULE[1];
   constructor(
     private httpClient: HttpClient,
     private globalService: GlobalService
   ) {}
-  token: string;
   profile() {
     this.token = this.globalService.token();
     return this.httpClient.get(this.urlEmployee + 'datos/token',
