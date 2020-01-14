@@ -20,6 +20,7 @@
               displayFormat="DD/MM/YYYY"                 
               ngModel
               name="started"
+              (ionChange)="onStart($event)"
               required>
             </ion-datetime>
           </ion-item>
@@ -33,7 +34,8 @@
               max="2022-01-01"
               displayFormat="DD/MM/YYYY"           
               ngModel
-              name="finished"
+              name="finished"              
+              (ionChange)="onEnd($event)"
               required>
             </ion-datetime>
           </ion-item>

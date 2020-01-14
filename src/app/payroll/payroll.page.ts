@@ -117,9 +117,11 @@ export class PayrollPage implements OnInit {
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
+
   onStart(event: Event): void {
     this.start = event.target;
   }
+
   onEnd(event: Event): void {
     this.end = event.target;
     if (moment(this.end.value) >= moment(this.start.value)) {
