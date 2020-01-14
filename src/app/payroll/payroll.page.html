@@ -61,6 +61,7 @@
                 button
                 *ngFor="let payroll of payrollArray"
                 (click)="impress(payroll.consolidationSetId)"                
+                [routerLink]="[]" detail
               >
                 <ion-label>
                   <p> {{ payroll.fechaPago }} </p>
