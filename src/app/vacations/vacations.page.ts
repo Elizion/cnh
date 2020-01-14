@@ -85,16 +85,13 @@ export class VacationsPage {
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
         }
-
         this.statusDependecy = this.dependent(res[key].periodoVacacional);
         if (this.statusDependecy === true) {
           this.mensajeDependecy = res[key].periodoEmpleado.dependencia.dependencia;
         } else {
           this.mensajeDependecy = null;
         }
-
         const value = this.holidayPeriod(res[key].periodoVacacional);
-
         if (value === false) {
           this.card = this.utilsHidden.visibleContent();
           this.visible = this.utilsHidden.unVisibleContent();
@@ -136,7 +133,6 @@ export class VacationsPage {
     }
     const startDate = moment(form.value.started).format('DD/MM/YYYY');
     const endDate = moment(form.value.finished).format('DD/MM/YYYY');
-
     this.loadingCtrl
     .create({
       keyboardClose: true,
@@ -145,7 +141,9 @@ export class VacationsPage {
       cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
+
       loadingEl.present();
+
       this.vacationsService.postAddVacations(
         this.idPerson,
         this.diasDisponibles,

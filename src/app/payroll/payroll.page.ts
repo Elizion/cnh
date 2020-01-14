@@ -49,6 +49,9 @@ export class PayrollPage implements OnInit {
       this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: Response ) => {
         const key = 'data';
         this.payrollArray = res[key];
+        if (this.payrollArray.length === 0 ) {
+          this.utilsMessage.messageListVoid();
+        }
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },

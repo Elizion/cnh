@@ -45,6 +45,9 @@ export class GeneralPage implements OnInit {
       this.noticesService.general().subscribe( (res: Response) => {
         const key = 'data';
         this.listGeneral = res[key];
+        if (this.listGeneral.length === 0 ) {
+          this.utilsMessage.messageListVoid();
+        }
         this.load();
         loadingEl.dismiss();
         this.visible = this.utilsHidden.visibleContent();

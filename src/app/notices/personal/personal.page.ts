@@ -41,6 +41,9 @@ export class PersonalPage implements OnInit {
       this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
         const key = 'data';
         this.listPersonal = res[key];
+        if (this.listPersonal.length === 0 ) {
+          this.utilsMessage.messageListVoid();
+        }
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
