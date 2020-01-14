@@ -15,10 +15,9 @@ export class NoticesService {
   constructor(
     private httpClient: HttpClient,
     private globalService: GlobalService
-    ) {}
+    ) { this.token = this.globalService.token(); }
 
   personal(idPerson: number) {
-    this.token = this.globalService.token();
     return this.httpClient.get(this.urlNotices + 'individual?personId=' + idPerson,
         this.globalService.headers(this.token, CONST.APPLICATION_JSON))
         .pipe(retry(CONST.ZERO), catchError(this.globalService.handleError));
