@@ -12,9 +12,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./personal-detail.page.scss'],
 })
 export class PersonalDetailPage implements OnInit {
+
   id: any;
   nombreArchivo: any;
   mensaje: any;
+
   constructor(
     private route: ActivatedRoute,
     private loadingCtrl: LoadingController,
@@ -23,6 +25,7 @@ export class PersonalDetailPage implements OnInit {
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
   ) {}
+
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('noticeId');
     const nombreArchivo = this.route.snapshot.paramMap.get('nombreArchivo');

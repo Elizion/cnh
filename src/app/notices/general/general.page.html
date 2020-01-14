@@ -6,21 +6,25 @@
     <ion-title>Avisos generales</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content padding *ngIf="visible">  
+
   <ion-grid>
+
     <ion-row>      
-      <ion-col *ngIf="descripcionAvisoGeneral" style="z-index: 9999;">                 
+      <ion-col *ngIf="descripcionAvisoGeneral"> 
           <h4 text-center>{{ descripcionAvisoGeneral }}</h4>        
           <pinch-zoom>
             <ion-img 
               src="data:image/jpeg;base64, {{archivoBase64}}" 
               alt="Noticia" 
-              style="height: 11rem;"            
+              style="height: auto; width: auto;"
             >
             </ion-img>  
           </pinch-zoom>                                    
       </ion-col>            
     </ion-row>
+
     <ion-row>      
       <ion-col *ngIf="descripcionAvisoGeneral">                 
           <ion-list>

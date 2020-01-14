@@ -54,7 +54,7 @@ export class GeneralPage implements OnInit {
       },
       (err) => {
         loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'GeneralPage', 'generalInit()');
+        this.utilsMessage.messageApiError(err, 'Avisos generales', 'Error');
         this.utilsNavigate.routerNavigateNotices();
       });
     });
