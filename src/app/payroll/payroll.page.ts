@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { Platform } from '@ionic/angular';
 import { PayrollService } from '../services/payroll.service';
 import { GlobalService } from '../services/global.service';
 import { UtilsMessage } from '../utils/utils.message';
@@ -24,14 +23,14 @@ export class PayrollPage implements OnInit {
   start = null;
   end = null;
   visibleButtonAdd: any = false;
+  card: any = true;
   constructor(
     private loadingCtrl: LoadingController,
     private payrollService: PayrollService,
     private globalService: GlobalService,
     private utilsMessage: UtilsMessage,
     private utilsNavigate: UtilsNavigate,
-    private utilsHidden: UtilsHidden,
-    private platform: Platform
+    private utilsHidden: UtilsHidden
   ) {}
   ngOnInit() {
     this.payrollInit();
@@ -49,9 +48,6 @@ export class PayrollPage implements OnInit {
       this.payrollService.payroll(this.idPerson, '', '').subscribe( (res: Response ) => {
         const key = 'data';
         this.payrollArray = res[key];
-        if (this.payrollArray.length === 0 ) {
-          this.utilsMessage.messageListVoid();
-        }
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
@@ -77,14 +73,16 @@ export class PayrollPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.payrollService.payroll(
-        this.idPerson,
-        startDate,
-        endDate
+      this.payrollService.payroll(this.idPerson, startDate, endDate
       ).subscribe( (res: Response ) => {
         const key = 'data';
         this.payrollArray = res[key];
         loadingEl.dismiss();
+        if (this.payrollArray.length === 0) {
+          this.card = false;
+        } else {
+          this.card = true;
+        }
       },
       (err) => {
         this.utilsMessage.messageApiError(err, 'Recibo de nómina', 'Consulta');

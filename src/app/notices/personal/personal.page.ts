@@ -25,6 +25,7 @@ export class PersonalPage implements OnInit {
   listPersonal: any[];
   idPerson = this.globalService.personId();
   visible: any = false;
+  card: any = true;
   ngOnInit() {
     this.personalInit();
   }
@@ -41,11 +42,13 @@ export class PersonalPage implements OnInit {
       this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
         const key = 'data';
         this.listPersonal = res[key];
-        if (this.listPersonal.length === 0 ) {
-          this.utilsMessage.messageListVoid();
-        }
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
+        if (this.listPersonal.length === 0) {
+          this.card = false;
+        } else {
+          this.card = true;
+        }
       },
       (err) => {
         this.utilsMessage.messageApiError(err, 'Avisos individuales', 'Error');

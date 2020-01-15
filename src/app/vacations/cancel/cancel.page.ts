@@ -62,7 +62,7 @@ export class CancelPage {
         this.fechaInicial         = res[key].fechaInicialFormat;
         this.fechaFinalFormat     = res[key].fechaFinalFormat;
         this.fechaIngresoFormat   = res[key].periodoEmpleado.fechaIngresoFormat;
-        this.listDaysDefault = res[key].listaDias;
+        this.listDaysDefault      = res[key].listaDias;
         this.buttonsRefresh(res);
         if (this.listDaysDefault.length === 0 ) {
           this.utilsMessage.messageListVoid();
@@ -119,7 +119,7 @@ export class CancelPage {
   buttonsRefresh(res: any): void {
     const key = 'data';
     this.btnModificar = res[key].botonModificar;
-    this.btnImprimir = res[key].botonImprimir;
+    this.btnImprimir  = res[key].botonImprimir;
   }
   sendCancel(data: any) {
     this.loadingCtrl

@@ -11,6 +11,7 @@ import { Constants as CONST } from '../../config/config.const';
   styleUrls: ['./general.page.scss'],
 })
 export class GeneralPage implements OnInit {
+
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
@@ -18,47 +19,77 @@ export class GeneralPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
   ) {}
+
   isLogin = true;
   listGeneral: any[];
   descripcionAvisoGeneral: any;
   archivoBase64: any;
   visible: boolean;
+  card: any = true;
+
   ngOnInit() {
+
     this.generalInit();
+
   }
+
   load(): void {
+
     if (this.listGeneral != null && this.listGeneral.length > 0 ) {
       this.descripcionAvisoGeneral = this.listGeneral[0].descripcionAvisoGeneral;
       this.archivoBase64 = this.listGeneral[0].archivoBase64;
     }
+
   }
+
   generalInit(): void {
+
     this.loadingCtrl
+
     .create({
+
       keyboardClose: true,
       spinner: null,
       message: CONST.LOADER_GIF,
       cssClass: 'custom-loader-class'
-    })
-    .then(loadingEl => {
+
+    }).then(loadingEl => {
+
       loadingEl.present();
-      this.noticesService.general().subscribe( (res: Response) => {
+
+      this.noticesService.general().subscribe((res: Response) => {
+
         const key = 'data';
+
         this.listGeneral = res[key];
-        if (this.listGeneral.length === 0 ) {
-          this.utilsMessage.messageListVoid();
+
+        if (this.listGeneral.length === 0) {
+
+          this.card = false;
+
+        } else {
+
+          this.card = true;
+
         }
+
         this.load();
         loadingEl.dismiss();
         this.visible = this.utilsHidden.visibleContent();
+
       },
       (err) => {
+
         loadingEl.dismiss();
         this.utilsMessage.messageApiError(err, 'Avisos generales', 'Error');
         this.utilsNavigate.routerNavigateNotices();
+
       });
+
     });
+
   }
+
   show(id: number, descripcionAvisoGeneral: string, archivoBase64: string): void {
     this.descripcionAvisoGeneral = descripcionAvisoGeneral;
     this.archivoBase64 = archivoBase64;

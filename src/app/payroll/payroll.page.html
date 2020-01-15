@@ -53,6 +53,17 @@
       </ion-row>        
     </ion-grid>
   </form>
+  
+ 
+  <ion-card *ngIf="!card"> 
+    <ion-card-header>
+      <ion-card-subtitle text-center> Consulta de nómina </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content text-center>    
+      <p> Sin resultados encontrados.</p>
+    </ion-card-content>
+  </ion-card> 
+
   <ion-grid>
     <ion-row>
       <ion-col>                             
@@ -75,3 +86,5 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+
