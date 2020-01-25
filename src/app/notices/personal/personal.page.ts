@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
@@ -26,7 +26,9 @@ export class PersonalPage {
   idPerson = this.globalService.personId();
   visible: any = false;
   card: any = true;
-  ionViewWillEnter() {
+
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewInit() {
     this.personalInit();
   }
   personalInit(): void {

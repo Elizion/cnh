@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
@@ -12,7 +12,7 @@ import { Constants as CONST } from '../../config/config.const';
   templateUrl: './general.page.html',
   styleUrls: ['./general.page.scss'],
 })
-export class GeneralPage  {
+export class GeneralPage {
 
   constructor(
     private loadingCtrl: LoadingController,
@@ -31,7 +31,8 @@ export class GeneralPage  {
   visible: boolean;
   card: any = true;
 
-  ionViewWillEnter() {
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewInit() {
     this.generalInit();
   }
 
