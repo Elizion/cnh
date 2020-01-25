@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { NoticesService } from '../../services/notices.service';
 import { GlobalService } from '../../services/global.service';
@@ -11,7 +11,7 @@ import { Constants as CONST } from '../../config/config.const';
   templateUrl: './personal.page.html',
   styleUrls: ['./personal.page.scss'],
 })
-export class PersonalPage implements OnInit {
+export class PersonalPage {
   constructor(
     private loadingCtrl: LoadingController,
     private noticesService: NoticesService,
@@ -26,7 +26,7 @@ export class PersonalPage implements OnInit {
   idPerson = this.globalService.personId();
   visible: any = false;
   card: any = true;
-  ngOnInit() {
+  ionViewWillEnter() {
     this.personalInit();
   }
   personalInit(): void {
@@ -44,11 +44,7 @@ export class PersonalPage implements OnInit {
         this.listPersonal = res[key];
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
-        if (this.listPersonal.length === 0) {
-          this.card = false;
-        } else {
-          this.card = true;
-        }
+        this.isVisible();
       },
       (err) => {
         this.utilsMessage.messageApiError(err, 'Avisos individuales', 'Error');
@@ -56,5 +52,12 @@ export class PersonalPage implements OnInit {
         loadingEl.dismiss();
       });
     });
+  }
+  isVisible() {
+    if (this.listPersonal.length === 0) {
+      this.card = false;
+    } else {
+      this.card = true;
+    }
   }
 }
