@@ -24,9 +24,8 @@ export class PersonalPage {
   isLogin = true;
   listPersonal: any[];
   idPerson = this.globalService.personId();
-  visible: any = false;
-  card: any = true;
-
+  visibleContent: any = false;
+  cardNotFound: any = true;
   // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit() {
     this.personalInit();
@@ -44,9 +43,9 @@ export class PersonalPage {
       this.noticesService.personal(this.idPerson).subscribe( (res: Response ) => {
         const key = 'data';
         this.listPersonal = res[key];
-        this.visible = this.utilsHidden.visibleContent();
+        this.visibleContent = this.utilsHidden.visibleContent();
+        this.cardNotFound = this.globalService.isVisible(this.listPersonal);
         loadingEl.dismiss();
-        this.isVisible();
       },
       (err) => {
         this.utilsMessage.messageApiError(err, 'Avisos individuales', 'Error');
@@ -54,12 +53,5 @@ export class PersonalPage {
         loadingEl.dismiss();
       });
     });
-  }
-  isVisible() {
-    if (this.listPersonal.length === 0) {
-      this.card = false;
-    } else {
-      this.card = true;
-    }
   }
 }

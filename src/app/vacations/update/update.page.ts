@@ -32,7 +32,6 @@ export class UpdatePage {
   statusDependecy: any;
   periodo: boolean;
   estatusDescripcion: any;
-  
   constructor(
     private vacationsService: VacationsService,
     private loadingCtrl: LoadingController,
@@ -78,7 +77,6 @@ export class UpdatePage {
         } else {
           this.mensajeDependecy = null;
         }
-
         this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
@@ -95,7 +93,6 @@ export class UpdatePage {
     } else {
       return this.periodo = false;
     }
-
   }
   buttonsRefresh(res: any): void {
     const key = 'data';
@@ -121,13 +118,10 @@ export class UpdatePage {
           fechaUltimoPeriodo: getFechaUltimoPeriodo,
           diasVacaciones: modifiedList
       };
-
       this.sendUpdate(data);
-
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', null);
     }
-    /***************************************************/
     this.visibleButton = false;
   }
   sendUpdate(data: any) {

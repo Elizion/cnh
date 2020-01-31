@@ -72,24 +72,24 @@ export class PayrollPage implements OnInit {
       cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
+
       loadingEl.present();
+
       this.payrollService.payroll(this.idPerson, startDate, endDate
       ).subscribe( (res: Response ) => {
         const key = 'data';
         this.payrollArray = res[key];
+        this.card = this.globalService.isVisible(this.payrollArray);
         loadingEl.dismiss();
-        if (this.payrollArray.length === 0) {
-          this.card = false;
-        } else {
-          this.card = true;
-        }
       },
       (err) => {
         this.utilsMessage.messageApiError(err, 'Recibo de nómina', 'Consulta');
         this.utilsNavigate.routerNavigatePayroll();
         loadingEl.dismiss();
       });
+
     });
+
   }
   impress(id: string): void {
     this.loadingCtrl
@@ -118,11 +118,9 @@ export class PayrollPage implements OnInit {
   download(b64Data: string, nameFile: string): void {
     this.globalService.b64toBlobPdf(b64Data, nameFile,  CONST.APPLICATION_PDF, CONST.SIZE_BUFFER);
   }
-
   onStart(event: Event): void {
     this.start = event.target;
   }
-
   onEnd(event: Event): void {
     this.end = event.target;
     if (moment(this.end.value) >= moment(this.start.value)) {
@@ -133,5 +131,4 @@ export class PayrollPage implements OnInit {
       console.log('false');
     }
   }
-
 }

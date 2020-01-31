@@ -25,7 +25,15 @@ const routes: Routes = [
   {
     path: 'vacations',
     loadChildren: './vacations/vacations.module#VacationsPageModule'
+  },
+  {
+    path: 'licenses',
+    loadChildren: './licenses/licenses.module#LicensesPageModule'
+  },  {
+    path: 'licenses',
+    loadChildren: () => import('./licenses/licenses.module').then( m => m.LicensesPageModule)
   }
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -182,6 +182,13 @@ export class GlobalService {
       const ext = /^.+\.([^.]+)$/.exec(nameFile);
       return ext == null ? '' : ext[1];
    }
+   isVisible(array: any = []) {
+    if (array.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
    /*
    open() {
       const request: DownloadRequest = {

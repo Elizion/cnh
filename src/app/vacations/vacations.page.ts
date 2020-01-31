@@ -141,9 +141,7 @@ export class VacationsPage {
       cssClass: 'custom-loader-class'
     })
     .then(loadingEl => {
-
       loadingEl.present();
-
       this.vacationsService.postAddVacations(
         this.idPerson,
         this.diasDisponibles,

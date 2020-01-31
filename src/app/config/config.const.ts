@@ -2,7 +2,7 @@ export abstract class Constants {
   static readonly PROTOCOL: string = 'https://';
   static readonly HOST: string = 'siarhqamovil.cnh.gob.mx/';
   static readonly BASE: string = 'api/';
-  static readonly MODULE: string[] = ['token/', 'empleado/', 'vacaciones/', 'avisos/', 'recibo/'];
+  static readonly MODULE: string[] = ['token/', 'empleado/', 'vacaciones/', 'avisos/', 'recibo/', 'licencias/'];
   static readonly FORMAT_DATE: string[] = ['DD/MM/YYYY'];
   static readonly ZERO: number = 0;
   static readonly ONE: number = 1;

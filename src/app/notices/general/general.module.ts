@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { GeneralPage } from './general.page';
 import { Routes, RouterModule } from '@angular/router';
-import { PinchZoomModule } from 'ngx-pinch-zoom';
 const routes: Routes = [
   {
     path: '',
@@ -16,8 +15,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    PinchZoomModule
+    RouterModule.forChild(routes)
   ],
   declarations: [GeneralPage]
 })

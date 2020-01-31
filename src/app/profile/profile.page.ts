@@ -45,6 +45,7 @@ export class ProfilePage implements OnInit {
       this.profileService.profile().subscribe((res: Response) => {
         const key = 'data';
         window.localStorage.setItem('personId', JSON.stringify(res[key].personId));
+        this.visible = this.utilsHidden.visibleContent();
         this.personId           = res[key].personId;
         this.nombre             = res[key].nombre;
         this.numeroEmpleado     = res[key].numeroEmpleado;
@@ -56,7 +57,6 @@ export class ProfilePage implements OnInit {
         this.rfc                = res[key].rfc;
         this.fechaIngresoFormat = res[key].fechaIngresoFormat;
         this.fotoBase64         = res[key].fotoBase64;
-        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {

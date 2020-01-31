@@ -113,7 +113,6 @@ export class CancelPage {
     } else {
       this.utilsMessage.messageGeneric(this.utilsMessage.messageSelectList(), 'Vacaciones', 'Cancelación');
     }
-    /***************************************************/
     this.visibleButton = false;
   }
   buttonsRefresh(res: any): void {
