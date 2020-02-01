@@ -27,3 +27,11 @@ ion-menu-button {
         box-shadow: none !important;
     }
 }
+
+.popover-content {
+    --min-width: 90%!important;
+}
+
+ion-radio {
+    display: none!important;
+}
