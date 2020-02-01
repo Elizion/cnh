@@ -9,7 +9,7 @@ const routes: Routes = [
     component: LicensesPage
   },
   {
-    path: 'licenses-detail',
+    path: 'licenses-detail/:daysWithPay',
     loadChildren: () => import('./licenses-detail/licenses-detail.module').then( m => m.LicensesDetailPageModule)
   }
 ];
