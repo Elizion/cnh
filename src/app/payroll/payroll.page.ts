@@ -14,6 +14,14 @@ import * as moment from 'moment';
   styleUrls: ['./payroll.page.scss'],
 })
 export class PayrollPage implements OnInit {
+  constructor(
+    private loadingCtrl: LoadingController,
+    private payrollService: PayrollService,
+    private globalService: GlobalService,
+    private utilsMessage: UtilsMessage,
+    private utilsNavigate: UtilsNavigate,
+    private utilsHidden: UtilsHidden
+  ) {}
   isLoading = false;
   isLogin = true;
   payrollArray: any[];
@@ -24,14 +32,6 @@ export class PayrollPage implements OnInit {
   end = null;
   visibleButtonAdd: any = false;
   card: any = true;
-  constructor(
-    private loadingCtrl: LoadingController,
-    private payrollService: PayrollService,
-    private globalService: GlobalService,
-    private utilsMessage: UtilsMessage,
-    private utilsNavigate: UtilsNavigate,
-    private utilsHidden: UtilsHidden
-  ) {}
   ngOnInit() {
     this.payrollInit();
   }
