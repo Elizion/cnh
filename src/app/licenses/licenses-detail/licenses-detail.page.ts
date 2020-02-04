@@ -42,10 +42,9 @@ export class LicensesDetailPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.historical(/*this.idPerson*/'283625', this.id).subscribe((res: Response ) => {
+      this.licenseService.historical(this.idPerson, this.id).subscribe((res: Response ) => {
         const key = 'data';
         this.historicalArray = res[key];
-        console.log(this.historicalArray);
         loadingEl.dismiss();
       },
       (err) => {
