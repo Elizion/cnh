@@ -18,10 +18,19 @@ export class LicensesService {
     this.token = this.globalService.token();
    }
 
-  licenses(idPerson: number) {
+  licenses(idPerson: string) {
     return this.httpClient.get(this.urlLicenses + 'historico?personId=' + idPerson,
         this.globalService.headers(this.token, CONST.APPLICATION_JSON))
         .pipe(retry(CONST.ZERO), catchError(this.globalService.handleError));
   }
+
+
+  historical(idPerson: string, anioAniversario: string) {
+    return this.httpClient.get(this.urlLicenses + 'detalle?personId=' + idPerson + '&anioAniversario=' + anioAniversario ,
+        this.globalService.headers(this.token, CONST.APPLICATION_JSON))
+        .pipe(retry(CONST.ZERO), catchError(this.globalService.handleError));
+  }
+
+  //https://siarhqamovil.cnh.gob.mx/api/licencias/detalle?personId=283625&anioAniversario=2
 
 }
