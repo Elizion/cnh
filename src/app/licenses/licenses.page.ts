@@ -23,6 +23,7 @@ export class LicensesPage implements OnInit {
   idPerson = this.globalService.personId();
   licensesArray: any = [];
   visible: boolean;
+  cardNotFound: boolean;
   ngOnInit() {
     this.licensesInit();
   }
@@ -41,6 +42,7 @@ export class LicensesPage implements OnInit {
         this.licensesArray = res[key];
         //console.log(this.licensesArray);
         this.visible = this.utilsHidden.visibleContent();
+        this.cardNotFound = this.globalService.isVisible(this.licensesArray);
         loadingEl.dismiss();
       },
       (err) => {

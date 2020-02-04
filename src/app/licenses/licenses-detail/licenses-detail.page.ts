@@ -26,14 +26,12 @@ export class LicensesDetailPage implements OnInit {
 
   idPerson = this.globalService.personId();
   historicalArray: any = [];
-  visible: boolean;
   id: string;
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('daysWithPay');
     console.log(this.id + ' ' + this.idPerson);
     this.licensesInit();
   }
-
   licensesInit(): void {
     this.loadingCtrl
     .create({
@@ -48,7 +46,6 @@ export class LicensesDetailPage implements OnInit {
         const key = 'data';
         this.historicalArray = res[key];
         console.log(this.historicalArray);
-        this.visible = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
