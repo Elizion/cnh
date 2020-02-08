@@ -6,7 +6,6 @@
     <ion-title>Licencias médicas</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-card *ngIf="!cardNotFound">
   <ion-card-header>
     <ion-card-subtitle text-center> Licencias médicas </ion-card-subtitle>
@@ -15,8 +14,6 @@
     <p> Sin resultados encontrados.</p>
   </ion-card-content>
 </ion-card> 
-
-
 <ion-content padding *ngIf="visible">
   <ion-grid>
     <ion-row *ngFor="let licenses of licensesArray">
@@ -25,15 +22,6 @@
           <ion-list>
             <ion-item>
               <ion-label>Dias de aniversario: {{licenses.anniversaryYear}}</ion-label>
-              <ion-select interface="popover">
-                <ion-select-option value="1"> Días con pago: {{licenses.daysWithPay}} </ion-select-option>
-                <ion-select-option value="2"> Cantidad de días con pago: {{licenses.qtyDaysWithPay}} </ion-select-option>
-                <ion-select-option value="3"> Días con mitad de pago: {{licenses.daysWithHalfPay}} </ion-select-option>
-                <ion-select-option value="4"> Cantidad de días con mitad de pago: {{licenses.qtyDaysWithHalfPay}} </ion-select-option>
-                <ion-select-option value="5"> Cantidad de días sin pago: {{licenses.qtyDaysWithoutPay}} </ion-select-option>
-                <ion-select-option value="6"> Días de maternidad: {{licenses.maternity}} </ion-select-option>
-                <ion-select-option value="7"> Cantidad de días de maternidad: {{licenses.qtyMaternity}} </ion-select-option>
-              </ion-select>      
             </ion-item>                  
           </ion-list>
         </div>
@@ -54,5 +42,81 @@
         </div>
       </ion-col>
     </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col>
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días con pago:  {{ licenses.daysWithPay }}</h5>
+              <p></p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+          button            
+          >
+            <ion-label>
+            <h5> Cantidad de días con pago: {{ licenses.qtyDaysWithPay }}</h5>
+              <p> </p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días con mitad de pago: {{ licenses.qtyDaysWithPay }}</h5>
+              <p> </p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Cantidad de días con mitad de pago: {{ licenses.qtyDaysWithHalfPay }}</h5>
+              <p></p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Cantidad de días sin pago: {{ licenses.qtyDaysWithoutPay }}</h5>
+              <p></p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días de maternidad: {{ licenses.maternity }}</h5>
+              <p> </p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>        
+        <ion-list *ngFor="let licenses of licensesArray">                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Cantidad de días de maternidad: {{ licenses.qtyMaternity }} </h5>
+              <p> </p>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
+
