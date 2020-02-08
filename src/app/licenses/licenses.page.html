@@ -6,6 +6,7 @@
     <ion-title>Licencias médicas</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-card *ngIf="!cardNotFound">
   <ion-card-header>
     <ion-card-subtitle text-center> Licencias médicas </ion-card-subtitle>
@@ -14,7 +15,8 @@
     <p> Sin resultados encontrados.</p>
   </ion-card-content>
 </ion-card> 
-<ion-content padding *ngIf="visible">
+
+<ion-content padding *ngIf="visibleContent">
   <ion-grid>
     <ion-row *ngFor="let licenses of licensesArray">
       <ion-col>

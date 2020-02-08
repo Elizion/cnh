@@ -22,8 +22,8 @@ export class LicensesPage implements OnInit {
   ) { }
   idPerson = this.globalService.personId();
   licensesArray: any = [];
-  visible: boolean;
-  cardNotFound: boolean;
+  visibleContent: any = false;
+  cardNotFound: any = true;
   ngOnInit() {
     this.licensesInit();
   }
@@ -37,11 +37,11 @@ export class LicensesPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.licenses(/*this.idPerson*/'283625').subscribe((res: Response ) => {
+      this.licenseService.licenses(this.idPerson).subscribe((res: Response ) => {
         const key = 'data';
         this.licensesArray = res[key];
-        this.visible = this.utilsHidden.visibleContent();
         this.cardNotFound = this.globalService.isVisible(this.licensesArray);
+        this.visibleContent = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
