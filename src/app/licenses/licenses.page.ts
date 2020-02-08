@@ -20,13 +20,19 @@ export class LicensesPage implements OnInit {
     private utilsNavigate: UtilsNavigate,
     private utilsHidden: UtilsHidden
   ) { }
+
   idPerson = this.globalService.personId();
+  id: number;
   licensesArray: any = [];
   visibleContent: any = false;
   cardNotFound: any = true;
+  historicalArray: any = [];
+
   ngOnInit() {
     this.licensesInit();
+    this.licensesInitSecond();
   }
+
   licensesInit(): void {
     this.loadingCtrl
     .create({
@@ -37,11 +43,39 @@ export class LicensesPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.licenses(this.idPerson).subscribe((res: Response ) => {
+      this.licenseService.licenses(/*this.idPerson*/'283625').subscribe((res: Response ) => {
         const key = 'data';
         this.licensesArray = res[key];
+
+        this.id = res[key].anniversaryYear;
+
+        console.log(JSON.stringify(res[key]));
+
         this.cardNotFound = this.globalService.isVisible(this.licensesArray);
         this.visibleContent = this.utilsHidden.visibleContent();
+        loadingEl.dismiss();
+      },
+      (err) => {
+        loadingEl.dismiss();
+        this.utilsMessage.messageApiError(err, 'Licencias', 'Error');
+        this.utilsNavigate.routerNavigatePayroll();
+      });
+    });
+  }
+
+  licensesInitSecond(): void {
+    this.loadingCtrl
+    .create({
+      keyboardClose: true,
+      spinner: null,
+      message: CONST.LOADER_GIF,
+      cssClass: 'custom-loader-class'
+    })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.licenseService.historical(/*this.idPerson*/'283625', this.id).subscribe((res: Response ) => {
+        const key = 'data';
+        this.historicalArray = res[key];
         loadingEl.dismiss();
       },
       (err) => {

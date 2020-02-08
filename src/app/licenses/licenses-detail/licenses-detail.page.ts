@@ -25,34 +25,15 @@ export class LicensesDetailPage implements OnInit {
   ) { }
 
   idPerson = this.globalService.personId();
-  historicalArray: any = [];
+
   id: string;
+
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('daysWithPay');
     console.log(this.id + ' ' + this.idPerson);
-    this.licensesInit();
+
   }
-  licensesInit(): void {
-    this.loadingCtrl
-    .create({
-      keyboardClose: true,
-      spinner: null,
-      message: CONST.LOADER_GIF,
-      cssClass: 'custom-loader-class'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.licenseService.historical(this.idPerson, this.id).subscribe((res: Response ) => {
-        const key = 'data';
-        this.historicalArray = res[key];
-        loadingEl.dismiss();
-      },
-      (err) => {
-        loadingEl.dismiss();
-        this.utilsMessage.messageApiError(err, 'Licencias', 'Error');
-        this.utilsNavigate.routerNavigatePayroll();
-      });
-    });
-  }
+
+
 
 }
