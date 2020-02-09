@@ -100,7 +100,7 @@
   
   <ion-grid>
     <ion-toolbar>
-      <ion-title>Segunda Api</ion-title>
+      <ion-title>Licencias médicas</ion-title>
     </ion-toolbar>
     <ion-row>      
       <ion-col>                 
@@ -108,7 +108,7 @@
             <ion-item
               button
               *ngFor="let historical of historicalArray"              
-              [routerLink]="['/', 'licenses', 'licenses-detail', historical.keyIssste]" detail
+              [routerLink]="['/', 'licenses', 'licenses-detail', historical.keyIssste, historical.startDate, historical.endDate, historical.receptionDate, historical.diagnostico, historical.riesgoTrabajo, historical.anniversaryYear, historical.diasConGoce, historical.diasMedioGoce, historical.diasSinGoce]" detail
             >                
               <ion-label>
                 <h5>Clave del ISSTE: </h5>
@@ -119,18 +119,5 @@
       </ion-col>            
     </ion-row>
   </ion-grid>
-  <!--
-  <ion-select interface="popover">
-    <ion-select-option value="1"> Fecha de inicio: {{historical.startDate}} </ion-select-option>
-    <ion-select-option value="2"> Fecha fin: {{historical.endDate}} </ion-select-option>
-    <ion-select-option value="3"> Fecha de recepción: {{historical.receptionDate}} </ion-select-option>
-    <ion-select-option value="4"> Diagnostico: {{historical.diagnostico === '' ? null : 'Sin dato'}}</ion-select-option>
-    <ion-select-option value="5"> Riesgo: {{historical.riesgoTrabajo === '' ? null : 'Sin dato'}} </ion-select-option>
-    <ion-select-option value="6"> Años aniversario: {{historical.anniversaryYear}} </ion-select-option>
-    <ion-select-option value="7"> Días con goce: {{historical.diasConGoce}} </ion-select-option>
-    <ion-select-option value="8"> Días con medio goce: {{historical.diasMedioGoce}} </ion-select-option>
-    <ion-select-option value="8"> Días con sin goce: {{historical.diasSinGoce}} </ion-select-option>
-  </ion-select>      
-  -->
 </ion-content>
 

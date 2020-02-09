@@ -9,7 +9,8 @@ const routes: Routes = [
     component: LicensesPage
   },
   {
-    path: 'licenses-detail/:daysWithPay',
+    path: 'licenses-detail/:keyIssste/:startDate/:endDate/:receptionDate/:diagnostico' +
+    '/:riesgoTrabajo/:anniversaryYear/:diasConGoce/:diasMedioGoce/:diasSinGoce',
     loadChildren: () => import('./licenses-detail/licenses-detail.module').then( m => m.LicensesDetailPageModule)
   }
 ];

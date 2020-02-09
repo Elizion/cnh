@@ -9,26 +9,105 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row *ngFor="let historical of historicalArray">
+    <ion-row>
       <ion-col>
-        <div>
-          <ion-list>
-            <ion-item>
-              <ion-label> Clave del ISSTE: {{historical.keyIssste}}</ion-label>
-              <ion-select interface="popover">
-                <ion-select-option value="1"> Fecha de inicio: {{historical.startDate}} </ion-select-option>
-                <ion-select-option value="2"> Fecha fin: {{historical.endDate}} </ion-select-option>
-                <ion-select-option value="3"> Fecha de recepción: {{historical.receptionDate}} </ion-select-option>
-                <ion-select-option value="4"> Diagnostico: {{historical.diagnostico === '' ? null : 'Sin dato'}}</ion-select-option>
-                <ion-select-option value="5"> Riesgo: {{historical.riesgoTrabajo === '' ? null : 'Sin dato'}} </ion-select-option>
-                <ion-select-option value="6"> Años aniversario: {{historical.anniversaryYear}} </ion-select-option>
-                <ion-select-option value="7"> Días con goce: {{historical.diasConGoce}} </ion-select-option>
-                <ion-select-option value="8"> Días con medio goce: {{historical.diasMedioGoce}} </ion-select-option>
-                <ion-select-option value="8"> Días con sin goce: {{historical.diasSinGoce}} </ion-select-option>
-              </ion-select>      
-            </ion-item>                  
-          </ion-list>
-        </div>
+        <ion-toolbar>
+          <ion-title>Licencias médicas</ion-title>
+        </ion-toolbar>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Clave del ISSTE:  {{ keyIssste }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Fecha de inicio:  {{ startDate }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>             
+          <ion-item 
+          button            
+          >
+            <ion-label>
+            <h5> Fecha fin: {{ endDate }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Fecha de recepción: {{ receptionDate }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>  
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Diagnostico: {{ diagnostico }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Riesgo: {{riesgoTrabajo === '' ? null : 'Sin dato'}} </h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Años aniversario: {{ anniversaryYear }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días con goce: {{ diasConGoce }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días con medio goce: {{ diasMedioGoce }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días sin goce: {{ diasSinGoce }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
       </ion-col>
     </ion-row>
   </ion-grid>
