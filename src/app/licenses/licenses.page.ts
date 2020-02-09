@@ -6,11 +6,13 @@ import { UtilsMessage } from '../utils/utils.message';
 import { UtilsNavigate } from '../utils/utils.navigate';
 import { UtilsHidden } from '../utils/utils.hidden';
 import { Constants as CONST } from '../config/config.const';
+
 @Component({
   selector: 'app-licenses',
   templateUrl: './licenses.page.html',
   styleUrls: ['./licenses.page.scss'],
 })
+
 export class LicensesPage implements OnInit {
   constructor(
     private loadingCtrl: LoadingController,
@@ -22,15 +24,44 @@ export class LicensesPage implements OnInit {
   ) { }
 
   idPerson = this.globalService.personId();
-  id: number;
+  idAnniversaryYear: any;
+
+  historicalArray: any = [];
   licensesArray: any = [];
+
+  anniversaryYear: any;
+  daysWithPay: any;
+  qtyDaysWithPay: any;
+  daysWithHalfPay: any;
+  qtyDaysWithHalfPay: any;
+  qtyDaysWithoutPay: any;
+  maternity: any;
+  qtyMaternity: any;
+
   visibleContent: any = false;
   cardNotFound: any = true;
-  historicalArray: any = [];
 
   ngOnInit() {
     this.licensesInit();
-    this.licensesInitSecond();
+  }
+
+  setIdAnniversaryYear() {
+    this.idAnniversaryYear = this.anniversaryYear;
+    console.log(this.idAnniversaryYear);
+  }
+
+  loadFirstElement(): void {
+    if (this.licensesArray != null && this.licensesArray.length > 0 ) {
+      this.anniversaryYear = this.licensesArray[0].anniversaryYear;
+      this.daysWithPay = this.licensesArray[0].daysWithPay;
+      this.qtyDaysWithPay = this.licensesArray[0].qtyDaysWithPay;
+      this.daysWithHalfPay = this.licensesArray[0].daysWithHalfPay;
+      this.qtyDaysWithHalfPay = this.licensesArray[0].qtyDaysWithHalfPay;
+      this.qtyDaysWithoutPay = this.licensesArray[0].qtyDaysWithoutPay;
+      this.maternity = this.licensesArray[0].maternity;
+      this.qtyMaternity = this.licensesArray[0].qtyMaternity;
+      this.setIdAnniversaryYear();
+    }
   }
 
   licensesInit(): void {
@@ -43,14 +74,11 @@ export class LicensesPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.licenses(/*this.idPerson*/'283625').subscribe((res: Response ) => {
+      this.licenseService.licenses('283625').subscribe((res: Response ) => {
         const key = 'data';
         this.licensesArray = res[key];
-
-        this.id = res[key].anniversaryYear;
-
-        console.log(JSON.stringify(res[key]));
-
+        this.loadFirstElement();
+        this.licensesInitSescond();
         this.cardNotFound = this.globalService.isVisible(this.licensesArray);
         this.visibleContent = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
@@ -63,7 +91,7 @@ export class LicensesPage implements OnInit {
     });
   }
 
-  licensesInitSecond(): void {
+  licensesInitSescond(): void {
     this.loadingCtrl
     .create({
       keyboardClose: true,
@@ -73,7 +101,7 @@ export class LicensesPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.historical(/*this.idPerson*/'283625', this.id).subscribe((res: Response ) => {
+      this.licenseService.historical('283625', this.idAnniversaryYear).subscribe((res: Response ) => {
         const key = 'data';
         this.historicalArray = res[key];
         loadingEl.dismiss();
