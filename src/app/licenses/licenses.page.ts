@@ -74,7 +74,7 @@ export class LicensesPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.licenses('283625').subscribe((res: Response ) => {
+      this.licenseService.licenses(this.idPerson).subscribe((res: Response ) => {
         const key = 'data';
         this.licensesArray = res[key];
         this.loadFirstElement();
@@ -101,7 +101,7 @@ export class LicensesPage implements OnInit {
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.licenseService.historical('283625', this.idAnniversaryYear).subscribe((res: Response ) => {
+      this.licenseService.historical(this.idPerson, this.idAnniversaryYear).subscribe((res: Response ) => {
         const key = 'data';
         this.historicalArray = res[key];
         loadingEl.dismiss();
