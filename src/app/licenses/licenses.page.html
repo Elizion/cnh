@@ -7,14 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-card *ngIf="!cardNotFound">
-  <ion-card-header>
-    <ion-card-subtitle text-center> Licencias médicas </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content text-center>    
-    <p> Sin resultados encontrados.</p>
-  </ion-card-content>
-</ion-card> 
+<ion-content>
+  <ion-card *ngIf="!cardNotFound">
+    <ion-card-header>
+      <ion-card-subtitle text-center> Licencias médicas </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content text-center>    
+      <p> Sin resultados encontrados.</p>
+    </ion-card-content>
+  </ion-card> 
+</ion-content>
+
 <ion-content padding *ngIf="visibleContent">
   <ion-grid>
     <ion-row>

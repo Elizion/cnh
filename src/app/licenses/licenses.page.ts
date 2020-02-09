@@ -47,7 +47,6 @@ export class LicensesPage implements OnInit {
 
   setIdAnniversaryYear() {
     this.idAnniversaryYear = this.anniversaryYear;
-    console.log(this.idAnniversaryYear);
   }
 
   loadFirstElement(): void {
@@ -60,6 +59,7 @@ export class LicensesPage implements OnInit {
       this.qtyDaysWithoutPay = this.licensesArray[0].qtyDaysWithoutPay;
       this.maternity = this.licensesArray[0].maternity;
       this.qtyMaternity = this.licensesArray[0].qtyMaternity;
+      this.visibleContent = this.utilsHidden.visibleContent();
       this.setIdAnniversaryYear();
     }
   }
@@ -80,7 +80,6 @@ export class LicensesPage implements OnInit {
         this.loadFirstElement();
         this.licensesInitSescond();
         this.cardNotFound = this.globalService.isVisible(this.licensesArray);
-        this.visibleContent = this.utilsHidden.visibleContent();
         loadingEl.dismiss();
       },
       (err) => {
