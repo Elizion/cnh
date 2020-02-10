@@ -23,10 +23,10 @@ export class LicensesPage implements OnInit {
     private utilsHidden: UtilsHidden
   ) { }
 
-  //idPerson = this.globalService.personId();
-  idPerson = '283625';
-  //sexo = this.globalService.sexo();
-  sexo = 'F';
+  idPerson = this.globalService.personId();
+  sexo = this.globalService.sexo();
+  //idPerson = '283625';  
+  //sexo = 'F';
   idAnniversaryYear: any;
 
   historicalArray: any = [];
@@ -69,7 +69,6 @@ export class LicensesPage implements OnInit {
       } else {
         this.showLabel = true;
       }
-      console.log(this.sexo);
       this.setIdAnniversaryYear();
     }
   }

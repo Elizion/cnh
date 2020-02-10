@@ -6,7 +6,6 @@
     <ion-title>Avisos generales</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-card *ngIf="!cardNotFound"> 
   <ion-card-header>
     <ion-card-subtitle text-center> Avisos generales </ion-card-subtitle>
@@ -15,9 +14,7 @@
     <p> Sin resultados encontrados.</p>
   </ion-card-content>
 </ion-card> 
-
 <ion-content padding *ngIf="visibleContent">    
-
   <ion-grid *ngIf="descripcionAvisoGeneral" text-center>
     <h4 style="font-weight: 600;">{{ descripcionAvisoGeneral }}</h4> 
     <ion-row text-center style="background-color: #FFFFFF; height: 18.5em;">                 
@@ -31,7 +28,6 @@
       </ion-img>  
       <!--</pinch-zoom>-->                                            
     </ion-row>
-
     <ion-row>      
       <ion-col *ngIf="descripcionAvisoGeneral">                 
           <ion-list>
@@ -51,5 +47,4 @@
       </ion-col>            
     </ion-row>
   </ion-grid>
-
 </ion-content>
