@@ -6,117 +6,118 @@
     <ion-title>Licencias médicas</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-card *ngIf="!cardNotFound"> 
-  <ion-card-header>
-    <ion-card-subtitle text-center> Licencias médicas </ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content text-center>    
-    <p> Sin resultados encontrados.</p>
-  </ion-card-content>
-</ion-card>
-<ion-content padding *ngIf="visibleContent">
-  <ion-grid>
-    <ion-row>
-      <ion-col>        
-        <ion-list>                              
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Días de aniversario:  {{ anniversaryYear }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-        <ion-list>                              
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Días con pago:  {{ daysWithPay }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-        <ion-list>             
-          <ion-item 
-          button            
-          >
-            <ion-label>
-            <h5> Cantidad de días con pago: {{ qtyDaysWithPay }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-
-        <ion-list>
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Días con mitad de pago: {{ qtyDaysWithPay }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-
-        <ion-list>  
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Cantidad de días con mitad de pago: {{ qtyDaysWithHalfPay }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-        <ion-list>                              
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Cantidad de días sin pago: {{ qtyDaysWithoutPay }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-
-        <ion-list *ngIf="showLabel">                              
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Días de maternidad: {{ maternity }}</h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>        
-        <ion-list *ngIf="showLabel">
-          <ion-item 
-            button            
-          >
-            <ion-label>
-              <h5> Cantidad de días de maternidad: {{ qtyMaternity }} </h5>
-            </ion-label>                
-          </ion-item>   
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  
-  <ion-grid>
-    <ion-toolbar text-center>
-      <ion-title>Detalle licencias médicas</ion-title>
-    </ion-toolbar>
-    <ion-row>      
-      <ion-col>                 
-          <ion-list>
-            <ion-item
-              button
-              *ngFor="let historical of historicalArray"              
-              [routerLink]="['/', 'licenses', 'licenses-detail', historical.keyIssste, historical.startDate, historical.endDate, historical.receptionDate, historical.diagnostico, historical.riesgoTrabajo, historical.anniversaryYear, historical.diasConGoce, historical.diasMedioGoce, historical.diasSinGoce]" detail
-            >                
+<ion-content>
+  <ion-card *ngIf="!cardNotFound"> 
+    <ion-card-header>
+      <ion-card-subtitle text-center> Licencias médicas </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content text-center>    
+      <p> Sin resultados encontrados.</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-content padding *ngIf="visibleContent">
+    <ion-grid>
+      <ion-row>
+        <ion-col>        
+          <ion-list>                              
+            <ion-item 
+              button            
+            >
               <ion-label>
-                <h5>Clave del ISSTE: </h5>
-                <p>{{ historical.keyIssste }}</p>
-              </ion-label>                              
-            </ion-item>
-          </ion-list>                          
-      </ion-col>            
-    </ion-row>
-  </ion-grid>
-</ion-content>
+                <h5> Días de aniversario:  {{ anniversaryYear }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
+          <ion-list>                              
+            <ion-item 
+              button            
+            >
+              <ion-label>
+                <h5> Días con pago:  {{ daysWithPay }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
+          <ion-list>             
+            <ion-item 
+            button            
+            >
+              <ion-label>
+              <h5> Cantidad de días con pago: {{ qtyDaysWithPay }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
 
+          <ion-list>
+            <ion-item 
+              button            
+            >
+              <ion-label>
+                <h5> Días con mitad de pago: {{ qtyDaysWithPay }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
+
+          <ion-list>  
+            <ion-item 
+              button            
+            >
+              <ion-label>
+                <h5> Cantidad de días con mitad de pago: {{ qtyDaysWithHalfPay }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
+          <ion-list>                              
+            <ion-item 
+              button            
+            >
+              <ion-label>
+                <h5> Cantidad de días sin pago: {{ qtyDaysWithoutPay }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
+
+          <ion-list *ngIf="showLabel">                              
+            <ion-item 
+              button            
+            >
+              <ion-label>
+                <h5> Días de maternidad: {{ maternity }}</h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>        
+          <ion-list *ngIf="showLabel">
+            <ion-item 
+              button            
+            >
+              <ion-label>
+                <h5> Cantidad de días de maternidad: {{ qtyMaternity }} </h5>
+              </ion-label>                
+            </ion-item>   
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-grid>
+      <ion-toolbar text-center>
+        <ion-title>Detalle licencias médicas</ion-title>
+      </ion-toolbar>
+      <ion-row>      
+        <ion-col>                 
+            <ion-list>
+              <ion-item
+                button
+                *ngFor="let historical of historicalArray"              
+                [routerLink]="['/', 'licenses', 'licenses-detail', historical.keyIssste, historical.startDate, historical.endDate, historical.receptionDate, historical.diagnostico, historical.riesgoTrabajo, historical.anniversaryYear, historical.diasConGoce, historical.diasMedioGoce, historical.diasSinGoce]" detail
+              >                
+                <ion-label>
+                  <h5>Clave del ISSTE: </h5>
+                  <p>{{ historical.keyIssste }}</p>
+                </ion-label>                              
+              </ion-item>
+            </ion-list>                          
+        </ion-col>            
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ion-content>
