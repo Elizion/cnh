@@ -21,6 +21,11 @@ export class GlobalService {
       const parseId = JSON.parse(id);
       return parseId;
    }
+   sexo() {
+      const sexo   = window.localStorage.getItem('sexo');
+      const parseSexo = JSON.parse(sexo);
+      return parseSexo;
+   }
    date() {
       const date = window.localStorage.getItem('date');
       const obj = JSON.parse(date);

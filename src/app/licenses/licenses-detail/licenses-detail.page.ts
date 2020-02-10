@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LicensesDetailPage implements OnInit {
   constructor(
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) { }
   keyIssste: any;
   startDate: any;

@@ -23,7 +23,10 @@ export class LicensesPage implements OnInit {
     private utilsHidden: UtilsHidden
   ) { }
 
-  idPerson = this.globalService.personId();
+  //idPerson = this.globalService.personId();
+  idPerson = '283625';
+  //sexo = this.globalService.sexo();
+  sexo = 'F';
   idAnniversaryYear: any;
 
   historicalArray: any = [];
@@ -40,6 +43,7 @@ export class LicensesPage implements OnInit {
 
   visibleContent: any = false;
   cardNotFound: any = true;
+  showLabel: any = false;
 
   ngOnInit() {
     this.licensesInit();
@@ -60,6 +64,12 @@ export class LicensesPage implements OnInit {
       this.maternity = this.licensesArray[0].maternity;
       this.qtyMaternity = this.licensesArray[0].qtyMaternity;
       this.visibleContent = this.utilsHidden.visibleContent();
+      if (this.sexo === 'M') {
+        this.showLabel = false;
+      } else {
+        this.showLabel = true;
+      }
+      console.log(this.sexo);
       this.setIdAnniversaryYear();
     }
   }
