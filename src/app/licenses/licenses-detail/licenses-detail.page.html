@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/licenses"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Licencias médicas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Clave del ISSTE:  {{ keyIssste }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Fecha de inicio:  {{ startDate }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>             
+          <ion-item 
+          button            
+          >
+            <ion-label>
+            <h5> Fecha fin: {{ endDate }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Fecha de recepción: {{ receptionDate }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>  
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Diagnostico: {{ diagnostico }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Riesgo: {{riesgoTrabajo === '' ? null : 'Sin dato'}} </h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Años aniversario: {{ anniversaryYear }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días con goce: {{ diasConGoce }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días con medio goce: {{ diasMedioGoce }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+        <ion-list>                              
+          <ion-item 
+            button            
+          >
+            <ion-label>
+              <h5> Días sin goce: {{ diasSinGoce }}</h5>
+            </ion-label>                
+          </ion-item>   
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

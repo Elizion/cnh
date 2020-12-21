@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>      
+    </ion-buttons>
+    <ion-title>Avisos personales</ion-title>
+  </ion-toolbar>
+</ion-header>
+   
+<ion-card *ngIf="!cardNotFound">
+  <ion-card-header>
+    <ion-card-subtitle text-center> Avisos individuales </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content text-center>    
+    <p> Sin resultados encontrados.</p>
+  </ion-card-content>
+</ion-card> 
+
+<ion-content padding *ngIf="visibleContent">
+  <ion-grid>
+    <ion-row>
+      <ion-col>                
+        <ion-list>          
+          <ion-item 
+            button
+            *ngFor="let notice of listPersonal"
+            [routerLink]="['/', 'notices', 'tabs', 'personal', notice.idArchivo, notice.nombreArchivo, notice.mensaje]" detail
+          >
+            <ion-label>
+              <h5>{{ notice.nombreArchivo }}</h5>
+              <p> {{ notice.mensaje }}</p>
+            </ion-label>
+          </ion-item>                      
+        </ion-list>        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

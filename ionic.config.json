@@ -1,0 +1,7 @@
+{
+  "name": "cnh",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

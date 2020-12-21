@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>      
+    </ion-buttons>
+    <ion-title>Recibo de nómina</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding *ngIf="visible">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-grid>        
+      <ion-row>                        
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Inicio</ion-label>
+            <ion-datetime 
+              cancelText="Cancelar" 
+              doneText="Aceptar"
+              max="2022-01-01"
+              displayFormat="DD/MM/YYYY"                 
+              ngModel
+              name="started"
+              (ionChange)="onStart($event)"
+              required>
+            </ion-datetime>
+          </ion-item>
+        </ion-col>            
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Termino</ion-label>
+            <ion-datetime 
+              cancelText="Cancelar" 
+              doneText="Aceptar"
+              max="2022-01-01"
+              displayFormat="DD/MM/YYYY"           
+              ngModel
+              name="finished"              
+              (ionChange)="onEnd($event)"
+              required>
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col style="margin-top: 1.3rem;">
+          <ion-button
+            type="submit"
+            color="primary"            
+            expand="block"                      
+            [disabled]="!this.visibleButtonAdd"
+          >
+            <ion-icon name="search"></ion-icon>
+          </ion-button>
+        </ion-col>              
+      </ion-row>        
+    </ion-grid>
+  </form>
+  
+ 
+  <ion-card *ngIf="!card"> 
+    <ion-card-header>
+      <ion-card-subtitle text-center> Consulta de nómina </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content text-center>    
+      <p> Sin resultados encontrados.</p>
+    </ion-card-content>
+  </ion-card> 
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>                             
+          <ion-list>                    
+              <ion-item 
+                button
+                *ngFor="let payroll of payrollArray"
+                (click)="impress(payroll.consolidationSetId)"                
+                [routerLink]="[]" detail
+              >
+                <ion-label>
+                  <p> {{ payroll.fechaPago }} </p>
+                  <h5> {{ payroll.nombreFolio }}</h5>
+                </ion-label>                
+                <slot name="end"></slot>
+                <ion-icon class="item-detail-icon ios hydrated" role="img" aria-label="arrow forward"></ion-icon>
+              </ion-item>   
+          </ion-list>                
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
